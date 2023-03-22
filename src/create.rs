@@ -1,4 +1,5 @@
 use crate::value::Value;
+use crate::error::BundError;
 use crate::types::*;
 
 impl Value {
@@ -55,6 +56,22 @@ impl Value {
             dt:   STRING,
             q:    100.0,
             data: Val::String(value.to_string()),
+            attr: Vec::new(),
+        }
+    }
+    pub fn from_bin(value: Vec<u8>) -> Self {
+        Self {
+            dt:   BIN,
+            q:    100.0,
+            data: Val::Binary(value),
+            attr: Vec::new(),
+        }
+    }
+    pub fn from_error(value: BundError) -> Self {
+        Self {
+            dt:   ERROR,
+            q:    100.0,
+            data: Val::Error(value),
             attr: Vec::new(),
         }
     }

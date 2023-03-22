@@ -10,4 +10,7 @@ impl Value {
             attr: Vec::new(),
         }
     }
+    pub fn none() -> Self {
+        Value::new()
+    }
 }

@@ -17,6 +17,7 @@ impl Value {
             CALL => "Call",
             PTR => "Ptr",
             BIN => "Bin",
+            LIST => "List",
             ERROR => "Error",
             TOKEN => "Token",
             _ => "Unknown",

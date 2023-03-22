@@ -1,3 +1,4 @@
+use crate::value::Value;
 use serde::{Deserialize, Serialize};
 use crate::error::{BundError};
 
@@ -25,7 +26,7 @@ pub enum Val {
     Bool(bool),
     I64(i64),
     F64(f64),
-    List(Vec<Val>),
+    List(Vec<Value>),
     String(String),
     Binary(Vec<u8>),
 }

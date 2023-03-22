@@ -1,5 +1,6 @@
 use std::any::Any;
 use crate::value::Value;
+use crate::error::BundError;
 
 impl Value {
     pub fn from<T: Clone + 'static>(value: T) -> Result<Self, Box<dyn std::error::Error>> {
@@ -17,6 +18,10 @@ impl Value {
             return Result::Ok(Value::from_string((*string_val.clone()).to_string()));
         } else if let Some(str_val) = (&value as &dyn Any).downcast_ref::<&str>() {
             return Result::Ok(Value::from_str(&*str_val.clone()));
+        } else if let Some(lst_val) = (&value as &dyn Any).downcast_ref::<Vec<Value>>() {
+            return Result::Ok(Value::from_list((*lst_val.clone()).to_vec()));
+        } else if let Some(err_val) = (&value as &dyn Any).downcast_ref::<BundError>() {
+            return Result::Ok(Value::from_error(err_val.clone()));
         }
         else {
             return Err("Unknown dynamic type".into());

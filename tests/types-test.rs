@@ -3,6 +3,7 @@ mod tests {
     #![allow(unused_imports)]
     use super::*;
     use rust_dynamic::value::Value;
+    use rust_dynamic::error::BundError;
 
     #[test]
     fn test_none() {
@@ -57,5 +58,15 @@ mod tests {
     fn test_create_nodata_type_name() {
         let v = Value::nodata();
         assert_eq!(v.type_name(), "NODATA");
+    }
+    #[test]
+    fn test_create_list_type_name() {
+        let v = Value::from(vec![Value::new(), Value::new()]).unwrap();
+        assert_eq!(v.type_name(), "List");
+    }
+    #[test]
+    fn test_create_error_type_name() {
+        let v = Value::from(BundError::new("Hello".to_string(), "World".to_string())).unwrap();
+        assert_eq!(v.type_name(), "Error");
     }
 }
