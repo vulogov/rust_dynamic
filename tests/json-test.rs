@@ -3,12 +3,18 @@ mod tests {
     #![allow(unused_imports)]
     use super::*;
     use rust_dynamic::value::Value;
-    use serde_json::to_string;
 
     #[test]
-    fn test_serialize_none() {
-        let data = Value::new();
-        println!("{:?}\n", to_string(&data));
-        assert_eq!(42, 42);
+    fn test_serialize_int() {
+        let mut data = Value::from(42 as i64).unwrap();
+        let json_out = data.to_json().unwrap();
+        assert_ne!(json_out.len(), 0);
+    }
+    #[test]
+    fn test_serialize_deserialize_int() {
+        let mut data = Value::from(42 as i64).unwrap();
+        let json_out = data.to_json().unwrap();
+        let mut data2 = Value::from_json(json_out).unwrap();
+        assert_eq!(data2.cast_int().unwrap(), 42 as i64);
     }
 }

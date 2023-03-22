@@ -51,4 +51,12 @@ impl Value {
             _ => return Err("This Dynamic type is not error".into()),
         }
     }
+    pub fn cast_list(&mut self) -> Result<Vec<Value>, Box<dyn std::error::Error>> {
+        match &self.data {
+            Val::List(l_val) => {
+                return Result::Ok(l_val.clone());
+            }
+            _ => return Err("This Dynamic type is not list".into()),
+        }
+    }
 }

@@ -24,4 +24,11 @@ mod tests {
         let mut v = Value::from("Hello world").unwrap();
         assert_eq!(v.cast_string().unwrap(), "Hello world");
     }
+    #[test]
+    fn test_cast_list_type() {
+        let mut v = Value::from_list(vec![Value::from(42 as i64).unwrap()]);
+        let mut l = v.cast_list().unwrap();
+        let v2 = l[0].cast_int().unwrap();
+        assert_eq!(v2, 42 as i64);
+    }
 }

@@ -10,5 +10,6 @@ pub mod types;
 pub mod error;
 pub mod push;
 pub mod map;
+pub mod json;
 pub mod value;
 pub mod value_types;
