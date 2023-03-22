@@ -1,8 +1,6 @@
 use crate::value::Value;
 use crate::types::*;
 
-type AppFn = fn(Value) -> Value;
-
 impl Value {
     pub fn map(&mut self, appfn: AppFn) -> Self {
         if self.dt == LIST {

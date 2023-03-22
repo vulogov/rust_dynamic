@@ -2,6 +2,8 @@ use crate::value::Value;
 use serde::{Deserialize, Serialize};
 use crate::error::{BundError};
 
+pub type AppFn = fn(Value) -> Value;
+
 pub const NONE: u16     = 0;
 pub const BOOL: u16     = 1;
 pub const INTEGER: u16  = 2;
