@@ -13,6 +13,7 @@ pub mod push;
 pub mod hash;
 pub mod eq;
 pub mod map;
+pub mod len;
 pub mod json;
 pub mod value;
 pub mod value_types;
