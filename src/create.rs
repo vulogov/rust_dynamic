@@ -42,4 +42,20 @@ impl Value {
             attr: Vec::new(),
         }
     }
+    pub const fn from_string(value: String) -> Self {
+        Self {
+            dt:   STRING,
+            q:    100.0,
+            data: Val::String(value),
+            attr: Vec::new(),
+        }
+    }
+    pub fn from_str(value: &str) -> Self {
+        Self {
+            dt:   STRING,
+            q:    100.0,
+            data: Val::String(value.to_string()),
+            attr: Vec::new(),
+        }
+    }
 }

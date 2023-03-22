@@ -8,6 +8,7 @@ impl Value {
     pub fn type_name(&self) -> &'static str {
         match self.dt {
             NONE => "None",
+            NODATA => "NODATA",
             BOOL => "Bool",
             INTEGER => "Integer",
             FLOAT => "Float",

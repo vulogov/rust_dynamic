@@ -43,4 +43,19 @@ mod tests {
         let v = Value::from(true).unwrap();
         assert_eq!(v.type_name(), "Bool");
     }
+    #[test]
+    fn test_create_string_type_name() {
+        let v = Value::from("Hello".to_string()).unwrap();
+        assert_eq!(v.type_name(), "String");
+    }
+    #[test]
+    fn test_create_str_type_name() {
+        let v = Value::from("Hello").unwrap();
+        assert_eq!(v.type_name(), "String");
+    }
+    #[test]
+    fn test_create_nodata_type_name() {
+        let v = Value::nodata();
+        assert_eq!(v.type_name(), "NODATA");
+    }
 }

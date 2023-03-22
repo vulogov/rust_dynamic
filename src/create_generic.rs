@@ -13,6 +13,10 @@ impl Value {
             return Result::Ok(Value::from_int32(*i32_val));
         } else if let Some(bool_val) = (&value as &dyn Any).downcast_ref::<bool>() {
             return Result::Ok(Value::from_bool(*bool_val));
+        } else if let Some(string_val) = (&value as &dyn Any).downcast_ref::<String>() {
+            return Result::Ok(Value::from_string((*string_val.clone()).to_string()));
+        } else if let Some(str_val) = (&value as &dyn Any).downcast_ref::<&str>() {
+            return Result::Ok(Value::from_str(&*str_val.clone()));
         }
         else {
             return Err("Unknown dynamic type".into());
