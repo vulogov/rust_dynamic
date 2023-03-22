@@ -22,4 +22,17 @@ use rust_dynamic::value::Value;
 let mut value = Value::from(42);
 println!("Type of the stored value is {}", &value.type_name());
 println!("Dynamic value of the value is {:?}", &value.cast_integer());
+
 ```
+
+## What are the properties of dynamically-typed objects
+
+* Value objects can wrap value of any supported type and they are functionally pure. Once you assigned the value, you can not change it, with one exception. Any attempts of change will result in generation of a new Value object. But you can push a new value to the object of List type, without re-creating a new object.
+* All dynamically-typed objects are hash-able, so you can use them as the keys in HasMap objects.
+* All dynamically-typed objects holds full information about stored data type.
+* All dynamically-typed objects stores a unique object identifier.
+* All dynamically-typed objects serialize-able to both JSON and a Bincode.
+
+## How to create a dynamically-typed values
+
+rust_dynamic crate supports a number of function-primitives that will take a raw value and return a wrapped Dynamic object.
