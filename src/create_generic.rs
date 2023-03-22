@@ -1,0 +1,21 @@
+use std::any::Any;
+use crate::value::Value;
+
+impl Value {
+    pub fn from<T: Clone + 'static>(value: T) -> Result<Self, Box<dyn std::error::Error>> {
+        if let Some(f_val) = (&value as &dyn Any).downcast_ref::<f64>() {
+            return Result::Ok(Value::from_float(*f_val));
+        } else if let Some(f32_val) = (&value as &dyn Any).downcast_ref::<f32>() {
+            return Result::Ok(Value::from_float32(*f32_val));
+        } else if let Some(i_val) = (&value as &dyn Any).downcast_ref::<i64>() {
+            return Result::Ok(Value::from_int(*i_val));
+        } else if let Some(i32_val) = (&value as &dyn Any).downcast_ref::<i32>() {
+            return Result::Ok(Value::from_int32(*i32_val));
+        } else if let Some(bool_val) = (&value as &dyn Any).downcast_ref::<bool>() {
+            return Result::Ok(Value::from_bool(*bool_val));
+        }
+        else {
+            return Err("Unknown dynamic type".into());
+        }
+    }
+}
