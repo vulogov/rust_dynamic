@@ -19,7 +19,7 @@ Dynamic values are wrapped and stored inside a Value structure and could be cast
 ```rust
 use rust_dynamic::value::Value;
 
-let mut value = Value::from(42);
+let mut value = Value::from(42).unwrap();
 println!("Type of the stored value is {}", &value.type_name());
 println!("Dynamic value of the value is {:?}", &value.cast_integer());
 
@@ -54,3 +54,27 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::nodata() | Create dynamic object that contains no data |
 
 There are generic function Value::from() that will automatically cast proper data type and ether return object or error message.
+
+## How to cast Rust value from dynamically-typed values
+
+rust_dynamic supports a number of casting functions that will try to extract wrapped value from the object that holds dynamically-typed value.
+
+| Function name | Description |
+|---|---|
+| Value::cast_float() | Return f64 number from FLOAT object |
+| Value::cast_integer() | Return i64 number from INTEGER object |
+| Value::cast_bool() | Return boolean from BOOL object |
+| Value::cast_string() | Return String from STRING object |
+| Value::cast_bin() | Return Vec<u8> from BINARY object |
+| Value::cast_list() | Return Vec<Value> from LIST object |
+
+## How to serialize and deserialize dynamically-typed values
+
+There are two serialization formats that rust_dynamic presently supports: JSON and Bincode.
+
+| Function name | Description |
+|---|---|
+| Value::to_json() | Return JSON representation of dynamically-typed value |
+| Value::to_binary() | Return Bincode representation of dynamically-typed value |
+| Value::from_json() | Takes string containing JSON representation of the dynamically-typed object and return re-created Value object |
+| Value::from_binary() | Takes Vec<u8> containing Bincode representation of the dynamically-typed object and return re-created Value object |
