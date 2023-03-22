@@ -74,4 +74,14 @@ mod tests {
         let v = Value::from_pair((Value::new(), Value::new()));
         assert_eq!(v.type_name(), "Pair");
     }
+    #[test]
+    fn test_create_ptr_type_name() {
+        let v = Value::ptr("name".to_string(), vec![]);
+        assert_eq!(v.type_name(), "Ptr");
+    }
+    #[test]
+    fn test_create_call_type_name() {
+        let v = Value::call("name".to_string(), vec![]);
+        assert_eq!(v.type_name(), "Call");
+    }
 }

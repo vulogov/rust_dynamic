@@ -1,3 +1,4 @@
+use nanoid::nanoid;
 use crate::value::Value;
 use crate::types::*;
 
@@ -15,6 +16,8 @@ impl Value {
             }
             return Value::from_list(data);
         }
-        return appfn(self.clone());
+        let mut res = self.clone();
+        res.id = nanoid!();
+        return appfn(res);
     }
 }
