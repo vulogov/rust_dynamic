@@ -78,3 +78,24 @@ There are two serialization formats that rust_dynamic presently supports: JSON a
 | Value::to_binary() | Return Bincode representation of dynamically-typed value |
 | Value::from_json() | Takes string containing JSON representation of the dynamically-typed object and return re-created Value object |
 | Value::from_binary() | Takes Vec<u8> containing Bincode representation of the dynamically-typed object and return re-created Value object |
+
+Example:
+
+```rust
+// This call will create a new dynamic value
+let mut data = Value::from(42 as i64).unwrap();
+// This call will serialize object to Bincode format
+let bin_out = data.to_binary().unwrap();
+// This will re-create an object from it's Bincode representation
+let mut data2 = Value::from_binary(bin_out).unwrap();
+```
+
+## Functional operations with dynamically-typed values
+
+While rust_dynamic crate is not strive to provide a full-featured functional interface to the dynamic values, some functionality that specific to a Functional programming has been implemented.
+
+| Function name | Description |
+|---|---|
+| Value::bind() | Takes a reference to a function that accepts Value as a parameter, that function is called with passed current object and new Value object returned |
+| Value::map() | Execute function to each element of the LIST or to the value and return new Value |
+| Value::push() | Ether add a new value to the list, or return a new Value |
