@@ -16,7 +16,7 @@ rust_dynamic is a crate, created for Rust language, implementing primitives that
 
 Dynamic values are wrapped and stored inside a Value structure and could be cast-able back into original Rust value.
 
-```lang=rust
+```rust
 use rust_dynamic::value::Value;
 
 let mut value = Value::from(42);
