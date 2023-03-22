@@ -13,4 +13,7 @@ impl Value {
     pub fn none() -> Self {
         Value::new()
     }
+    pub fn pair(x: Value, y:Value) -> Self {
+        Value::from_pair((x, y))
+    }
 }

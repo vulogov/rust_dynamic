@@ -69,4 +69,9 @@ mod tests {
         let v = Value::from(BundError::new("Hello".to_string(), "World".to_string())).unwrap();
         assert_eq!(v.type_name(), "Error");
     }
+    #[test]
+    fn test_create_pair_type_name() {
+        let v = Value::from_pair((Value::new(), Value::new()));
+        assert_eq!(v.type_name(), "Pair");
+    }
 }

@@ -14,6 +14,7 @@ pub const CALL: u16     = 6;
 pub const PTR: u16      = 7;
 pub const BIN: u16      = 8;
 pub const LIST: u16     = 9;
+pub const PAIR: u16     = 10;
 pub const NODATA: u16   = 97;
 pub const ERROR: u16    = 98;
 pub const TOKEN: u16    = 99;

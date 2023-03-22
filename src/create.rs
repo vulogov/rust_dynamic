@@ -75,4 +75,9 @@ impl Value {
             attr: Vec::new(),
         }
     }
+    pub fn from_pair(value: (Value, Value)) -> Self {
+        let mut res = Value::from_list(vec![value.0, value.1]);
+        res.dt = PAIR;
+        res
+    }
 }
