@@ -68,6 +68,18 @@ rust_dynamic supports a number of casting functions that will try to extract wra
 | Value::cast_bin() | Return Vec<u8> from BINARY object |
 | Value::cast_list() | Return Vec<Value> from LIST object |
 
+Example:
+
+```rust
+use rust_dynamic::value::Value;
+
+// First we create a dynamically-typed value from a raw static value
+let mut value = Value::from(42).unwrap();
+
+// Then we can cast raw value back from the dynamic object
+let raw_value = value.cast_integer().unwrap()
+```
+
 ## How to serialize and deserialize dynamically-typed values
 
 There are two serialization formats that rust_dynamic presently supports: JSON and Bincode.
@@ -99,3 +111,18 @@ While rust_dynamic crate is not strive to provide a full-featured functional int
 | Value::bind() | Takes a reference to a function that accepts Value as a parameter, that function is called with passed current object and new Value object returned |
 | Value::map() | Execute function to each element of the LIST or to the value and return new Value |
 | Value::push() | Ether add a new value to the list, or return a new Value |
+
+## How to use dynamically-typed objects as HashMap keys
+
+```rust
+use std::collections::HashMap;
+
+// This call will create a key object. Key object can be of any supported type
+let key = Value::from(42.0 as f64).unwrap();
+
+// Then we are creating a HashMap
+let mut h: HashMap<Value, String> = HashMap::new();
+
+// and store a key->value association
+h.insert(key, "value".to_string());
+```
