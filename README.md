@@ -36,3 +36,21 @@ println!("Dynamic value of the value is {:?}", &value.cast_integer());
 ## How to create a dynamically-typed values
 
 rust_dynamic crate supports a number of function-primitives that will take a raw value and return a wrapped Dynamic object.
+
+| Function name | Description |
+|---|---|
+| Value::from_float() | Create dynamic object from f64 float number |
+| Value::from_float32() | Create dynamic object from f32 float number |
+| Value::from_integer() | Create dynamic object from i64 float number |
+| Value::from_integer32() | Create dynamic object from i32 float number |
+| Value::from_bool() | Create dynamic object from boolean value |
+| Value::from_string() | Create dynamic object from Rust String |
+| Value::from_str() | Create dynamic object from Rust &str |
+| Value::from_bin() | Create dynamic object of type BINARY from Vec<u8> |
+| Value::pair() | Create dynamic object of type PAIR from the pair of values |
+| Value::list() | Create empty dynamic object of type LIST |
+| Value::from_list() | Create dynamic object of type LIST and initialize it from Vec<Value> |
+| Value::none() | Create dynamic object that wraps value of None  |
+| Value::nodata() | Create dynamic object that contains no data |
+
+There are generic function Value::from() that will automatically cast proper data type and ether return object or error message.
