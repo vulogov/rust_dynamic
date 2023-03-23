@@ -33,7 +33,9 @@ println!("Dynamic value of the value is {:?}", &value.cast_integer());
 * All dynamically-typed objects stores a unique object identifier.
 * All dynamically-typed objects serialize-able to both JSON and a Bincode.
 * You can iterate over All dynamically-typed objects.
-* You can create attributes attached to wrapped data
+* You can create attributes attached to wrapped data.
+* Basic math operation Add/Sub/Mul/Div supported for FLOAT and INTEGER types.
+* String concatenation and multiplication supported.
 
 ## How to create a dynamically-typed values
 
@@ -144,11 +146,33 @@ for i in v {
 }
 ```
 
-# How to map over dynamically-typed objects
+## How to map over dynamically-typed objects
 
 In this example we are applying f64::sin function to all iterable values of the dynamically-typed object
 
 ```rust
 let mut v = Value::from(42.0).unwrap();
 v = v.map_float(f64::sin);
+```
+## How to use a math operations with dynamically-typed objects
+
+At this moment, only FLOAT and INTEGER objects supported math operations.
+
+```rust
+// Let's create x and y objects both of FLOAT type
+let mut x = Value::from(1.0 as f64).unwrap();
+let y = Value::from(41.0 as f64).unwrap();
+// And perform math operation as usual
+x = x + y;
+```
+## How to concatenate string objects
+
+At this moment, only STRING object supports that operation.
+
+```rust
+// Let's create x and y objects both of STRING type
+let mut x = Value::from("Hello").unwrap();
+// Then perform operation as usual, x shall be a object of STRING type containing string "Hello world"
+let y = Value::from(" world").unwrap();
+x = x + y;
 ```
