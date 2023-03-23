@@ -84,6 +84,16 @@ impl Value {
             curr: -1,
         }
     }
+    pub fn binary() -> Self {
+        Self {
+            id:   nanoid!(),
+            dt:   BIN,
+            q:    100.0,
+            data: Val::Binary(Vec::new()),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
     pub fn from_error(value: BundError) -> Self {
         Self {
             id:   nanoid!(),

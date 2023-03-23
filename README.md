@@ -94,6 +94,8 @@ There are two serialization formats that rust_dynamic presently supports: JSON a
 | Value::to_binary() | Return Bincode representation of dynamically-typed value |
 | Value::from_json() | Takes string containing JSON representation of the dynamically-typed object and return re-created Value object |
 | Value::from_binary() | Takes Vec<u8> containing Bincode representation of the dynamically-typed object and return re-created Value object |
+| Value.wrap() | Return a BINARY object containing a Bincode representation of object |
+| Value.unwrap() | If object is BINARY unpack binary representation of enclosed object, recreate it and return |
 
 Example:
 
