@@ -7,6 +7,7 @@ pub mod cast;
 pub mod create;
 pub mod create_generic;
 pub mod create_special;
+pub mod create_special_float;
 pub mod create_list;
 pub mod types;
 pub mod error;
