@@ -32,6 +32,7 @@ println!("Dynamic value of the value is {:?}", &value.cast_integer());
 * All dynamically-typed objects holds full information about stored data type.
 * All dynamically-typed objects stores a unique object identifier.
 * All dynamically-typed objects serialize-able to both JSON and a Bincode.
+* You can iterate over All dynamically-typed objects.
 
 ## How to create a dynamically-typed values
 
@@ -125,4 +126,18 @@ let mut h: HashMap<Value, String> = HashMap::new();
 
 // and store a key->value association
 h.insert(key, "value".to_string());
+```
+
+## How to iterate over dynamically-typed objects
+
+```rust
+let mut c = 0.0;
+// Let's create a object of LIST type and push two elements into list
+let v = Value::list()
+        .push(Value::from(1.0 as f64).unwrap())
+        .push(Value::from(41.0 as f64).unwrap());
+// We can iterate over dynamically-typed object
+for i in v {
+    c += i.cast_float().unwrap();
+}
 ```
