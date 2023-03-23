@@ -2,3 +2,5 @@
 
 * More test cases
 * Mathematical operation Add/Sub/Mul/Div for FLOAT and INTEGER types
+* String + String concatenation
+* String * NUMBER, NUMBER * String - String multiplication

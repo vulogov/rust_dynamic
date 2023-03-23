@@ -27,6 +27,20 @@ fn numeric_op_int_int(op: Ops, x: i64, y: i64) -> i64 {
     }
 }
 
+fn string_op_string_string(op: Ops, x: String, y: String) -> String {
+    match op {
+        Ops::Add => format!("{}{}", &x, &y),
+        _ => x,
+    }
+}
+
+fn string_op_string_int(op: Ops, x: String, y: i64) -> String {
+    match op {
+        Ops::Mul => x.repeat(y as usize),
+        _ => x,
+    }
+}
+
 impl Value {
     pub fn numeric_op(op: Ops, x: Value, y: Value) -> Result<Value, Box<dyn std::error::Error>> {
         match x.data {
@@ -37,6 +51,9 @@ impl Value {
                     }
                     Val::I64(i_y) => {
                         return Result::Ok(Value::from(numeric_op_float_float(op, f_x, i_y as f64)).unwrap());
+                    }
+                    Val::String(s_y) => {
+                        return Result::Ok(Value::from(string_op_string_int(op, s_y, f_x as i64)).unwrap());
                     }
                     _ => return Err("Incompartible X argument for the math operations".into()),
                 }
@@ -49,7 +66,24 @@ impl Value {
                     Val::I64(i_y) => {
                         return Result::Ok(Value::from(numeric_op_int_int(op, i_x, i_y)).unwrap());
                     }
-                    _ => return Err("Incompartible X argument for the math operations".into()),
+                    Val::String(s_y) => {
+                        return Result::Ok(Value::from(string_op_string_int(op, s_y, i_x)).unwrap());
+                    }
+                    _ => return Err("Incompartible Y argument for the math operations".into()),
+                }
+            }
+            Val::String(s_x) => {
+                match y.data {
+                    Val::String(s_y) => {
+                        return Result::Ok(Value::from(string_op_string_string(op, s_x, s_y)).unwrap());
+                    }
+                    Val::I64(i_y) => {
+                        return Result::Ok(Value::from(string_op_string_int(op, s_x, i_y)).unwrap());
+                    }
+                    Val::F64(f_y) => {
+                        return Result::Ok(Value::from(string_op_string_int(op, s_x, f_y as i64)).unwrap());
+                    }
+                    _ => return Err("Incompartible Y argument for the string operations".into()),
                 }
             }
             _ => return Err("Incompartible X argument for the math operations".into()),

@@ -32,4 +32,18 @@ mod tests {
         x = x / y;
         assert_eq!(x.cast_int().unwrap(), 42);
     }
+    #[test]
+    fn test_string_add() {
+        let mut x = Value::from("Hello").unwrap();
+        let y = Value::from(" world").unwrap();
+        x = x + y;
+        assert_eq!(x.cast_string().unwrap(), "Hello world");
+    }
+    #[test]
+    fn test_string_mul() {
+        let mut x = Value::from("Hello").unwrap();
+        let y = Value::from(2 as i64).unwrap();
+        x = x * y;
+        assert_eq!(x.cast_string().unwrap(), "HelloHello");
+    }
 }
