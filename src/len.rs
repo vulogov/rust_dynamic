@@ -10,6 +10,12 @@ impl Value {
                     _ => return 0,
                 }
             }
+            BIN => {
+                match &self.data {
+                    Val::Binary(v) => return v.len(),
+                    _ => return 0,
+                }
+            }
             NODATA => return 0,
             _ => return 1,
         }

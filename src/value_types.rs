@@ -16,7 +16,7 @@ impl Value {
             LITERAL => "Literal",
             CALL => "Call",
             PTR => "Ptr",
-            BIN => "Bin",
+            BIN => "Binary",
             LIST => "List",
             PAIR => "Pair",
             ERROR => "Error",

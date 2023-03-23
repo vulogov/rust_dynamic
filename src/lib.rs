@@ -15,6 +15,7 @@ pub mod push;
 pub mod hash;
 pub mod eq;
 pub mod map;
+pub mod math;
 pub mod len;
 pub mod iter;
 pub mod json;

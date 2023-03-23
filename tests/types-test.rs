@@ -113,4 +113,14 @@ mod tests {
         let v = Value::e();
         assert_eq!(v.cast_float().unwrap(), E);
     }
+    #[test]
+    fn test_create_binary_type_name() {
+        let v = Value::binary();
+        assert_eq!(v.type_name(), "Binary");
+    }
+    #[test]
+    fn test_create_binary_type() {
+        let v = Value::binary();
+        assert_eq!(v.len(), 0);
+    }
 }

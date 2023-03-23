@@ -17,4 +17,17 @@ mod tests {
         let data2 = Value::from_binary(bin_out).unwrap();
         assert_eq!(data2.cast_int().unwrap(), 42 as i64);
     }
+    #[test]
+    fn test_serialize_wrap_int() {
+        let data = Value::from(42 as i64).unwrap();
+        let bin_data = data.wrap().unwrap();
+        assert_eq!(bin_data.len(), 63);
+    }
+    #[test]
+    fn test_serialize_unwrap_int() {
+        let data = Value::from(42 as i64).unwrap();
+        let bin_data = data.wrap().unwrap();
+        let data2 = bin_data.unwrap().unwrap();
+        assert_eq!(data2.cast_int().unwrap(), 42);
+    }
 }
