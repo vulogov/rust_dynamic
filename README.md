@@ -33,6 +33,7 @@ println!("Dynamic value of the value is {:?}", &value.cast_integer());
 * All dynamically-typed objects stores a unique object identifier.
 * All dynamically-typed objects serialize-able to both JSON and a Bincode.
 * You can iterate over All dynamically-typed objects.
+* You can create attributes attached to wrapped data
 
 ## How to create a dynamically-typed values
 
@@ -111,6 +112,7 @@ While rust_dynamic crate is not strive to provide a full-featured functional int
 |---|---|
 | Value::bind() | Takes a reference to a function that accepts Value as a parameter, that function is called with passed current object and new Value object returned |
 | Value::map() | Execute function to each element of the LIST or to the value and return new Value |
+| Value::map_float() | Execute function to each FLOAT element of the LIST or to the value and return new Value |
 | Value::push() | Ether add a new value to the list, or return a new Value |
 
 ## How to use dynamically-typed objects as HashMap keys
@@ -140,4 +142,13 @@ let v = Value::list()
 for i in v {
     c += i.cast_float().unwrap();
 }
+```
+
+# How to map over dynamically-typed objects
+
+In this example we are applying f64::sin function to all iterable values of the dynamically-typed object
+
+```rust
+let mut v = Value::from(42.0).unwrap();
+v = v.map_float(f64::sin);
 ```
