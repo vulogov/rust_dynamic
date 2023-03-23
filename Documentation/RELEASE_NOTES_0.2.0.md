@@ -7,4 +7,4 @@
 * Value.attr_add() method that adds Value to the list of attributes
 * Value::pi()/e()/nan()/inf()/negative_inf() creators of some float values
 * Value.map_float() for special operations over float values or list of float values
- 
+* Value is now iterable
