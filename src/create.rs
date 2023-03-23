@@ -11,6 +11,7 @@ impl Value {
             q:    100.0,
             data: Val::F64(value),
             attr: Vec::new(),
+            curr: -1,
         }
     }
     pub fn from_float32(value: f32) -> Self {
@@ -20,6 +21,7 @@ impl Value {
             q:    100.0,
             data: Val::F64(value as f64),
             attr: Vec::new(),
+            curr: -1,
         }
     }
     pub fn from_int(value: i64) -> Self {
@@ -29,6 +31,7 @@ impl Value {
             q:    100.0,
             data: Val::I64(value),
             attr: Vec::new(),
+            curr: -1,
         }
     }
     pub fn from_int32(value: i32) -> Self {
@@ -38,6 +41,7 @@ impl Value {
             q:    100.0,
             data: Val::I64(value as i64),
             attr: Vec::new(),
+            curr: -1,
         }
     }
     pub fn from_bool(value: bool) -> Self {
@@ -47,6 +51,7 @@ impl Value {
             q:    100.0,
             data: Val::Bool(value),
             attr: Vec::new(),
+            curr: -1,
         }
     }
     pub fn from_string(value: String) -> Self {
@@ -56,6 +61,7 @@ impl Value {
             q:    100.0,
             data: Val::String(value),
             attr: Vec::new(),
+            curr: -1,
         }
     }
     pub fn from_str(value: &str) -> Self {
@@ -65,6 +71,7 @@ impl Value {
             q:    100.0,
             data: Val::String(value.to_string()),
             attr: Vec::new(),
+            curr: -1,
         }
     }
     pub fn from_bin(value: Vec<u8>) -> Self {
@@ -74,6 +81,7 @@ impl Value {
             q:    100.0,
             data: Val::Binary(value),
             attr: Vec::new(),
+            curr: -1,
         }
     }
     pub fn from_error(value: BundError) -> Self {
@@ -83,6 +91,7 @@ impl Value {
             q:    100.0,
             data: Val::Error(value),
             attr: Vec::new(),
+            curr: -1,
         }
     }
     pub fn from_pair(value: (Value, Value)) -> Self {

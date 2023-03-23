@@ -9,6 +9,7 @@ pub struct Value {
     pub q:      f64,
     pub data:   Val,
     pub attr:   Vec::<Value>,
+    pub curr:   i32,
 }
 
 impl Value {
@@ -19,6 +20,7 @@ impl Value {
             q:    0.0,
             data: Val::Null,
             attr: Vec::new(),
+            curr: -1,
         }
     }
 }

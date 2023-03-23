@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::error::{BundError};
 
 pub type AppFn = fn(Value) -> Value;
+pub type FloatFn = fn(f64) -> f64;
 
 pub const NONE: u16     = 0;
 pub const BOOL: u16     = 1;

@@ -84,4 +84,33 @@ mod tests {
         let v = Value::call("name".to_string(), vec![]);
         assert_eq!(v.type_name(), "Call");
     }
+    #[test]
+    fn test_create_float_nan() {
+        let v = Value::nan();
+        assert!(v.cast_float().unwrap().is_nan());
+    }
+    #[test]
+    fn test_create_float_inf1() {
+        let v = Value::inf();
+        assert!(v.cast_float().unwrap().is_infinite());
+    }
+    #[test]
+    fn test_create_float_inf2() {
+        let v = Value::negative_inf();
+        assert!(v.cast_float().unwrap().is_infinite());
+    }
+    #[test]
+    fn test_create_float_pi() {
+        use std::f64::consts::PI;
+
+        let v = Value::pi();
+        assert_eq!(v.cast_float().unwrap(), PI);
+    }
+    #[test]
+    fn test_create_float_e() {
+        use std::f64::consts::E;
+
+        let v = Value::e();
+        assert_eq!(v.cast_float().unwrap(), E);
+    }
 }
