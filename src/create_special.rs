@@ -10,6 +10,7 @@ impl Value {
             q:    100.0,
             data: Val::Null,
             attr: Vec::new(),
+            curr: -1,
         }
     }
     pub fn none() -> Self {
@@ -25,6 +26,7 @@ impl Value {
             q:    100.0,
             data: Val::String(name),
             attr: attrs,
+            curr: -1,
         }
     }
     pub fn call(name: String, attrs: Vec<Value>) -> Self {
@@ -34,6 +36,7 @@ impl Value {
             q:    100.0,
             data: Val::String(name),
             attr: attrs,
+            curr: -1,
         }
     }
 }

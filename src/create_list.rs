@@ -10,6 +10,7 @@ impl Value {
             q:    100.0,
             data: Val::List(Vec::new()),
             attr: Vec::new(),
+            curr: -1,
         }
     }
     pub fn from_list(value: Vec<Value>) -> Self {
@@ -19,6 +20,7 @@ impl Value {
             q:    100.0,
             data: Val::List(value),
             attr: Vec::new(),
+            curr: -1,
         }
     }
 }
