@@ -9,6 +9,7 @@ pub mod create_generic;
 pub mod create_special;
 pub mod create_special_float;
 pub mod create_list;
+pub mod dup;
 pub mod types;
 pub mod error;
 pub mod push;
