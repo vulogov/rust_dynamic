@@ -9,6 +9,10 @@ homepage = "https://github.com/vulogov/rust_dynamic"
 
 [dependencies]
 bincode2 = "2.0.*"
+dtoa = "1.0.6"
+itoa = "1.0.6"
+lexical-core = "0.8.5"
 nanoid = "0.4.*"
+rustils = "0.1.23"
 serde = { version = "1.0.*", features = ["derive"] }
 serde_json = { version="1.0.*", default-features = true }
