@@ -56,6 +56,7 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::from_list() | Create dynamic object of type LIST and initialize it from Vec<Value> |
 | Value::none() | Create dynamic object that wraps value of None  |
 | Value::nodata() | Create dynamic object that contains no data |
+| Value::conv() | Converting of the object of one type to another |
 
 There are generic function Value::from() that will automatically cast proper data type and ether return object or error message.
 
@@ -177,4 +178,11 @@ let mut x = Value::from("Hello").unwrap();
 // Then perform operation as usual, x shall be a object of STRING type containing string "Hello world"
 let y = Value::from(" world").unwrap();
 x = x + y;
+```
+
+## How to convert from String to Float
+
+```rust
+// This call returns the object of type FLOAT 
+let val = Value::from("42").unwrap().conv(FLOAT).unwrap();
 ```
