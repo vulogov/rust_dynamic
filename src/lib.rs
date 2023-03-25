@@ -12,6 +12,7 @@ pub mod create_special_float;
 pub mod create_list;
 pub mod create_map;
 pub mod dup;
+pub mod q;
 pub mod types;
 pub mod error;
 pub mod push;

@@ -31,4 +31,12 @@ mod tests {
         let v2 = l[0].cast_int().unwrap();
         assert_eq!(v2, 42 as i64);
     }
+    #[test]
+    fn test_cast_dict_type() {
+        let val = Value::dict()
+                        .set("answer".to_string(), Value::from(42 as i64).unwrap());
+        let d = val.cast_dict().unwrap();
+        let v2 = d.get("answer").unwrap();
+        assert_eq!(v2.cast_int().unwrap(), 42 as i64);
+    }
 }

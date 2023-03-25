@@ -1,3 +1,4 @@
+use std::collections::hash_map::HashMap;
 use crate::value::Value;
 use crate::error::BundError;
 use crate::types::*;
@@ -57,6 +58,14 @@ impl Value {
                 return Result::Ok(l_val.clone());
             }
             _ => return Err("This Dynamic type is not list".into()),
+        }
+    }
+    pub fn cast_dict(&self) -> Result<HashMap<String,Value>, Box<dyn std::error::Error>> {
+        match &self.data {
+            Val::Map(m_val) => {
+                return Result::Ok(m_val.clone());
+            }
+            _ => return Err("This Dynamic type is not dict".into()),
         }
     }
 }

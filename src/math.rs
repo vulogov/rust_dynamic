@@ -94,8 +94,11 @@ impl Value {
 impl Add for Value {
     type Output = Self;
     fn add(self, other: Self) -> Self {
+        let q = (&self.get_q() + &other.get_q())/2.0;
         match Value::numeric_op(Ops::Add, self, other) {
-            Ok(res) => res,
+            Ok(mut res) => {
+                return res.set_q(q).clone();
+            }
             Err(_) => Value::nodata(),
         }
     }
@@ -104,8 +107,9 @@ impl Add for Value {
 impl Sub for Value {
     type Output = Self;
     fn sub(self, other: Self) -> Self {
+        let q = (&self.get_q() + &other.get_q())/2.0;
         match Value::numeric_op(Ops::Sub, self, other) {
-            Ok(res) => res,
+            Ok(mut res) => res.set_q(q).clone(),
             Err(_) => Value::nodata(),
         }
     }
@@ -114,8 +118,9 @@ impl Sub for Value {
 impl Mul for Value {
     type Output = Self;
     fn mul(self, other: Self) -> Self {
+        let q = (&self.get_q() + &other.get_q())/2.0;
         match Value::numeric_op(Ops::Mul, self, other) {
-            Ok(res) => res,
+            Ok(mut res) => res.set_q(q).clone(),
             Err(_) => Value::nodata(),
         }
     }
@@ -124,8 +129,9 @@ impl Mul for Value {
 impl Div for Value {
     type Output = Self;
     fn div(self, other: Self) -> Self {
+        let q = (&self.get_q() + &other.get_q())/2.0;
         match Value::numeric_op(Ops::Div, self, other) {
-            Ok(res) => res,
+            Ok(mut res) => res.set_q(q).clone(),
             Err(_) => Value::nodata(),
         }
     }
