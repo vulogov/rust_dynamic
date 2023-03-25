@@ -24,4 +24,24 @@ impl Value {
             curr: -1,
         }
     }
+    pub fn info() -> Self {
+        Self {
+            id:   nanoid!(),
+            dt:   INFO,
+            q:    100.0,
+            data: Val::Map(HashMap::new()),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
+    pub fn config() -> Self {
+        Self {
+            id:   nanoid!(),
+            dt:   CONFIG,
+            q:    100.0,
+            data: Val::Map(HashMap::new()),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
 }

@@ -18,6 +18,7 @@ pub const BIN: u16      = 8;
 pub const LIST: u16     = 9;
 pub const PAIR: u16     = 10;
 pub const MAP: u16      = 11;
+pub const CONFIG: u16   = 95;
 pub const INFO: u16     = 96;
 pub const NODATA: u16   = 97;
 pub const ERROR: u16    = 98;
@@ -28,7 +29,7 @@ pub const TOKEN: u16    = 99;
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum Val {
     Null,
-    Token,
+    Token(String),
     Error(BundError),
     Bool(bool),
     I64(i64),
