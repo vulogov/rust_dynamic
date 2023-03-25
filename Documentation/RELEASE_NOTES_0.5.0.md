@@ -1,4 +1,4 @@
-# What's new in 0.3.0
+# What's new in 0.5.0
 
 * More test cases
 * Support for the MAP, CONFIG, INFO  type wrapped in Value object

@@ -1,4 +1,4 @@
-# What's new in 0.3.0
+# What's new in 0.4.0
 
 * More test cases
 * Value.dup() - duplicates Value object by passing through bincode
