@@ -19,6 +19,7 @@ impl Value {
             BIN => "Binary",
             LIST => "List",
             PAIR => "Pair",
+            MAP => "Map",
             ERROR => "Error",
             TOKEN => "Token",
             _ => "Unknown",

@@ -30,4 +30,11 @@ mod tests {
         let data2 = bin_data.unwrap().unwrap();
         assert_eq!(data2.cast_int().unwrap(), 42);
     }
+    #[test]
+    fn test_serialize_unwrap_dict() {
+        let data = Value::dict();
+        let bin_data = data.wrap().unwrap();
+        let data2 = bin_data.unwrap().unwrap();
+        assert_eq!(data2.len(), 0);
+    }
 }

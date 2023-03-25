@@ -16,6 +16,12 @@ impl Value {
                     _ => return 0,
                 }
             }
+            MAP => {
+                match &self.data {
+                    Val::Map(v) => return v.len(),
+                    _ => return 0,
+                }
+            }
             NODATA => return 0,
             _ => return 1,
         }
