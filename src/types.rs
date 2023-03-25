@@ -1,3 +1,4 @@
+use std::collections::hash_map::HashMap;
 use crate::value::Value;
 use serde::{Deserialize, Serialize};
 use crate::error::{BundError};
@@ -16,6 +17,8 @@ pub const PTR: u16      = 7;
 pub const BIN: u16      = 8;
 pub const LIST: u16     = 9;
 pub const PAIR: u16     = 10;
+pub const MAP: u16      = 11;
+pub const INFO: u16     = 96;
 pub const NODATA: u16   = 97;
 pub const ERROR: u16    = 98;
 pub const TOKEN: u16    = 99;
@@ -31,6 +34,7 @@ pub enum Val {
     I64(i64),
     F64(f64),
     List(Vec<Value>),
+    Map(HashMap<String, Value>),
     String(String),
     Binary(Vec<u8>),
 }
