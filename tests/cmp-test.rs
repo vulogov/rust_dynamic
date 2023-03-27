@@ -22,4 +22,10 @@ mod tests {
         let v2 = Value::from(21 as i64).unwrap();
         assert!(v1 > v2);
     }
+    #[test]
+    fn test_cmp_str() {
+        let v1 = Value::from("HelloHello").unwrap();
+        let v2 = Value::from("HelloHello").unwrap();
+        assert!(v1 == v2);
+    }
 }
