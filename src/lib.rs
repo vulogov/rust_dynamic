@@ -18,6 +18,7 @@ pub mod error;
 pub mod push;
 pub mod hash;
 pub mod eq;
+pub mod ord;
 pub mod map;
 pub mod math;
 pub mod len;
