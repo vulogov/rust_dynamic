@@ -28,4 +28,16 @@ mod tests {
         let v2 = Value::from("HelloHello").unwrap();
         assert!(v1 == v2);
     }
+    #[test]
+    fn test_cmp_lt_float() {
+        let v1 = Value::from(42.0 as f64).unwrap();
+        let v2 = Value::from(21.0 as f64).unwrap();
+        assert!(v1 > v2);
+    }
+    #[test]
+    fn test_cmp_le_float() {
+        let v1 = Value::from(42.0 as f64).unwrap();
+        let v2 = Value::from(42.0 as f64).unwrap();
+        assert!(v1 >= v2);
+    }
 }
