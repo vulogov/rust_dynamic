@@ -10,7 +10,7 @@ impl Value {
                     _ => return 0,
                 }
             }
-            BIN => {
+            BIN | ENVELOPE => {
                 match &self.data {
                     Val::Binary(v) => return v.len(),
                     _ => return 0,

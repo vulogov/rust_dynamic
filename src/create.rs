@@ -84,6 +84,16 @@ impl Value {
             curr: -1,
         }
     }
+    pub fn make_envelope(value: Vec<u8>) -> Self {
+        Self {
+            id:   nanoid!(),
+            dt:   ENVELOPE,
+            q:    100.0,
+            data: Val::Binary(value),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
     pub fn binary() -> Self {
         Self {
             id:   nanoid!(),
