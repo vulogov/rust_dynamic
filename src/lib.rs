@@ -24,5 +24,6 @@ pub mod len;
 pub mod iter;
 pub mod json;
 pub mod set;
+pub mod get;
 pub mod value;
 pub mod value_types;

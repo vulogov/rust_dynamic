@@ -8,7 +8,7 @@ impl Value {
             LIST => {
                 return Value::from_list(vec![value]);
             }
-            MAP | INFO | CONFIG => {
+            MAP | INFO | CONFIG | ASSOCIATION => {
                 let mut res = self.dup().unwrap();
                 res.id = nanoid!();
                 match &res.data {

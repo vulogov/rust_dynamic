@@ -44,4 +44,16 @@ impl Value {
             curr: -1,
         }
     }
+    pub fn association(name: String, value: Value) -> Self {
+        let mut data: HashMap<String, Value> = HashMap::new();
+        data.insert(name, value);
+        Self {
+            id:   nanoid!(),
+            dt:   CONFIG,
+            q:    100.0,
+            data: Val::Map(data),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
 }
