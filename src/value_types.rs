@@ -25,6 +25,7 @@ impl Value {
             ENVELOPE    => "Envelope",
             ERROR       => "Error",
             TOKEN       => "Token",
+            EXIT        => "Exit",
             ASSOCIATION => "Association",
             _ => "Unknown",
         }

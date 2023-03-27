@@ -19,6 +19,7 @@ pub const LIST: u16         = 9;
 pub const PAIR: u16         = 10;
 pub const MAP: u16          = 11;
 pub const ENVELOPE: u16     = 12;
+pub const EXIT: u16         = 93;
 pub const ASSOCIATION: u16  = 94;
 pub const CONFIG: u16       = 95;
 pub const INFO: u16         = 96;
@@ -31,6 +32,7 @@ pub const TOKEN: u16        = 99;
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum Val {
     Null,
+    Exit,
     Token(String),
     Error(BundError),
     Bool(bool),

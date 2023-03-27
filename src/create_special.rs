@@ -39,4 +39,14 @@ impl Value {
             curr: -1,
         }
     }
+    pub fn exit() -> Self {
+        Self {
+            id:   nanoid!(),
+            dt:   EXIT,
+            q:    100.0,
+            data: Val::Exit,
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
 }
