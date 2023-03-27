@@ -1,4 +1,4 @@
-use crate::value::Value;
+use crate::value::{Value, timestamp_ms};
 use nanoid::nanoid;
 use crate::types::*;
 
@@ -6,6 +6,7 @@ impl Value {
     pub fn nodata() -> Self {
         Self {
             id:   nanoid!(),
+            stamp:  timestamp_ms(),
             dt:   NODATA,
             q:    100.0,
             data: Val::Null,
@@ -22,6 +23,7 @@ impl Value {
     pub fn ptr(name: String, attrs: Vec<Value>) -> Self {
         Self {
             id:   nanoid!(),
+            stamp:  timestamp_ms(),
             dt:   PTR,
             q:    100.0,
             data: Val::String(name),
@@ -32,6 +34,7 @@ impl Value {
     pub fn call(name: String, attrs: Vec<Value>) -> Self {
         Self {
             id:   nanoid!(),
+            stamp:  timestamp_ms(),
             dt:   CALL,
             q:    100.0,
             data: Val::String(name),
@@ -42,6 +45,7 @@ impl Value {
     pub fn exit() -> Self {
         Self {
             id:   nanoid!(),
+            stamp:  timestamp_ms(),
             dt:   EXIT,
             q:    100.0,
             data: Val::Exit,

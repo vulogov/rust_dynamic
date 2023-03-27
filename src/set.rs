@@ -1,4 +1,4 @@
-use crate::value::Value;
+use crate::value::{Value, timestamp_ms};
 use crate::types::*;
 use nanoid::nanoid;
 
@@ -24,6 +24,7 @@ impl Value {
             _ => {
                 let mut res = value.clone();
                 res.id = nanoid!();
+                res.stamp = timestamp_ms();
                 res.q = self.q;
                 return res;
             }

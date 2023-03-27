@@ -21,7 +21,7 @@ mod tests {
     fn test_serialize_wrap_int() {
         let data = Value::from(42 as i64).unwrap();
         let bin_data = data.wrap().unwrap();
-        assert_eq!(bin_data.len(), 63);
+        assert_eq!(bin_data.len(), 71);
     }
     #[test]
     fn test_serialize_unwrap_int() {

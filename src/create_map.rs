@@ -1,5 +1,5 @@
 use std::collections::hash_map::HashMap;
-use crate::value::Value;
+use crate::value::{Value, timestamp_ms};
 use nanoid::nanoid;
 use crate::types::*;
 
@@ -7,6 +7,7 @@ impl Value {
     pub fn dict() -> Self {
         Self {
             id:   nanoid!(),
+            stamp:  timestamp_ms(),
             dt:   MAP,
             q:    100.0,
             data: Val::Map(HashMap::new()),
@@ -17,6 +18,7 @@ impl Value {
     pub fn from_dict(value: HashMap<String, Value>) -> Self {
         Self {
             id:   nanoid!(),
+            stamp:  timestamp_ms(),
             dt:   MAP,
             q:    100.0,
             data: Val::Map(value),
@@ -27,6 +29,7 @@ impl Value {
     pub fn info() -> Self {
         Self {
             id:   nanoid!(),
+            stamp:  timestamp_ms(),
             dt:   INFO,
             q:    100.0,
             data: Val::Map(HashMap::new()),
@@ -37,6 +40,7 @@ impl Value {
     pub fn config() -> Self {
         Self {
             id:   nanoid!(),
+            stamp:  timestamp_ms(),
             dt:   CONFIG,
             q:    100.0,
             data: Val::Map(HashMap::new()),
@@ -49,6 +53,7 @@ impl Value {
         data.insert(name, value);
         Self {
             id:   nanoid!(),
+            stamp:  timestamp_ms(),
             dt:   CONFIG,
             q:    100.0,
             data: Val::Map(data),
