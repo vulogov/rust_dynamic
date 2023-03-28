@@ -10,3 +10,4 @@
 * New datatype - EXIT
 * Value::exit() - create an instance of datatype EXIT
 * Value.as_any() - converts Value to &dyn Any
+* Value.export_float() - export single or list of values as Vec<f64>

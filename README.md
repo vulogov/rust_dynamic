@@ -76,6 +76,8 @@ rust_dynamic supports a number of casting functions that will try to extract wra
 | Value::cast_string() | Return String from STRING object |
 | Value::cast_bin() | Return Vec<u8> from BINARY object |
 | Value::cast_list() | Return Vec<Value> from LIST object |
+| Value::export_float() | Return Vec<f64> from Value object |
+
 
 Example:
 
