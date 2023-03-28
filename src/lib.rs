@@ -4,6 +4,7 @@ pub mod attr;
 pub mod bind;
 pub mod bincode;
 pub mod cast;
+pub mod cast_generic;
 pub mod conv;
 pub mod create;
 pub mod create_generic;

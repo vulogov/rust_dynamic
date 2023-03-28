@@ -9,3 +9,4 @@
 * Value.elapsed_value() - same as Value.elapsed() but returns Value
 * New datatype - EXIT
 * Value::exit() - create an instance of datatype EXIT
+* Value.as_any() - converts Value to &dyn Any
