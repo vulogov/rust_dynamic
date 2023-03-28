@@ -19,6 +19,7 @@ pub const LIST: u16         = 9;
 pub const PAIR: u16         = 10;
 pub const MAP: u16          = 11;
 pub const ENVELOPE: u16     = 12;
+pub const TIME: u16         = 13;
 pub const EXIT: u16         = 93;
 pub const ASSOCIATION: u16  = 94;
 pub const CONFIG: u16       = 95;

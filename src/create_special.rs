@@ -1,4 +1,4 @@
-use crate::value::{Value, timestamp_ms};
+use crate::value::{Value, timestamp_ms, timestamp_ns};
 use nanoid::nanoid;
 use crate::types::*;
 
@@ -49,6 +49,17 @@ impl Value {
             dt:   EXIT,
             q:    100.0,
             data: Val::Exit,
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
+    pub fn now() -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   TIME,
+            q:    100.0,
+            data: Val::F64(timestamp_ns()),
             attr: Vec::new(),
             curr: -1,
         }
