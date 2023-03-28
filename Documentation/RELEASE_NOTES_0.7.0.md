@@ -7,3 +7,5 @@
 * New datatype TIME that internally stores time as number of nanoseconds since UNIX_EPOCH
 * Value.elapsed() - return number of nanoseconds between one stored in object TIME and now
 * Value.elapsed_value() - same as Value.elapsed() but returns Value
+* New datatype - EXIT
+* Value::exit() - create an instance of datatype EXIT

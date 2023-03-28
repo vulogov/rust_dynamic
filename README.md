@@ -54,8 +54,12 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::pair() | Create dynamic object of type PAIR from the pair of values |
 | Value::list() | Create empty dynamic object of type LIST |
 | Value::from_list() | Create dynamic object of type LIST and initialize it from Vec<Value> |
+| Value::from_dict() | Create dynamic object of type MAP and initialize it from HashMap<String, Value> |
+| Value::dict() | Create dynamic empty object of type MAP  |
 | Value::none() | Create dynamic object that wraps value of None  |
 | Value::nodata() | Create dynamic object that contains no data |
+| Value::now() | Return dynamic object of type TIME containing current number of nanosecods from UNIX_EPOCH |
+| Value::exit() | Return dynamic object of type EXIT  |
 | Value::conv() | Converting of the object of one type to another |
 
 There are generic function Value::from() that will automatically cast proper data type and ether return object or error message.
@@ -95,8 +99,8 @@ There are two serialization formats that rust_dynamic presently supports: JSON a
 | Value::to_binary() | Return Bincode representation of dynamically-typed value |
 | Value::from_json() | Takes string containing JSON representation of the dynamically-typed object and return re-created Value object |
 | Value::from_binary() | Takes Vec<u8> containing Bincode representation of the dynamically-typed object and return re-created Value object |
-| Value.wrap() | Return a BINARY object containing a Bincode representation of object |
-| Value.unwrap() | If object is BINARY unpack binary representation of enclosed object, recreate it and return |
+| Value.wrap() | Return a ENVELOPE object containing a Bincode representation of object |
+| Value.unwrap() | If object is ENVELOPE unpack binary representation of enclosed object, recreate it and return |
 
 Example:
 
@@ -183,6 +187,6 @@ x = x + y;
 ## How to convert from String to Float
 
 ```rust
-// This call returns the object of type FLOAT 
+// This call returns the object of type FLOAT
 let val = Value::from("42").unwrap().conv(FLOAT).unwrap();
 ```
