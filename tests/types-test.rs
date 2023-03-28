@@ -123,4 +123,19 @@ mod tests {
         let v = Value::binary();
         assert_eq!(v.len(), 0);
     }
+    #[test]
+    fn test_create_dict_type_name() {
+        let v = Value::dict();
+        assert_eq!(v.type_name(), "Map");
+    }
+    #[test]
+    fn test_create_dict_type() {
+        let v = Value::dict();
+        assert_eq!(v.len(), 0);
+    }
+    #[test]
+    fn test_create_exit_type() {
+        let v = Value::exit();
+        assert_eq!(v.type_name(), "Exit");
+    }
 }

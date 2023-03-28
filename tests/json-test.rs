@@ -17,4 +17,10 @@ mod tests {
         let data2 = Value::from_json(json_out).unwrap();
         assert_eq!(data2.cast_int().unwrap(), 42 as i64);
     }
+    #[test]
+    fn test_serialize_dict() {
+        let data = Value::dict();
+        let json_out = data.to_json().unwrap();
+        assert_ne!(json_out.len(), 0);
+    }
 }

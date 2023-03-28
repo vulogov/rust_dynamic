@@ -1,65 +1,62 @@
-use crate::value::{Value, timestamp_ms, timestamp_ns};
+use std::collections::hash_map::HashMap;
+use crate::value::{Value, timestamp_ms};
 use nanoid::nanoid;
 use crate::types::*;
 
 impl Value {
-    pub fn nodata() -> Self {
+    pub fn dict() -> Self {
         Self {
             id:   nanoid!(),
             stamp:  timestamp_ms(),
-            dt:   NODATA,
+            dt:   MAP,
             q:    100.0,
-            data: Val::Null,
+            data: Val::Map(HashMap::new()),
             attr: Vec::new(),
             curr: -1,
         }
     }
-    pub fn none() -> Self {
-        Value::new()
-    }
-    pub fn pair(x: Value, y:Value) -> Self {
-        Value::from_pair((x, y))
-    }
-    pub fn ptr(name: String, attrs: Vec<Value>) -> Self {
+    pub fn from_dict(value: HashMap<String, Value>) -> Self {
         Self {
             id:   nanoid!(),
             stamp:  timestamp_ms(),
-            dt:   PTR,
+            dt:   MAP,
             q:    100.0,
-            data: Val::String(name),
-            attr: attrs,
-            curr: -1,
-        }
-    }
-    pub fn call(name: String, attrs: Vec<Value>) -> Self {
-        Self {
-            id:   nanoid!(),
-            stamp:  timestamp_ms(),
-            dt:   CALL,
-            q:    100.0,
-            data: Val::String(name),
-            attr: attrs,
-            curr: -1,
-        }
-    }
-    pub fn exit() -> Self {
-        Self {
-            id:   nanoid!(),
-            stamp:  timestamp_ms(),
-            dt:   EXIT,
-            q:    100.0,
-            data: Val::Exit,
+            data: Val::Map(value),
             attr: Vec::new(),
             curr: -1,
         }
     }
-    pub fn now() -> Self {
+    pub fn info() -> Self {
         Self {
             id:   nanoid!(),
             stamp:  timestamp_ms(),
-            dt:   TIME,
+            dt:   INFO,
             q:    100.0,
-            data: Val::F64(timestamp_ns()),
+            data: Val::Map(HashMap::new()),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
+    pub fn config() -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   CONFIG,
+            q:    100.0,
+            data: Val::Map(HashMap::new()),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
+    pub fn association(name: String, value: Value) -> Self {
+        let mut data: HashMap<String, Value> = HashMap::new();
+        data.insert(name, value);
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   CONFIG,
+            q:    100.0,
+            data: Val::Map(data),
             attr: Vec::new(),
             curr: -1,
         }

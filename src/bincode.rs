@@ -13,14 +13,14 @@ impl Value {
     pub fn wrap(&self) -> Result<Value, bincode2::Error> {
         match self.to_binary() {
             Ok(res) => {
-                return Result::Ok(Value::from_bin(res));
+                return Result::Ok(Value::make_envelope(res));
             }
             Err(err) => return Err(err),
         }
     }
     pub fn unwrap(&self) -> Result<Value, Box<dyn std::error::Error>> {
-        if self.dt != BIN {
-            return Err("You requested to unwrap a non-binary object".into());
+        if self.dt != ENVELOPE {
+            return Err("You requested to unwrap a non-envelope object".into());
         }
         match &self.data {
             Val::Binary(data) => {

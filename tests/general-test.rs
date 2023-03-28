@@ -29,4 +29,12 @@ mod tests {
         let val2 = val1.dup().unwrap();
         assert_ne!(val1.id, val2.id);
     }
+    #[test]
+    fn test_elapsed() {
+        use std::{thread, time};
+        let ten_millis = time::Duration::from_millis(10);
+        let val = Value::now();
+        thread::sleep(ten_millis);
+        assert_ne!(val.elapsed().unwrap(), 0.0);
+    }
 }

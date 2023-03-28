@@ -12,6 +12,14 @@ mod tests {
         assert_eq!(x.cast_float().unwrap(), 42.0);
     }
     #[test]
+    fn test_math_add_with_q() {
+        let mut x = Value::from(1.0 as f64).unwrap()
+                    .set_q(50.0).clone();
+        let y = Value::from(41.0 as f64).unwrap();
+        x = x + y;
+        assert_eq!(x.get_q(), 75.0);
+    }
+    #[test]
     fn test_math_sub() {
         let mut x = Value::from(43.0 as f64).unwrap();
         let y = Value::from(1.0 as f64).unwrap();
