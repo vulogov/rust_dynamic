@@ -24,6 +24,14 @@ impl PartialOrd for Value {
                     _ => return true,
                 }
             }
+            Val::Time(u_val_self) => {
+                match other.data {
+                    Val::Time(u_val_other) => {
+                        u_val_self < u_val_other
+                    }
+                    _ => return true,
+                }
+            }
             _ => return true,
         }
     }
@@ -41,6 +49,14 @@ impl PartialOrd for Value {
                 match other.data {
                     Val::F64(f_val_other) => {
                         f_val_self <= f_val_other
+                    }
+                    _ => return true,
+                }
+            }
+            Val::Time(u_val_self) => {
+                match other.data {
+                    Val::Time(u_val_other) => {
+                        u_val_self <= u_val_other
                     }
                     _ => return true,
                 }
@@ -66,6 +82,14 @@ impl PartialOrd for Value {
                     _ => return true,
                 }
             }
+            Val::Time(u_val_self) => {
+                match other.data {
+                    Val::Time(u_val_other) => {
+                        u_val_self > u_val_other
+                    }
+                    _ => return true,
+                }
+            }
             _ => return true,
         }
     }
@@ -87,6 +111,14 @@ impl PartialOrd for Value {
                     _ => return true,
                 }
             }
+            Val::Time(u_val_self) => {
+                match other.data {
+                    Val::Time(u_val_other) => {
+                        u_val_self >= u_val_other
+                    }
+                    _ => return true,
+                }
+            }
             _ => return true,
         }
     }
@@ -99,6 +131,14 @@ impl Ord for Value {
                 match &other.data {
                     Val::I64(i_val_other) => {
                         i_val_self.cmp(&i_val_other)
+                    }
+                    _ => return self.id.cmp(&other.id),
+                }
+            }
+            Val::Time(u_val_self) => {
+                match &other.data {
+                    Val::Time(u_val_other) => {
+                        u_val_self.cmp(&u_val_other)
                     }
                     _ => return self.id.cmp(&other.id),
                 }

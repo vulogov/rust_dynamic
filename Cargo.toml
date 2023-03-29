@@ -1,7 +1,7 @@
 [package]
 name = "rust_dynamic"
 description = "Support for dynamically-typed values in run-time"
-version = "0.7.0"
+version = "0.8.0"
 edition = "2021"
 license-file = "LICENSE"
 homepage = "https://github.com/vulogov/rust_dynamic"
@@ -9,9 +9,11 @@ homepage = "https://github.com/vulogov/rust_dynamic"
 
 [dependencies]
 bincode2 = "2.0.*"
+chrono = "0.4.24"
 dtoa = "1.0.6"
 itoa = "1.0.6"
 nanoid = "0.4.*"
 rustils = "0.1.23"
 serde = { version = "1.0.*", features = ["derive"] }
 serde_json = { version="1.0.*", default-features = true }
+unix-ts = { version="0.4.1", features = ["chrono"] }

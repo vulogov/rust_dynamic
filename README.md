@@ -121,10 +121,63 @@ While rust_dynamic crate is not strive to provide a full-featured functional int
 
 | Function name | Description |
 |---|---|
-| Value::bind() | Takes a reference to a function that accepts Value as a parameter, that function is called with passed current object and new Value object returned |
-| Value::map() | Execute function to each element of the LIST or to the value and return new Value |
+| Value.bind() | Takes a reference to a function that accepts Value as a parameter, that function is called with passed current object and new Value object returned |
+| Value::bind_values() | Takes a reference to a function that accepts two Values as a parameter, and two values. New Value object returned that is result of programmatic binding of the values |
+| Value::map_value() | Execute function to each element of the LIST or to the value and return new Value |
 | Value::map_float() | Execute function to each FLOAT element of the LIST or to the value and return new Value |
-| Value::push() | Ether add a new value to the list, or return a new Value |
+| Value.push() | Ether add a new value to the list, or return a new Value |
+| Value.maybe() | Takes a function which is if returns true, Value.maybe() returns value, if false Value::none() |
+| Value::left_right() | Takes a function which is if returns true, and a references on two Values. Value::left_right() returns clone of first value, if function return true, second othewise |
+
+
+Example of mapping:
+
+```rust
+// First, we define a function which will cast value of f64 and apply f64.sin() operation
+fn comp_sin(value: Value) -> Value {
+    match value.data {
+        Val::F64(f_val) => {
+            return Value::from_float(f64::sin(f_val));
+        }
+        _ => return value,
+    }
+}
+// Then we create a single value object (map could be epplied to ether list or single value object)
+let mut v = Value::from(42.0).unwrap();
+// Now v contains result of computation
+v = v.map_value(comp_sin);
+```
+
+Example of binding
+
+```rust
+// First, let's create a "binding function" which will takes two Value objects and return a new Value
+// In our example, simple sum() will be performed
+fn sum_of_values(v1: Value, v2: Value) -> Value {
+    v1 + v2
+}
+// Then let's create two values
+let v1 = Value::from(41.0 as f64).unwrap();
+let v2 = Value::from(1.0 as f64).unwrap();
+// Value referred as _s_ now contains value of 42.0
+let s = Value::bind_values(sum_of_values, v1, v2);
+```
+
+Example of maybe()
+
+```rust
+// First, we create a function that will check if v is float and is 42
+fn if_value_is_42(v: &Value) -> bool {
+    if v.cast_float().unwrap() == 42.0 {
+        return true;
+    }
+    false
+}
+// And because it is, v is object of Value(42.0)
+// Otherwise it would be Value::none()
+let v = Value::from(42.0 as f64).unwrap()
+        .maybe(if_value_is_42);
+```
 
 ## How to use dynamically-typed objects as HashMap keys
 

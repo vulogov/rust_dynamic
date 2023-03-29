@@ -68,4 +68,15 @@ impl Value {
             _ => return Err("This Dynamic type is not dict".into()),
         }
     }
+    pub fn cast_timestamp(&self) -> Result<u128, Box<dyn std::error::Error>> {
+        if self.dt != TIME {
+            return Err("This Dynamic type is not TIME".into());
+        }
+        match &self.data {
+            Val::Time(t_val) => {
+                return Result::Ok(t_val.clone());
+            }
+            _ => return Err("This Dynamic type is not TIME".into()),
+        }
+    }
 }
