@@ -122,9 +122,27 @@ While rust_dynamic crate is not strive to provide a full-featured functional int
 | Function name | Description |
 |---|---|
 | Value::bind() | Takes a reference to a function that accepts Value as a parameter, that function is called with passed current object and new Value object returned |
-| Value::map() | Execute function to each element of the LIST or to the value and return new Value |
+| Value::map_value() | Execute function to each element of the LIST or to the value and return new Value |
 | Value::map_float() | Execute function to each FLOAT element of the LIST or to the value and return new Value |
 | Value::push() | Ether add a new value to the list, or return a new Value |
+
+Example:
+
+```rust
+// First, we define a function which will cast value of f64 and apply f64.sin() operation
+fn comp_sin(value: Value) -> Value {
+    match value.data {
+        Val::F64(f_val) => {
+            return Value::from_float(f64::sin(f_val));
+        }
+        _ => return value,
+    }
+}
+// Then we create a single value object (map could be epplied to ether list or single value object)
+let mut v = Value::from(42.0).unwrap();
+// Now v contains result of computation
+v = v.map_value(comp_sin);
+```
 
 ## How to use dynamically-typed objects as HashMap keys
 

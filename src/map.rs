@@ -3,7 +3,7 @@ use crate::value::Value;
 use crate::types::*;
 
 impl Value {
-    pub fn map(&mut self, appfn: AppFn) -> Self {
+    pub fn map_value(&mut self, appfn: AppFn) -> Self {
         if self.dt == LIST {
             let mut data: Vec<Value> = Vec::new();
             match &self.data {

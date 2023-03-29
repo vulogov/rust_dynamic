@@ -5,3 +5,4 @@
 * Value.cast_timestamp() casting TIME object to u128
 * Value.get_time_as_datetime() - return UTC DateTime object handeled by chrono
 * ==, >, <, >=, <= compare for TIME objects
+* Value.map renamed to Value.map_value
