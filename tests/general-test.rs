@@ -57,4 +57,26 @@ mod tests {
         let val2 = Value::now();
         assert!(val2 > val1);
     }
+    #[test]
+    fn test_bind_values() {
+        fn sum_of_values(v1: Value, v2: Value) -> Value {
+            v1 + v2
+        }
+        let v1 = Value::from(41.0 as f64).unwrap();
+        let v2 = Value::from(1.0 as f64).unwrap();
+        let s = Value::bind_values(sum_of_values, v1, v2);
+        assert_eq!(s.cast_float().unwrap(), 42.0 as f64);
+    }
+    #[test]
+    fn test_maybe() {
+        fn if_value_is_42(v: &Value) -> bool {
+            if v.cast_float().unwrap() == 42.0 {
+                return true;
+            }
+            false
+        }
+        let v = Value::from(42.0 as f64).unwrap()
+                .maybe(if_value_is_42);
+        assert_eq!(v.cast_float().unwrap(), 42.0 as f64);
+    }
 }

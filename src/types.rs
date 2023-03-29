@@ -5,6 +5,7 @@ use crate::error::{BundError};
 
 pub type AppFn  = fn(Value) -> Value;
 pub type AppFn2 = fn(Value, Value) -> Value;
+pub type MaybeFn = fn(&Value) -> bool;
 pub type FloatFn = fn(f64) -> f64;
 
 pub const NONE: u16         = 0;
