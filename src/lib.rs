@@ -25,6 +25,7 @@ pub mod ord;
 pub mod map;
 pub mod math;
 pub mod len;
+pub mod id;
 pub mod iter;
 pub mod json;
 pub mod set;

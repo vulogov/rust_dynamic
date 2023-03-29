@@ -127,6 +127,8 @@ While rust_dynamic crate is not strive to provide a full-featured functional int
 | Value::map_float() | Execute function to each FLOAT element of the LIST or to the value and return new Value |
 | Value.push() | Ether add a new value to the list, or return a new Value |
 | Value.maybe() | Takes a function which is if returns true, Value.maybe() returns value, if false Value::none() |
+| Value::left_right() | Takes a function which is if returns true, and a references on two Values. Value::left_right() returns clone of first value, if function return true, second othewise |
+
 
 Example of mapping:
 
@@ -172,7 +174,7 @@ fn if_value_is_42(v: &Value) -> bool {
     false
 }
 // And because it is, v is object of Value(42.0)
-// Otherwise it would be Value::none() 
+// Otherwise it would be Value::none()
 let v = Value::from(42.0 as f64).unwrap()
         .maybe(if_value_is_42);
 ```

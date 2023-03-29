@@ -79,4 +79,14 @@ mod tests {
                 .maybe(if_value_is_42);
         assert_eq!(v.cast_float().unwrap(), 42.0 as f64);
     }
+    #[test]
+    fn test_left_right() {
+        fn pick_largest(v1: &Value, v2: &Value) -> bool {
+            v1 > v2
+        }
+        let mut v1 = Value::from(42.0 as f64).unwrap();
+        let mut v2 = Value::from(41.0 as f64).unwrap();
+        let v3 = Value::left_right(pick_largest, &mut v1, &mut v2);
+        assert_eq!(v3.cast_float().unwrap(), 42.0 as f64);
+    }
 }
