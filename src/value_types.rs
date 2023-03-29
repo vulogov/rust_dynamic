@@ -23,6 +23,7 @@ impl Value {
             CONFIG      => "Config",
             INFO        => "Info",
             ENVELOPE    => "Envelope",
+            TIME        => "Time",
             ERROR       => "Error",
             TOKEN       => "Token",
             EXIT        => "Exit",

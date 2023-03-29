@@ -7,8 +7,8 @@ pub fn timestamp_ms() -> f64 {
     SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_millis() as f64
 }
 
-pub fn timestamp_ns() -> f64 {
-    SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos() as f64
+pub fn timestamp_ns() -> u128 {
+    SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos() as u128
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]

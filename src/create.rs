@@ -130,4 +130,15 @@ impl Value {
         res.dt = PAIR;
         res
     }
+    pub fn from_timestamp(value: u128) -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   TIME,
+            q:    100.0,
+            data: Val::Time(value),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
 }

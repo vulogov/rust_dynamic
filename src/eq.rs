@@ -34,6 +34,14 @@ impl PartialEq for Value {
                     _ => return self.id == other.id,
                 }
             }
+            Val::Time(u_val_self) => {
+                match &other.data {
+                    Val::Time(u_val_other) => {
+                        u_val_self == u_val_other
+                    }
+                    _ => return self.id == other.id,
+                }
+            }
             _ => return self.id == other.id,
         }
     }

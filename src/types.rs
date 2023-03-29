@@ -43,4 +43,5 @@ pub enum Val {
     Map(HashMap<String, Value>),
     String(String),
     Binary(Vec<u8>),
+    Time(u128),
 }

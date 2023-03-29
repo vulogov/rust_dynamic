@@ -35,6 +35,26 @@ mod tests {
         let ten_millis = time::Duration::from_millis(10);
         let val = Value::now();
         thread::sleep(ten_millis);
-        assert_ne!(val.elapsed().unwrap(), 0.0);
+        assert_ne!(val.elapsed().unwrap(), 0);
+    }
+    #[test]
+    fn test_time_compare_nanos() {
+        let val = Value::now();
+        let dt = val.get_time_as_datetime().unwrap();
+        assert_eq!(dt.timestamp_nanos() as u128, val.cast_timestamp().unwrap());
+    }
+    #[test]
+    fn test_time_compare_times() {
+        let val = Value::now();
+        assert!(val == val);
+    }
+    #[test]
+    fn test_time_gt_compare_times() {
+        use std::{thread, time};
+        let ten_millis = time::Duration::from_millis(10);
+        let val1 = Value::now();
+        thread::sleep(ten_millis);
+        let val2 = Value::now();
+        assert!(val2 > val1);
     }
 }

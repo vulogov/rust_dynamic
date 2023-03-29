@@ -59,7 +59,7 @@ impl Value {
             stamp:  timestamp_ms(),
             dt:   TIME,
             q:    100.0,
-            data: Val::F64(timestamp_ns()),
+            data: Val::Time(timestamp_ns()),
             attr: Vec::new(),
             curr: -1,
         }
