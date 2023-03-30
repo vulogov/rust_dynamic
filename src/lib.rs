@@ -1,5 +1,6 @@
 #[allow(dead_code)]
 
+pub mod applicative;
 pub mod attr;
 pub mod bind;
 pub mod bincode;

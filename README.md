@@ -123,8 +123,8 @@ While rust_dynamic crate is not strive to provide a full-featured functional int
 |---|---|
 | Value.bind() | Takes a reference to a function that accepts Value as a parameter, that function is called with passed current object and new Value object returned |
 | Value::bind_values() | Takes a reference to a function that accepts two Values as a parameter, and two values. New Value object returned that is result of programmatic binding of the values |
-| Value::map_value() | Execute function to each element of the LIST or to the value and return new Value |
-| Value::map_float() | Execute function to each FLOAT element of the LIST or to the value and return new Value |
+| Value.fmap() | Execute function to each element of the LIST or to the value and return new Value |
+| Value.map_float() | Execute function to each FLOAT element of the LIST or to the value and return new Value |
 | Value.push() | Ether add a new value to the list, or return a new Value |
 | Value.maybe() | Takes a function which is if returns true, Value.maybe() returns value, if false Value::none() |
 | Value::left_right() | Takes a function which is if returns true, and a references on two Values. Value::left_right() returns clone of first value, if function return true, second othewise |
@@ -244,4 +244,27 @@ x = x + y;
 ```rust
 // This call returns the object of type FLOAT
 let val = Value::from("42").unwrap().conv(FLOAT).unwrap();
+```
+
+# Functional features of rust_dynamic
+
+## Create and use of Applicative
+
+You can create an Applicative that is wrapping a function and apply a Value object with wrapped value to Applicative. For example:
+
+```rust
+// First, as usual, we are defining function, that will be wrapped in Applicative
+fn comp_sin(value: Value) -> Value {
+    match value.data {
+        Val::F64(f_val) => {
+            return Value::from_float(f64::sin(f_val));
+        }
+        _ => return value,
+    }
+}
+
+// Create applicative and wrap a function
+let sin = Applicative::new(comp_sin);
+// Then apply a Value to a wrapped function
+let res = sin.apply(Value::from(42.0).unwrap());
 ```
