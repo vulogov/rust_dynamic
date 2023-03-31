@@ -15,7 +15,7 @@ mod tests {
     #[test]
     fn test_null_ctx_resolve() {
         let ctx = NullContext::new();
-        let fun = ctx.resolve("test").expect("function expected");
-        assert!(fun(&ctx, Value::none()).is_none());
+        let fun = ctx.resolve("test").expect("function expected").f;
+        assert!(fun(&ctx, "test", Value::none()).is_none());
     }
 }
