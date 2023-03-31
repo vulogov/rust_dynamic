@@ -32,6 +32,13 @@ impl Value {
                 }
                 return Result::Ok(res);
             }
+            Val::Metrics(m_val) => {
+                let mut res: Vec<f64> = Vec::new();
+                for m in m_val {
+                    res.push(m.data as f64);
+                }
+                return Result::Ok(res);
+            }
             _ => return Err("This Dynamic type is not float".into()),
         }
     }

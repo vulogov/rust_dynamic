@@ -9,3 +9,9 @@
 * == operator for CINTEGER and CFLOAT
 * Add/Sub/Mul/Div for CINTEGER and CFLOAT
 * >=/<=/</> operations for CINTEGER and CFLOAT
+* New data-type METRICS representing a Vec of samples of TIMESTAMP->F64.
+* Value.push() support for METRICS
+* Iterator supported for METRICS
+* Value.len() supported for METRICS
+* Value.cast_metrics() - casting Vec<Metric>
+* Value.export_float() - cupports METRICS

@@ -1,6 +1,7 @@
 use std::collections::hash_map::HashMap;
 use num::complex::Complex;
 use crate::value::Value;
+use crate::metric::Metric;
 use crate::error::BundError;
 use crate::types::*;
 
@@ -102,6 +103,17 @@ impl Value {
                 return Result::Ok(res);
             }
             _ => return Err("This Dynamic type is not CFLOAT".into()),
+        }
+    }
+    pub fn cast_metrics(&self) -> Result<Vec<Metric>, Box<dyn std::error::Error>> {
+        if self.dt != METRICS {
+            return Err("This Dynamic type is not METRICS".into());
+        }
+        match &self.data {
+            Val::Metrics(m_val) => {
+                return Result::Ok(m_val.clone());
+            }
+            _ => return Err("This Dynamic type is not METRICS".into()),
         }
     }
 }

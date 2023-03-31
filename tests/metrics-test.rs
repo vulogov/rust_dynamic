@@ -26,4 +26,11 @@ mod tests {
         }
         assert_eq!(c, 42.0 as f64);
     }
+    #[test]
+    fn test_export_metrics() {
+        let mut val = Value::metrics_n(1);
+        val = val.push(Value::from_float(42.0 as f64));
+        let m = val.export_float().unwrap();
+        assert_eq!(m[0], 42 as f64);
+    }
 }
