@@ -72,6 +72,8 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::metrics() | Return dynamic object of type METRICS for 128 samples  |
 | Value::metrics_n(n) | Return dynamic object of type METRICS for n samples  |
 | Value::from_metrics() | Return dynamic object created from Vec of Metrics  |
+| Value::from_complex_int() | Return dynamic object created from Complex<i64>  |
+| Value::from_complex_float() | Return dynamic object created from Complex<f64>  |
 | Value::conv() | Converting of the object of one type to another |
 
 There are generic function Value::from() that will automatically cast proper data type and ether return object or error message.
@@ -88,6 +90,10 @@ rust_dynamic supports a number of casting functions that will try to extract wra
 | Value::cast_string() | Return String from STRING object |
 | Value::cast_bin() | Return Vec<u8> from BINARY object |
 | Value::cast_list() | Return Vec<Value> from LIST object |
+| Value::cast_metrics() | Return Vec<Metric> from METRICS object |
+| Value::cast_dict() | Return HashMap<String,Value> from MAP,INFO,CONFIG,ASSOCIATION objects |
+| Value::cast_complex_int() | Return Complex<i64> from CINTEGER object |
+| Value::cast_complex_float() | Return Complex<f64> from CFLOAT object |
 | Value::export_float() | Return Vec<f64> from Value object |
 
 

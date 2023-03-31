@@ -15,3 +15,7 @@
 * Value.len() supported for METRICS
 * Value.cast_metrics() - casting Vec<Metric>
 * Value.export_float() - supports METRICS
+* Value.car() - return first element of the Value
+* Value.cdr() - return the rest of the elements of the Value
+* Value.last() - return last element of the Value
+* car()/cdr()/last() support for LIST datatype.

@@ -4,6 +4,7 @@ pub mod applicative;
 pub mod attr;
 pub mod bind;
 pub mod bincode;
+pub mod carcdr;
 pub mod cast;
 pub mod cast_generic;
 pub mod conv;
