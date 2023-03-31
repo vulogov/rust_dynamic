@@ -13,6 +13,14 @@ rust_dynamic is a crate, created for Rust language, implementing primitives that
 * Pair, as a pair of dynamic values
 * List, as a list of dynamic values
 * Binary, as a Vector of u8 values
+* Nanosecond grade timestamp
+* Any dynamically-typed object wrapped in envelope
+* Complex numbers for i64 and f64
+* Maps
+* Associations
+* None
+* NODATA
+* Error
 
 Dynamic values are wrapped and stored inside a Value structure and could be cast-able back into original Rust value.
 

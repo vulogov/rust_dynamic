@@ -15,6 +15,7 @@ pub mod create_special;
 pub mod create_special_float;
 pub mod create_list;
 pub mod create_map;
+pub mod create_complex;
 pub mod checker;
 pub mod dup;
 pub mod q;

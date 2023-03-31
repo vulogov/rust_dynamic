@@ -1,4 +1,5 @@
 use std::collections::hash_map::HashMap;
+use num::complex::Complex;
 use crate::value::Value;
 use crate::error::BundError;
 use crate::types::*;
@@ -77,6 +78,30 @@ impl Value {
                 return Result::Ok(t_val.clone());
             }
             _ => return Err("This Dynamic type is not TIME".into()),
+        }
+    }
+    pub fn cast_complex_int(&self) -> Result<Complex<i64>, Box<dyn std::error::Error>> {
+        if self.dt != CINTEGER {
+            return Err(format!("This Dynamic type is not CINTEGER: {}", &self.dt).into());
+        }
+        match &self.data {
+            Val::List(l_val) => {
+                let res = Complex::new(l_val[0].cast_int().unwrap(), l_val[1].cast_int().unwrap());
+                return Result::Ok(res);
+            }
+            _ => return Err("This Dynamic type is not CINTEGER".into()),
+        }
+    }
+    pub fn cast_complex_float(&self) -> Result<Complex<f64>, Box<dyn std::error::Error>> {
+        if self.dt != CFLOAT {
+            return Err(format!("This Dynamic type is not CFLOAT: {}", &self.dt).into());
+        }
+        match &self.data {
+            Val::List(l_val) => {
+                let res = Complex::new(l_val[0].cast_float().unwrap(), l_val[1].cast_float().unwrap());
+                return Result::Ok(res);
+            }
+            _ => return Err("This Dynamic type is not CFLOAT".into()),
         }
     }
 }
