@@ -1,4 +1,5 @@
 use std::ops::{Add, Sub, Mul, Div};
+use num::complex::Complex;
 use crate::value::Value;
 use crate::types::*;
 
@@ -19,6 +20,24 @@ fn numeric_op_float_float(op: Ops, x: f64, y: f64) -> f64 {
 }
 
 fn numeric_op_int_int(op: Ops, x: i64, y: i64) -> i64 {
+    match op {
+        Ops::Add => x + y,
+        Ops::Sub => x - y,
+        Ops::Mul => x * y,
+        Ops::Div => x / y,
+    }
+}
+
+fn numeric_op_cpx_int_cpx_int(op: Ops, x: Complex<i64>, y: Complex<i64>) -> Complex<i64> {
+    match op {
+        Ops::Add => x + y,
+        Ops::Sub => x - y,
+        Ops::Mul => x * y,
+        Ops::Div => x / y,
+    }
+}
+
+fn numeric_op_cpx_float_cpx_float(op: Ops, x: Complex<f64>, y: Complex<f64>) -> Complex<f64> {
     match op {
         Ops::Add => x + y,
         Ops::Sub => x - y,
@@ -86,7 +105,27 @@ impl Value {
                     _ => return Err("Incompartible Y argument for the string operations".into()),
                 }
             }
-            _ => return Err("Incompartible X argument for the math operations".into()),
+            _ => {
+                match x.dt {
+                    CINTEGER => {
+                        match y.dt {
+                            CINTEGER => {
+                                return Result::Ok(Value::from(numeric_op_cpx_int_cpx_int(op, x.cast_complex_int().unwrap(), y.cast_complex_int().unwrap())).unwrap());
+                            }
+                            _ => return Err("Incompartible Y argument for the math operations".into()),
+                        }
+                    }
+                    CFLOAT => {
+                        match y.dt {
+                            CFLOAT => {
+                                return Result::Ok(Value::from(numeric_op_cpx_float_cpx_float(op, x.cast_complex_float().unwrap(), y.cast_complex_float().unwrap())).unwrap());
+                            }
+                            _ => return Err("Incompartible Y argument for the math operations".into()),
+                        }
+                    }
+                    _ => return Err("Incompartible X argument for the math operations".into()),
+                }
+            }
         }
     }
 }
