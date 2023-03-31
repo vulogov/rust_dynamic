@@ -7,3 +7,5 @@
 * Value.cast_complex_int() - casting Complex<i64>
 * Value.cast_complex_float() - casting Complex<f64>
 * == operator for CINTEGER and CFLOAT
+* Add/Sub/Mul/Div for CINTEGER and CFLOAT
+* >=/<=/</> operations for CINTEGER and CFLOAT
