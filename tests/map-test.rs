@@ -35,9 +35,24 @@ mod tests {
                 _ => return value,
             }
         }
-        let mut v = Value::association("answer".to_string(), Value::from(42.0).unwrap());
+        let mut v = Value::association("answer", Value::from(42.0).unwrap());
         v = v.fmap(comp_sin);
         let val = v.get("answer".to_string()).unwrap();
+        assert_eq!(val.cast_float().unwrap(), f64::sin(42.0));
+    }
+    #[test]
+    fn test_map_float_map_but_param_string() {
+        fn comp_sin(value: Value) -> Value {
+            match value.data {
+                Val::F64(f_val) => {
+                    return Value::from_float(f64::sin(f_val));
+                }
+                _ => return value,
+            }
+        }
+        let mut v = Value::association("answer".to_string(), Value::from(42.0).unwrap());
+        v = v.fmap(comp_sin);
+        let val = v.get("answer").unwrap();
         assert_eq!(val.cast_float().unwrap(), f64::sin(42.0));
     }
 }

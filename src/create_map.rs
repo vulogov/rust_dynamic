@@ -48,9 +48,9 @@ impl Value {
             curr: -1,
         }
     }
-    pub fn association(name: String, value: Value) -> Self {
+    pub fn association<N: AsRef<str>>(name: N, value: Value) -> Self {
         let mut data: HashMap<String, Value> = HashMap::new();
-        data.insert(name, value);
+        data.insert(name.as_ref().to_string(), value);
         Self {
             id:   nanoid!(),
             stamp:  timestamp_ms(),

@@ -3,7 +3,7 @@ use crate::types::*;
 use nanoid::nanoid;
 
 impl Value {
-    pub fn set(&mut self, key: String, value: Value) -> Self {
+    pub fn set<N: AsRef<str> + std::fmt::Display>(&mut self, key: N, value: Value) -> Self {
         match self.dt {
             LIST => {
                 return Value::from_list(vec![value]);
@@ -14,7 +14,7 @@ impl Value {
                 match &res.data {
                     Val::Map(v) => {
                         let mut m = v.clone();
-                        m.insert(key, value);
+                        m.insert(key.as_ref().to_string(), value);
                         return Value::from_dict(m);
                     }
                     _ => {}

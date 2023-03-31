@@ -59,13 +59,13 @@ impl Value {
             curr: -1,
         }
     }
-    pub fn from_string(value: String) -> Self {
+    pub fn from_string<N: AsRef<str>>(value: N) -> Self {
         Self {
             id:   nanoid!(),
             stamp:  timestamp_ms(),
             dt:   STRING,
             q:    100.0,
-            data: Val::String(value),
+            data: Val::String(value.as_ref().to_string()),
             attr: Vec::new(),
             curr: -1,
         }
