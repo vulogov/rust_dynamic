@@ -2,6 +2,7 @@ use std::collections::hash_map::HashMap;
 use crate::value::Value;
 use serde::{Deserialize, Serialize};
 use crate::error::{BundError};
+use crate::metric::Metric;
 
 pub type AppFn  = fn(Value) -> Value;
 pub type AppFn2 = fn(Value, Value) -> Value;
@@ -25,6 +26,7 @@ pub const ENVELOPE: u16     = 12;
 pub const TIME: u16         = 13;
 pub const CINTEGER: u16     = 14;
 pub const CFLOAT: u16       = 15;
+pub const METRICS: u16      = 16;
 pub const EXIT: u16         = 93;
 pub const ASSOCIATION: u16  = 94;
 pub const CONFIG: u16       = 95;
@@ -49,4 +51,5 @@ pub enum Val {
     String(String),
     Binary(Vec<u8>),
     Time(u128),
+    Metrics(Vec<Metric>),
 }

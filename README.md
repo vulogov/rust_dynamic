@@ -21,6 +21,7 @@ rust_dynamic is a crate, created for Rust language, implementing primitives that
 * None
 * NODATA
 * Error
+* Metrics as a Vector of TIMESTAMP->F64 samples
 
 Dynamic values are wrapped and stored inside a Value structure and could be cast-able back into original Rust value.
 
@@ -68,6 +69,9 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::nodata() | Create dynamic object that contains no data |
 | Value::now() | Return dynamic object of type TIME containing current number of nanosecods from UNIX_EPOCH |
 | Value::exit() | Return dynamic object of type EXIT  |
+| Value::metrics() | Return dynamic object of type METRICS for 128 samples  |
+| Value::metrics_n(n) | Return dynamic object of type METRICS for n samples  |
+| Value::from_metrics() | Return dynamic object created from Vec of Metrics  |
 | Value::conv() | Converting of the object of one type to another |
 
 There are generic function Value::from() that will automatically cast proper data type and ether return object or error message.

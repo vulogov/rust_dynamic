@@ -1,26 +1,48 @@
 use crate::value::{Value, timestamp_ms};
+use crate::metric::Metric;
 use crate::types::*;
 use nanoid::nanoid;
 
 impl Value {
     pub fn push(&mut self, value: Value) -> Self {
-        if self.dt == LIST {
-            let mut data: Vec<Value> = Vec::new();
-            match &self.data {
-                Val::List(v) => {
-                    for i in v {
-                        data.push(i.clone());
+        match self.dt {
+            LIST => {
+                let mut data: Vec<Value> = Vec::new();
+                match &self.data {
+                    Val::List(v) => {
+                        for i in v {
+                            data.push(i.clone());
+                        }
+                        data.push(value.clone());
                     }
-                    data.push(value.clone());
+                    _ => {},
                 }
-                _ => {},
+                return Value::from_list(data);
             }
-            return Value::from_list(data);
+            METRICS => {
+                if value.dt != FLOAT {
+                    return self.clone();
+                }
+                match &self.data {
+                    Val::Metrics(v) => {
+                        let mut m_data: Vec<Metric> = Vec::new();
+                        for i in v {
+                            m_data.push(i.clone());
+                        }
+                        m_data.push(Metric::new(value.cast_float().unwrap()));
+                        m_data.remove(0);
+                        return Value::from_metrics(m_data);
+                    }
+                    _ => return self.clone(),
+                }
+            }
+            _ => {
+                let mut res = value.clone();
+                res.q = self.q;
+                res.id = nanoid!();
+                res.stamp = timestamp_ms();
+                return res;
+            }
         }
-        let mut res = value.clone();
-        res.q = self.q;
-        res.id = nanoid!();
-        res.stamp = timestamp_ms();
-        return res;
     }
 }

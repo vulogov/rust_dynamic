@@ -30,6 +30,7 @@ impl Value {
             ASSOCIATION => "Association",
             CINTEGER    => "ComplexInteger",
             CFLOAT      => "ComplexFloat",
+            METRICS     => "Metrics",
             _ => "Unknown",
         }
     }

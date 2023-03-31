@@ -10,7 +10,7 @@ impl Value {
             Val::F64(f_val) => {
                 return Result::Ok(f_val);
             }
-            _ => return Err("This Dynamic type is not float".into()),
+            _ => return Err(format!("This Dynamic type is not float: {}", self.dt).into()),
         }
     }
     pub fn cast_int(&self) -> Result<i64, Box<dyn std::error::Error>> {

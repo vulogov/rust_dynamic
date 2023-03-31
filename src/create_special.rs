@@ -64,4 +64,15 @@ impl Value {
             curr: -1,
         }
     }
+    pub fn from_stamp(t: u128) -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   TIME,
+            q:    100.0,
+            data: Val::Time(t),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
 }
