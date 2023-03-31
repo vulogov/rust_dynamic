@@ -32,7 +32,17 @@ impl PartialOrd for Value {
                     _ => return true,
                 }
             }
-            _ => return true,
+            _ =>  {
+                match self.dt {
+                    CINTEGER => {
+                        return self.cast_complex_int().unwrap().re < other.cast_complex_int().unwrap().re;
+                    }
+                    CFLOAT => {
+                        return self.cast_complex_float().unwrap().re < other.cast_complex_float().unwrap().re;
+                    }
+                    _ => return true,
+                }
+            }
         }
     }
     fn le(&self, other: &Self) -> bool {
@@ -61,7 +71,17 @@ impl PartialOrd for Value {
                     _ => return true,
                 }
             }
-            _ => return true,
+            _ =>  {
+                match self.dt {
+                    CINTEGER => {
+                        return self.cast_complex_int().unwrap().re <= other.cast_complex_int().unwrap().re;
+                    }
+                    CFLOAT => {
+                        return self.cast_complex_float().unwrap().re <= other.cast_complex_float().unwrap().re;
+                    }
+                    _ => return true,
+                }
+            }
         }
     }
     fn gt(&self, other: &Self) -> bool {
@@ -90,7 +110,17 @@ impl PartialOrd for Value {
                     _ => return true,
                 }
             }
-            _ => return true,
+            _ =>  {
+                match self.dt {
+                    CINTEGER => {
+                        return self.cast_complex_int().unwrap().re > other.cast_complex_int().unwrap().re;
+                    }
+                    CFLOAT => {
+                        return self.cast_complex_float().unwrap().re > other.cast_complex_float().unwrap().re;
+                    }
+                    _ => return true,
+                }
+            }
         }
     }
     fn ge(&self, other: &Self) -> bool {
@@ -119,7 +149,17 @@ impl PartialOrd for Value {
                     _ => return true,
                 }
             }
-            _ => return true,
+            _ =>  {
+                match self.dt {
+                    CINTEGER => {
+                        return self.cast_complex_int().unwrap().re >= other.cast_complex_int().unwrap().re;
+                    }
+                    CFLOAT => {
+                        return self.cast_complex_float().unwrap().re >= other.cast_complex_float().unwrap().re;
+                    }
+                    _ => return true,
+                }
+            }
         }
     }
 }
@@ -151,7 +191,14 @@ impl Ord for Value {
                     _ => return self.id.cmp(&other.id),
                 }
             }
-            _ => return self.id.cmp(&other.id),
+            _ => {
+                match self.dt {
+                    CINTEGER => {
+                        return self.cast_complex_int().unwrap().re.cmp(&other.cast_complex_int().unwrap().re);
+                    }
+                    _ => return self.id.cmp(&other.id),
+                }
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 use std::any::Any;
 use crate::value::Value;
 use crate::error::BundError;
+use num::complex::Complex;
 
 impl Value {
     pub fn from<T: Clone + 'static>(value: T) -> Result<Self, Box<dyn std::error::Error>> {
@@ -22,6 +23,10 @@ impl Value {
             return Result::Ok(Value::from_list((*lst_val.clone()).to_vec()));
         } else if let Some(err_val) = (&value as &dyn Any).downcast_ref::<BundError>() {
             return Result::Ok(Value::from_error(err_val.clone()));
+        } else if let Some(ci_val) = (&value as &dyn Any).downcast_ref::<Complex<i64>>() {
+            return Result::Ok(Value::from_complex_int(ci_val.clone()));
+        } else if let Some(cf_val) = (&value as &dyn Any).downcast_ref::<Complex<f64>>() {
+            return Result::Ok(Value::from_complex_float(cf_val.clone()));
         }
         else {
             return Err("Unknown dynamic type".into());

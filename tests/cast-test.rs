@@ -39,4 +39,11 @@ mod tests {
         let v2 = d.get("answer").unwrap();
         assert_eq!(v2.cast_int().unwrap(), 42 as i64);
     }
+    #[test]
+    fn test_cast_metrics_type() {
+        let mut val = Value::metrics_n(1);
+        val = val.push(Value::from_float(42.0 as f64));
+        let m = val.cast_metrics().unwrap();
+        assert_eq!(m[0].data, 42 as f64);
+    }
 }

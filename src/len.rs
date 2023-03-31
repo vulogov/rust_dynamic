@@ -22,6 +22,12 @@ impl Value {
                     _ => return 0,
                 }
             }
+            METRICS => {
+                match &self.data {
+                    Val::Metrics(v) => return v.len(),
+                    _ => return 0,
+                }
+            }
             NODATA => return 0,
             _ => return 1,
         }

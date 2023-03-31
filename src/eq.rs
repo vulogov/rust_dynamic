@@ -42,7 +42,17 @@ impl PartialEq for Value {
                     _ => return self.id == other.id,
                 }
             }
-            _ => return self.id == other.id,
+            _ => {
+                match self.dt {
+                    CINTEGER => {
+                        return self.cast_complex_int().unwrap() == other.cast_complex_int().unwrap();
+                    }
+                    CFLOAT => {
+                        return self.cast_complex_float().unwrap() == other.cast_complex_float().unwrap();
+                    }
+                    _ => return self.id == other.id,
+                }
+            }
         }
     }
 }

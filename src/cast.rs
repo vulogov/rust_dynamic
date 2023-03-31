@@ -1,5 +1,7 @@
 use std::collections::hash_map::HashMap;
+use num::complex::Complex;
 use crate::value::Value;
+use crate::metric::Metric;
 use crate::error::BundError;
 use crate::types::*;
 
@@ -9,7 +11,7 @@ impl Value {
             Val::F64(f_val) => {
                 return Result::Ok(f_val);
             }
-            _ => return Err("This Dynamic type is not float".into()),
+            _ => return Err(format!("This Dynamic type is not float: {}", self.dt).into()),
         }
     }
     pub fn cast_int(&self) -> Result<i64, Box<dyn std::error::Error>> {
@@ -77,6 +79,41 @@ impl Value {
                 return Result::Ok(t_val.clone());
             }
             _ => return Err("This Dynamic type is not TIME".into()),
+        }
+    }
+    pub fn cast_complex_int(&self) -> Result<Complex<i64>, Box<dyn std::error::Error>> {
+        if self.dt != CINTEGER {
+            return Err(format!("This Dynamic type is not CINTEGER: {}", &self.dt).into());
+        }
+        match &self.data {
+            Val::List(l_val) => {
+                let res = Complex::new(l_val[0].cast_int().unwrap(), l_val[1].cast_int().unwrap());
+                return Result::Ok(res);
+            }
+            _ => return Err("This Dynamic type is not CINTEGER".into()),
+        }
+    }
+    pub fn cast_complex_float(&self) -> Result<Complex<f64>, Box<dyn std::error::Error>> {
+        if self.dt != CFLOAT {
+            return Err(format!("This Dynamic type is not CFLOAT: {}", &self.dt).into());
+        }
+        match &self.data {
+            Val::List(l_val) => {
+                let res = Complex::new(l_val[0].cast_float().unwrap(), l_val[1].cast_float().unwrap());
+                return Result::Ok(res);
+            }
+            _ => return Err("This Dynamic type is not CFLOAT".into()),
+        }
+    }
+    pub fn cast_metrics(&self) -> Result<Vec<Metric>, Box<dyn std::error::Error>> {
+        if self.dt != METRICS {
+            return Err("This Dynamic type is not METRICS".into());
+        }
+        match &self.data {
+            Val::Metrics(m_val) => {
+                return Result::Ok(m_val.clone());
+            }
+            _ => return Err("This Dynamic type is not METRICS".into()),
         }
     }
 }
