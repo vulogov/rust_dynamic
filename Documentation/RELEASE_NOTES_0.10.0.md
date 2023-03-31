@@ -14,4 +14,4 @@
 * Iterator supported for METRICS
 * Value.len() supported for METRICS
 * Value.cast_metrics() - casting Vec<Metric>
-* Value.export_float() - cupports METRICS
+* Value.export_float() - supports METRICS
