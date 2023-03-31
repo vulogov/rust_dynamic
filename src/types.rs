@@ -1,4 +1,5 @@
 use std::collections::hash_map::HashMap;
+use num::complex::Complex;
 use crate::value::Value;
 use serde::{Deserialize, Serialize};
 use crate::error::{BundError};
@@ -23,6 +24,8 @@ pub const PAIR: u16         = 10;
 pub const MAP: u16          = 11;
 pub const ENVELOPE: u16     = 12;
 pub const TIME: u16         = 13;
+pub const CINTEGER: u16     = 14;
+pub const CFLOAT: u16       = 15;
 pub const EXIT: u16         = 93;
 pub const ASSOCIATION: u16  = 94;
 pub const CONFIG: u16       = 95;

@@ -1,24 +1,44 @@
-use nanoid::nanoid;
+use std::collections::hash_map::HashMap;
 use crate::value::Value;
 use crate::types::*;
 
 impl Value {
-    pub fn map_value(&mut self, appfn: AppFn) -> Self {
-        if self.dt == LIST {
-            let mut data: Vec<Value> = Vec::new();
-            match &self.data {
-                Val::List(v) => {
-                    for i in v {
-                        data.push(appfn(i.clone()));
+    pub fn fmap(&mut self, appfn: AppFn) -> Self {
+        match self.dt {
+            LIST => {
+                let mut data: Vec<Value> = Vec::new();
+                match &self.data {
+                    Val::List(v) => {
+                        for i in v {
+                            data.push(appfn(i.clone()));
+                        }
                     }
+                    _ => {},
                 }
-                _ => {},
+                return Value::from_list(data);
             }
-            return Value::from_list(data);
+            MAP | INFO | ASSOCIATION | CONFIG => {
+                let mut data: HashMap<String, Value> = HashMap::new();
+                let mut res = self.dup().unwrap().regen_id();
+                match &self.data {
+                    Val::Map(m_data) => {
+                        for (k,v) in m_data {
+                            data.insert(k.clone(), appfn(v.clone()));
+                        }
+                    }
+                    _ => {},
+                }
+                res.data = Val::Map(data);
+                return res;
+            }
+            NONE => {
+                self.clone()
+            }
+            _ => {
+                let res = self.dup().unwrap().regen_id();
+                return appfn(res);
+            }
         }
-        let mut res = self.clone();
-        res.id = nanoid!();
-        return appfn(res);
     }
     pub fn map_float(&mut self, appfn: FloatFn) -> Self {
         if self.dt == LIST {
@@ -36,9 +56,7 @@ impl Value {
             return Value::from_list(data);
         }
         if self.dt == FLOAT {
-            let mut res = self.clone();
-            res.id = nanoid!();
-            return Value::from_float(appfn(res.cast_float().unwrap()));
+            return Value::from_float(appfn(self.cast_float().unwrap()));
         }
         return Value::new();
     }

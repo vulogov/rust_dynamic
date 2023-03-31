@@ -1,17 +1,21 @@
 #[allow(dead_code)]
 
+pub mod applicative;
 pub mod attr;
 pub mod bind;
 pub mod bincode;
 pub mod cast;
 pub mod cast_generic;
 pub mod conv;
+pub mod ctx;
+pub mod ctxapplicative;
 pub mod create;
 pub mod create_generic;
 pub mod create_special;
 pub mod create_special_float;
 pub mod create_list;
 pub mod create_map;
+pub mod checker;
 pub mod dup;
 pub mod q;
 pub mod func;

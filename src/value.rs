@@ -22,6 +22,11 @@ pub struct Value {
     pub curr:   i32,
 }
 
+#[derive(Clone, Debug)]
+pub struct Applicative {
+    pub f:      AppFn,
+}
+
 impl Value {
     pub fn new() -> Self {
         Self {
@@ -32,6 +37,14 @@ impl Value {
             data:   Val::Null,
             attr:   Vec::new(),
             curr:   -1,
+        }
+    }
+}
+
+impl Applicative {
+    pub fn new(f: AppFn) -> Self {
+        Self {
+            f:     f,
         }
     }
 }
