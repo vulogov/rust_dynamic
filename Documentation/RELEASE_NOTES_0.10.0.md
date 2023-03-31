@@ -19,3 +19,4 @@
 * Value.cdr() - return the rest of the elements of the Value
 * Value.last() - return last element of the Value
 * car()/cdr()/last() support for LIST datatype.
+* car()/cdr()/last() support for METRICS datatype.

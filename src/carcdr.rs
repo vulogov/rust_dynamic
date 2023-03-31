@@ -16,6 +16,22 @@ impl Value {
                     _ => None,
                 }
             }
+            METRICS => {
+                match &self.data {
+                    Val::Metrics(m_val) => {
+                        if m_val.len() > 0 {
+                            let m = &m_val[0];
+                            let mut res = Value::dict();
+                            res = res.set("value", Value::from_float(m.data as f64));
+                            res = res.set("ts", Value::from_stamp(m.stamp as u128));
+                            return Some(res);
+                        } else {
+                            return None;
+                        }
+                    }
+                    _ => None,
+                }
+            }
             _ => Some(self.clone()),
         }
     }
@@ -33,6 +49,19 @@ impl Value {
                     _ => None,
                 }
             }
+            METRICS => {
+                match &self.data {
+                    Val::Metrics(m_val) => {
+                        if m_val.len() > 0 {
+                            let m = &m_val[1..].to_vec();
+                            return Some(Value::from_metrics(m.clone()));
+                        } else {
+                            return None;
+                        }
+                    }
+                    _ => None,
+                }
+            }
             _ => Some(self.clone()),
         }
     }
@@ -43,6 +72,22 @@ impl Value {
                     Val::List(l_val) => {
                         if l_val.len() > 0 {
                             return Some(l_val[l_val.len()].clone());
+                        } else {
+                            return None;
+                        }
+                    }
+                    _ => None,
+                }
+            }
+            METRICS => {
+                match &self.data {
+                    Val::Metrics(m_val) => {
+                        if m_val.len() > 0 {
+                            let m = &m_val[m_val.len()];
+                            let mut res = Value::dict();
+                            res = res.set("value", Value::from_float(m.data as f64));
+                            res = res.set("ts", Value::from_stamp(m.stamp as u128));
+                            return Some(res);
                         } else {
                             return None;
                         }
