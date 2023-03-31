@@ -6,3 +6,4 @@
 * Value::from_complex_int() and Value::from_complex_float(O) creating complex dynamic datatype from complex int and complex float directly
 * Value.cast_complex_int() - casting Complex<i64>
 * Value.cast_complex_float() - casting Complex<f64>
+* == operator for CINTEGER and CFLOAT
