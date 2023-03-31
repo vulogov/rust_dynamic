@@ -28,6 +28,8 @@ impl Value {
             TOKEN       => "Token",
             EXIT        => "Exit",
             ASSOCIATION => "Association",
+            CINTEGER    => "ComplexInteger",
+            CFLOAT      => "ComplexFloat",
             _ => "Unknown",
         }
     }
