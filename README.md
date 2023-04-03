@@ -109,6 +109,28 @@ let mut value = Value::from(42).unwrap();
 let raw_value = value.cast_integer().unwrap()
 ```
 
+## How to set attributes to the Value
+
+Value attributes is a Vector of the values that stored in the Value object. You can assign any number of the Value objects stored as attributes of the Value object. Attributes are serailize-able and wrap-able.
+
+| Function name | Description |
+|---|---|
+| Value.attr(Vec<Value>) | Set vector of values as an attributes of the Value object |
+| Value.attr_add(Value) | Add a Value to the end of attributes list of the Value object. Returns duplicate of Value object |
+| Value.attr_merge(Vec<Value>) | Merge Vector of Values and current attributes of the Value object. Returns duplicate of Value object |
+| Value.attr_len() | Return number of attributes of the Value object |
+
+Example:
+
+```rust
+// Create object
+let v = Value::from(42 as i64).unwrap()
+                // Set the attributes of the object
+                .attr(vec![Value::from(41.0 as f64).unwrap()])
+                // And merge some extra attributes. The first attribute now have a value of 42.0
+                .attr_merge(vec![Value::from(42.0 as f64).unwrap()]);
+```
+
 ## How to serialize and deserialize dynamically-typed values
 
 There are two serialization formats that rust_dynamic presently supports: JSON and Bincode.
