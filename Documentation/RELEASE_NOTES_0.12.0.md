@@ -3,3 +3,4 @@
 * More test cases
 * Value.freduce(fun, Value) - reducing dynamic value to a single value
 * Value.freduce() supported for single-value and lists
+* Value.freduce() supported for MAP and METRICS

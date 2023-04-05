@@ -17,4 +17,20 @@ mod tests {
         v = v.freduce(|x: Value,y: Value| -> Value { x+y }, Value::from_float(0.0 as f64));
         assert_eq!(v.cast_float().unwrap(), 42.0 as f64);
     }
+    #[test]
+    fn test_reduce_dict() {
+        let mut v = Value::dict()
+                .set("x1", Value::from(41.0 as f64).unwrap())
+                .set("x2", Value::from(1.0 as f64).unwrap());
+        v = v.freduce(|x: Value,y: Value| -> Value { x+y }, Value::from_float(0.0 as f64));
+        assert_eq!(v.cast_float().unwrap(), 42.0 as f64);
+    }
+    #[test]
+    fn test_reduce_metrics() {
+        let mut v = Value::metrics()
+                    .push(Value::from(41.0 as f64).unwrap())
+                    .push(Value::from(1.0 as f64).unwrap());
+        v = v.freduce(|x: Value,y: Value| -> Value { x+y }, Value::from_float(0.0 as f64));
+        assert_eq!(v.cast_float().unwrap(), 42.0 as f64);
+    }
 }
