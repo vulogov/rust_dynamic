@@ -15,7 +15,7 @@ impl Value {
             dt:   METRICS,
             q:    100.0,
             data: Val::Metrics(data),
-            attr: Vec::new(),
+            attr: data,
             curr: -1,
         }
     }
