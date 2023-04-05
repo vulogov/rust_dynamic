@@ -41,4 +41,12 @@ mod tests {
         let v = Value::from_list(vec![Value::from_int(1), Value::from_int(2)]).as_json_value();
         assert_eq!(v.as_array().unwrap().len(), 2);
     }
+    #[test]
+    fn test_as_json_value_dict() {
+        use serde_json;
+        let val = Value::dict()
+                        .set("answer".to_string(), Value::from(42 as i64).unwrap())
+                        .as_json_value();
+        assert_eq!(val.as_object().unwrap().len(), 1);
+    }
 }
