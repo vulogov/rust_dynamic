@@ -10,7 +10,7 @@ impl Value {
             FLOAT =>    json!(self.cast_float().unwrap()),
             STRING =>   json!(self.cast_string().unwrap()),
             BOOL =>   json!(self.cast_bool().unwrap()),
-            LIST => {
+            LIST | PAIR => {
                 let mut res: Vec<value::Value> = Vec::new();
                 match &self.data {
                     Val::List(v) => {

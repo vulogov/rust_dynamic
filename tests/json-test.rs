@@ -49,4 +49,10 @@ mod tests {
                         .as_json_value();
         assert_eq!(val.as_object().unwrap().len(), 1);
     }
+    #[test]
+    fn test_as_json_value_pair() {
+        use serde_json;
+        let v = Value::pair(Value::from_int(1), Value::from_int(2)).as_json_value();
+        assert_eq!(v.as_array().unwrap()[0].as_i64().unwrap(), 1);
+    }
 }
