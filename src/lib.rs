@@ -32,6 +32,7 @@ pub mod ord;
 pub mod map;
 pub mod metric;
 pub mod math;
+pub mod reduce;
 pub mod len;
 pub mod id;
 pub mod iter;

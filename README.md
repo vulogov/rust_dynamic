@@ -168,6 +168,7 @@ While rust_dynamic crate is not strive to provide a full-featured functional int
 | Value.push() | Ether add a new value to the list, or return a new Value |
 | Value.maybe() | Takes a function which is if returns true, Value.maybe() returns value, if false Value::none() |
 | Value::left_right() | Takes a function which is if returns true, and a references on two Values. Value::left_right() returns clone of first value, if function return true, second othewise |
+| Value::freduce() | Takes two parameters - function which takes two values and returning a single value and initial value, reducing dynamic value to a single value by applying function to all elements |
 
 
 Example of mapping:
@@ -218,6 +219,21 @@ fn if_value_is_42(v: &Value) -> bool {
 let v = Value::from(42.0 as f64).unwrap()
         .maybe(if_value_is_42);
 ```
+
+Example of reducing
+
+```rust
+// First, we shall create a list of the values
+let mut v = Value::from_list(
+    vec![Value::from_float(41.0 as f64),
+    Value::from_float(1.0 as f64)]);
+// Then reduce this list applying function that sums "accumulator" and current value
+v = v.freduce(
+    |x: Value,y: Value| -> Value { x+y },
+    Value::from_float(0.0 as f64));
+// This function shall return a single FLOAT value wrapping number 42.0
+```
+
 
 ## How to use dynamically-typed objects as HashMap keys
 
