@@ -165,7 +165,7 @@ Crate rust_dynamic is capable to export Value object to  serde_json::value::Valu
 
 Example:
 
-```json
+```rust
 // This call will create a Value object of type PAIR and on-the-fly exports it
 // to the serde_json::value::Value object that can be processed as any other Value object created by serde_json crate.
 let v = Value::pair(Value::from_int(1), Value::from_int(2)).as_json_value();
