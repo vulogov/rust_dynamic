@@ -155,6 +155,23 @@ let bin_out = data.to_binary().unwrap();
 let mut data2 = Value::from_binary(bin_out).unwrap();
 ```
 
+## Integration of dynamically-typed values with serde_json crate.
+
+Crate rust_dynamic is capable to export Value object to  serde_json::value::Value
+
+| Function name | Description |
+|---|---|
+| Value.as_json_value() | Function converts Value object to serde_json::value::Value |
+
+Example:
+
+```json
+// This call will create a Value object of type PAIR and on-the-fly exports it
+// to the serde_json::value::Value object that can be processed as any other Value object created by serde_json crate.
+let v = Value::pair(Value::from_int(1), Value::from_int(2)).as_json_value();
+```
+
+
 ## Functional operations with dynamically-typed values
 
 While rust_dynamic crate is not strive to provide a full-featured functional interface to the dynamic values, some functionality that specific to a Functional programming has been implemented.
