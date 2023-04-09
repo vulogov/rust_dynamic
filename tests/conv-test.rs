@@ -96,4 +96,9 @@ mod tests {
         let val = Value::from(true).unwrap().conv(FLOAT).unwrap();
         assert_eq!(val.cast_float().unwrap(), 1.0 as f64);
     }
+    #[test]
+    fn test_conv_list_string() {
+        let val = Value::from(vec![Value::from_int(42)]).unwrap().conv(STRING).unwrap();
+        assert_eq!(val.cast_string().unwrap(), "[ 42 :: ]");
+    }
 }

@@ -122,7 +122,31 @@ fn value_bool_conversion(t: u16, ot: u16, val: bool) -> Result<Value, Box<dyn st
         LIST => {
             return Result::Ok(Value::from(vec![Value::from_bool(val)]).unwrap());
         }
-        _ => Err(format!("Can not convert string to {:?}", &t).into()),
+        _ => Err(format!("Can not convert bool to {:?}", &t).into()),
+    }
+}
+
+fn value_list_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, Box<dyn std::error::Error>> {
+    if ot != LIST {
+        return Err(format!("Source value is not LIST but {:?} and not suitable for conversion", &ot).into());
+    }
+    match t {
+        STRING => {
+            let mut out: String = "[".to_string();
+            for v in val {
+                match v.conv(STRING) {
+                    Ok(s_v) => {
+                        out = out + &" ".to_string();
+                        out = out + &s_v.cast_string().unwrap();
+                        out = out + &" :: ".to_string();
+                    }
+                    Err(_) => continue,
+                }
+            }
+            out = out + &"]".to_string();
+            return Result::Ok(Value::from_string(out));
+        }
+        _ => Err(format!("Can not convert list to {:?}", &t).into()),
     }
 }
 
@@ -133,7 +157,17 @@ impl Value {
             Val::I64(i_val) => value_integer_conversion(t, self.dt, *i_val),
             Val::String(s_val) => value_string_conversion(t, self.dt, &s_val),
             Val::Bool(b_val) => value_bool_conversion(t, self.dt, *b_val),
-            _ => Err(format!("Can not convert float from {:?}", &self.dt).into()),
+            _ => {
+                match self.dt {
+                    LIST => {
+                        match &self.data {
+                            Val::List(l_val) => value_list_conversion(t, self.dt, l_val),
+                            _ => Err(format!("Can not convert LIST Value from {:?}", &self.dt).into()),
+                        }
+                    }
+                    _ => Err(format!("Can not convert Value from {:?}", &self.dt).into()),
+                }
+            }
         }
     }
 }
