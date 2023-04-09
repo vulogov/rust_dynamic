@@ -94,12 +94,45 @@ fn value_string_conversion(t: u16, ot: u16, val: &String) -> Result<Value, Box<d
     }
 }
 
+fn value_bool_conversion(t: u16, ot: u16, val: bool) -> Result<Value, Box<dyn std::error::Error>> {
+    if ot != BOOL {
+        return Err(format!("Source value is not BOOL but {:?} and not suitable for conversion", &ot).into());
+    }
+    match t {
+        FLOAT => {
+            if val {
+                return Result::Ok(Value::from_float(1.0));
+            } else {
+                return Result::Ok(Value::from_float(0.0));
+            }
+        }
+        INTEGER => {
+            if val {
+                return Result::Ok(Value::from_int(1));
+            } else {
+                return Result::Ok(Value::from_int(0));
+            }
+        }
+        BOOL => {
+            return Result::Ok(Value::from_bool(val));
+        }
+        STRING => {
+            return Result::Ok(Value::from_string(format!("{}",val)));
+        }
+        LIST => {
+            return Result::Ok(Value::from(vec![Value::from_bool(val)]).unwrap());
+        }
+        _ => Err(format!("Can not convert string to {:?}", &t).into()),
+    }
+}
+
 impl Value {
-    pub fn conv(&mut self, t: u16) -> Result<Self, Box<dyn std::error::Error>> {
+    pub fn conv(&self, t: u16) -> Result<Self, Box<dyn std::error::Error>> {
         match &self.data {
             Val::F64(f_val) => value_float_conversion(t, self.dt, *f_val),
             Val::I64(i_val) => value_integer_conversion(t, self.dt, *i_val),
             Val::String(s_val) => value_string_conversion(t, self.dt, &s_val),
+            Val::Bool(b_val) => value_bool_conversion(t, self.dt, *b_val),
             _ => Err(format!("Can not convert float from {:?}", &self.dt).into()),
         }
     }

@@ -19,6 +19,7 @@ pub mod create_map;
 pub mod create_complex;
 pub mod create_metrics;
 pub mod checker;
+pub mod display;
 pub mod dup;
 pub mod q;
 pub mod func;

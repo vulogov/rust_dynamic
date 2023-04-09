@@ -81,4 +81,19 @@ mod tests {
         let val = Value::from("42").unwrap().conv(INTEGER).unwrap();
         assert_eq!(val.cast_int().unwrap(), 42 as i64);
     }
+    #[test]
+    fn test_conv_bool_list_check_len() {
+        let val = Value::from(true).unwrap().conv(LIST).unwrap();
+        assert_eq!(val.len(), 1);
+    }
+    #[test]
+    fn test_conv_bool_list() {
+        let val = Value::from(true).unwrap().conv(LIST).unwrap();
+        assert!(val.cast_list().unwrap()[0].cast_bool().unwrap());
+    }
+    #[test]
+    fn test_conv_bool_float() {
+        let val = Value::from(true).unwrap().conv(FLOAT).unwrap();
+        assert_eq!(val.cast_float().unwrap(), 1.0 as f64);
+    }
 }

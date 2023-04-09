@@ -4,7 +4,8 @@ pub type CtxAppFn  = fn(&dyn Context,&str,Value) -> Option<Value>;
 
 pub const NOEXTRA: u16         = 0;
 pub const JUSTONE: u16         = 1;
-pub const TAKEALL: u16         = 2;
+pub const JUSTTWO: u16         = 2;
+pub const TAKEALL: u16         = 3;
 
 
 #[derive(Clone)]
