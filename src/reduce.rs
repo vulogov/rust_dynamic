@@ -4,7 +4,7 @@ use crate::types::*;
 impl Value {
     pub fn freduce(&mut self, appfn: AppFn2, value1: Value) -> Self {
         match self.dt {
-            LIST => {
+            LIST | RESULT => {
                 match &self.data {
                     Val::List(v) => {
                         let mut v1 = value1;

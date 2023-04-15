@@ -5,7 +5,7 @@ use nanoid::nanoid;
 impl Value {
     pub fn set<N: AsRef<str> + std::fmt::Display>(&mut self, key: N, value: Value) -> Self {
         match self.dt {
-            LIST => {
+            LIST | RESULT => {
                 return Value::from_list(vec![value]);
             }
             MAP | INFO | CONFIG | ASSOCIATION => {

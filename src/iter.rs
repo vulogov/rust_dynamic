@@ -4,7 +4,7 @@ use crate::types::*;
 impl Iterator for Value {
     type Item = Value;
     fn next(&mut self) -> Option<Value> {
-         if self.curr == -1 && self.dt == LIST {
+         if self.curr == -1 && ( self.dt == LIST || self.dt == RESULT ) {
             match &self.data {
                 Val::List(v) => {
                     if v.len() > 0 {
@@ -16,7 +16,7 @@ impl Iterator for Value {
                 }
                 _ => return None,
             }
-        } else if self.curr >= 0 && self.dt == LIST {
+        } else if self.curr >= 0 && ( self.dt == LIST || self.dt == RESULT ) {
             match &self.data {
                 Val::List(v) => {
                     if v.len() > self.curr as usize {

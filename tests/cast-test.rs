@@ -32,6 +32,25 @@ mod tests {
         assert_eq!(v2, 42 as i64);
     }
     #[test]
+    fn test_cast_pair_type() {
+        let v = Value::pair(Value::from_int(42 as i64), Value::from_int(43 as i64));
+        let l = v.cast_pair().unwrap();
+        let v2 = l[0].cast_int().unwrap();
+        assert_eq!(v2, 42 as i64);
+    }
+    #[test]
+    fn test_cast_pair_x_type() {
+        let v = Value::pair(Value::from_int(42 as i64), Value::from_int(43 as i64));
+        let v2 = v.cast_pair_x().unwrap();
+        assert_eq!(v2.cast_int().unwrap(), 42 as i64);
+    }
+    #[test]
+    fn test_cast_pair_y_type() {
+        let v = Value::pair(Value::from_int(42 as i64), Value::from_int(43 as i64));
+        let v2 = v.cast_pair_y().unwrap();
+        assert_eq!(v2.cast_int().unwrap(), 43 as i64);
+    }
+    #[test]
     fn test_cast_dict_type() {
         let val = Value::dict()
                         .set("answer".to_string(), Value::from(42 as i64).unwrap());

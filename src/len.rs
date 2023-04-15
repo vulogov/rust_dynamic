@@ -4,7 +4,7 @@ use crate::types::*;
 impl Value {
     pub fn len(&self) -> usize {
         match self.dt {
-            LIST => {
+            LIST | RESULT => {
                 match &self.data {
                     Val::List(v) => return v.len(),
                     _ => return 0,

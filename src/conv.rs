@@ -128,12 +128,15 @@ fn value_bool_conversion(t: u16, ot: u16, val: bool) -> Result<Value, Box<dyn st
 }
 
 fn value_list_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, Box<dyn std::error::Error>> {
-    if ot != LIST {
+    if ot != LIST && ot != RESULT {
         return Err(format!("Source value is not LIST but {:?} and not suitable for conversion", &ot).into());
     }
     match t {
         LIST => {
             return Result::Ok(Value::from_list(val.to_vec()));
+        }
+        RESULT => {
+            return Result::Ok(Value::to_result(val.to_vec()));
         }
         FLOAT => {
             return Result::Ok(Value::from_float(val.len() as f64));
@@ -238,10 +241,10 @@ impl Value {
             Val::Bool(b_val) => value_bool_conversion(t, self.dt, *b_val),
             _ => {
                 match self.dt {
-                    LIST => {
+                    LIST | RESULT => {
                         match &self.data {
                             Val::List(l_val) => value_list_conversion(t, self.dt, l_val),
-                            _ => Err(format!("Can not convert LIST Value from {:?}", &self.dt).into()),
+                            _ => Err(format!("Can not convert LIST/RESULT Value from {:?}", &self.dt).into()),
                         }
                     }
                     MAP | INFO | CONFIG | ASSOCIATION => {
