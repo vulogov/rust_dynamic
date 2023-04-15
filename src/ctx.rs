@@ -2,6 +2,9 @@ use crate::value::{Value};
 
 pub type CtxAppFn  = fn(&dyn Context,&str,Value) -> Option<Value>;
 
+//
+// Number of required operands for the Applicatives
+//
 pub const NOEXTRA: u16         = 0;
 pub const JUSTONE: u16         = 1;
 pub const JUSTTWO: u16         = 2;
@@ -32,7 +35,7 @@ pub trait Context {
     fn get_association(&self, name: &str) -> Option<Value>;
     fn register(&mut self, name: &str, f: CtxApplicative) -> bool;
     fn register_association(&mut self, name: &str, v: Value) -> bool;
-    fn eval(&mut self, v: Value) -> Option<Value>;
+    fn eval(&mut self, a: Option<CtxApplicative>, v: Value) -> Option<Value>;
 }
 
 pub struct NullContext {}
@@ -58,12 +61,12 @@ impl Context for NullContext {
     fn register_association(&mut self, _name: &str, _v: Value) -> bool {
         true
     }
-    fn eval(&mut self, _v: Value) -> Option<Value> {
+    fn eval(&mut self, _a: Option<CtxApplicative>, _v: Value) -> Option<Value> {
         None
     }
 }
 
 
 pub fn context(mut ctx: impl Context, value: Value) -> Option<Value> {
-    ctx.eval(value)
+    ctx.eval(None, value)
 }
