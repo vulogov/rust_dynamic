@@ -76,6 +76,28 @@ impl Value {
             _ => return Err("This Dynamic type is not pair".into()),
         }
     }
+    pub fn cast_pair_x(&self) -> Result<Value, Box<dyn std::error::Error>> {
+        if self.dt != PAIR {
+            return Err(format!("This is not a PAIR value but {}", &self.dt).into());
+        }
+        match &self.data {
+            Val::List(l_val) => {
+                return Result::Ok(l_val[0].clone());
+            }
+            _ => return Err("This Dynamic type is not pair".into()),
+        }
+    }
+    pub fn cast_pair_y(&self) -> Result<Value, Box<dyn std::error::Error>> {
+        if self.dt != PAIR {
+            return Err(format!("This is not a PAIR value but {}", &self.dt).into());
+        }
+        match &self.data {
+            Val::List(l_val) => {
+                return Result::Ok(l_val[1].clone());
+            }
+            _ => return Err("This Dynamic type is not pair".into()),
+        }
+    }
     pub fn cast_result(&self) -> Result<Vec<Value>, Box<dyn std::error::Error>> {
         if self.dt != RESULT {
             return Err(format!("This is not a LIST value but {}", &self.dt).into());
