@@ -27,6 +27,7 @@ pub const TIME: u16         = 13;
 pub const CINTEGER: u16     = 14;
 pub const CFLOAT: u16       = 15;
 pub const METRICS: u16      = 16;
+pub const RESULT: u16       = 92;
 pub const EXIT: u16         = 93;
 pub const ASSOCIATION: u16  = 94;
 pub const CONFIG: u16       = 95;

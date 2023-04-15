@@ -53,6 +53,28 @@ impl Value {
             curr: -1,
         }
     }
+    pub fn result() -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   RESULT,
+            q:    100.0,
+            data: Val::List(Vec::new()),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
+    pub fn to_result(value: Vec<Value>) -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   RESULT,
+            q:    100.0,
+            data: Val::List(value),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
     pub fn now() -> Self {
         Self {
             id:   nanoid!(),

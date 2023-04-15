@@ -6,7 +6,7 @@ use nanoid::nanoid;
 impl Value {
     pub fn push(&mut self, value: Value) -> Self {
         match self.dt {
-            LIST => {
+            LIST | RESULT => {
                 let mut data: Vec<Value> = Vec::new();
                 match &self.data {
                     Val::List(v) => {

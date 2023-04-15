@@ -27,6 +27,7 @@ impl Value {
             ERROR       => "Error",
             TOKEN       => "Token",
             EXIT        => "Exit",
+            RESULT      => "Result",
             ASSOCIATION => "Association",
             CINTEGER    => "ComplexInteger",
             CFLOAT      => "ComplexFloat",

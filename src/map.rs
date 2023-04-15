@@ -5,7 +5,7 @@ use crate::types::*;
 impl Value {
     pub fn fmap(&mut self, appfn: AppFn) -> Self {
         match self.dt {
-            LIST => {
+            LIST | RESULT => {
                 let mut data: Vec<Value> = Vec::new();
                 match &self.data {
                     Val::List(v) => {
