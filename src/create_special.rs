@@ -97,4 +97,48 @@ impl Value {
             curr: -1,
         }
     }
+    pub fn queue() -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   QUEUE,
+            q:    100.0,
+            data: Val::Queue(Vec::new()),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
+    pub fn to_queue(value: Vec<Value>) -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   QUEUE,
+            q:    100.0,
+            data: Val::Queue(value),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
+    pub fn fifo() -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   FIFO,
+            q:    100.0,
+            data: Val::Queue(Vec::new()),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
+    pub fn to_fifo(value: Vec<Value>) -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   FIFO,
+            q:    100.0,
+            data: Val::Queue(value),
+            attr: Vec::new(),
+            curr: -1,
+        }
+    }
 }

@@ -28,6 +28,8 @@ pub const CINTEGER: u16     = 14;
 pub const CFLOAT: u16       = 15;
 pub const METRICS: u16      = 16;
 pub const LAMBDA: u16       = 17;
+pub const QUEUE: u16        = 18;
+pub const FIFO: u16         = 19;
 pub const RESULT: u16       = 92;
 pub const EXIT: u16         = 93;
 pub const ASSOCIATION: u16  = 94;
@@ -50,6 +52,7 @@ pub enum Val {
     F64(f64),
     List(Vec<Value>),
     Lambda(Vec<Value>),
+    Queue(Vec<Value>),
     Map(HashMap<String, Value>),
     String(String),
     Binary(Vec<u8>),

@@ -143,4 +143,14 @@ mod tests {
         let v = Value::lambda();
         assert_eq!(v.type_name(), "Lambda");
     }
+    #[test]
+    fn test_create_queue_type() {
+        let v = Value::queue();
+        assert_eq!(v.type_name(), "Queue");
+    }
+    #[test]
+    fn test_create_fifo_type() {
+        let v = Value::fifo();
+        assert_eq!(v.type_name(), "Fifo");
+    }
 }
