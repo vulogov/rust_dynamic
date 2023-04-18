@@ -95,6 +95,7 @@ rust_dynamic supports a number of casting functions that will try to extract wra
 | Value::cast_bin() | Return Vec<u8> from BINARY object |
 | Value::cast_list() | Return Vec<Value> from LIST/PAIR object |
 | Value::cast_result() | Return Vec<Value> from RESULT object |
+| Value::cast_lambda() | Return Vec<Value> from LAMBDA object |
 | Value::cast_pair() | Return Vec<Value> from PAIR object |
 | Value::cast_pair_x() | Return Value from PAIR X object |
 | Value::cast_pair_y() | Return Value from PAIR Y object |

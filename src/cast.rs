@@ -65,6 +65,17 @@ impl Value {
             _ => return Err("This Dynamic type is not list".into()),
         }
     }
+    pub fn cast_lambda(&self) -> Result<Vec<Value>, Box<dyn std::error::Error>> {
+        if self.dt != LAMBDA {
+            return Err(format!("This is not a LAMBDA value but {}", &self.dt).into());
+        }
+        match &self.data {
+            Val::Lambda(l_val) => {
+                return Result::Ok(l_val.clone());
+            }
+            _ => return Err("This Dynamic type is not lambda".into()),
+        }
+    }
     pub fn cast_pair(&self) -> Result<Vec<Value>, Box<dyn std::error::Error>> {
         if self.dt != PAIR {
             return Err(format!("This is not a PAIR value but {}", &self.dt).into());

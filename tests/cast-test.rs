@@ -32,6 +32,13 @@ mod tests {
         assert_eq!(v2, 42 as i64);
     }
     #[test]
+    fn test_cast_lambda_type() {
+        let v = Value::to_lambda(vec![Value::from(42 as i64).unwrap()]);
+        let l = v.cast_lambda().unwrap();
+        let v2 = l[0].cast_int().unwrap();
+        assert_eq!(v2, 42 as i64);
+    }
+    #[test]
     fn test_cast_pair_type() {
         let v = Value::pair(Value::from_int(42 as i64), Value::from_int(43 as i64));
         let l = v.cast_pair().unwrap();

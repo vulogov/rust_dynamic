@@ -5,3 +5,5 @@
 * Value.to_lambda() - creates an empty lambda from Vector of Values
 * Value.len()/conv()/push() supported lambda
 * Value.fmap() supports LAMBDA
+* Value.cast_lambda() - casting inner Vec<Value>
+* Value.set() supports LAMBDA
