@@ -71,6 +71,10 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::exit() | Return dynamic object of type EXIT  |
 | Value::metrics() | Return dynamic object of type METRICS for 128 samples  |
 | Value::metrics_n(n) | Return dynamic object of type METRICS for n samples  |
+| Value::lambda() | Return dynamic object of type LAMBDA   |
+| Value::to_lambda() | Return dynamic object of type LAMBDA created from Vector  |
+| Value::result() | Return dynamic object of type RESULT   |
+| Value::to_result() | Return dynamic object of type RESULT created from Vector  |
 | Value::from_metrics() | Return dynamic object created from Vec of Metrics  |
 | Value::from_complex_int() | Return dynamic object created from Complex<i64>  |
 | Value::from_complex_float() | Return dynamic object created from Complex<f64>  |

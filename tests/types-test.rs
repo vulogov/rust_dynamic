@@ -138,4 +138,9 @@ mod tests {
         let v = Value::exit();
         assert_eq!(v.type_name(), "Exit");
     }
+    #[test]
+    fn test_create_lambda_type() {
+        let v = Value::lambda();
+        assert_eq!(v.type_name(), "Lambda");
+    }
 }

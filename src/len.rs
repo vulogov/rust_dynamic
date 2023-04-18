@@ -10,6 +10,12 @@ impl Value {
                     _ => return 0,
                 }
             }
+            LAMBDA => {
+                match &self.data {
+                    Val::Lambda(v) => return v.len(),
+                    _ => return 0,
+                }
+            }
             BIN | ENVELOPE => {
                 match &self.data {
                     Val::Binary(v) => return v.len(),

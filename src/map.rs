@@ -17,6 +17,18 @@ impl Value {
                 }
                 return Value::from_list(data);
             }
+            LAMBDA => {
+                let mut data: Vec<Value> = Vec::new();
+                match &self.data {
+                    Val::Lambda(v) => {
+                        for i in v {
+                            data.push(appfn(i.clone()));
+                        }
+                    }
+                    _ => {},
+                }
+                return Value::to_lambda(data);
+            }
             MAP | INFO | ASSOCIATION | CONFIG => {
                 let mut data: HashMap<String, Value> = HashMap::new();
                 let mut res = self.dup().unwrap().regen_id();

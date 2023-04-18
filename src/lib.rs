@@ -35,6 +35,7 @@ pub mod metric;
 pub mod math;
 pub mod reduce;
 pub mod len;
+pub mod create_lambda;
 pub mod id;
 pub mod iter;
 pub mod json;

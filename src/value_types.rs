@@ -32,6 +32,7 @@ impl Value {
             CINTEGER    => "ComplexInteger",
             CFLOAT      => "ComplexFloat",
             METRICS     => "Metrics",
+            LAMBDA      => "Lambda",
             _ => "Unknown",
         }
     }

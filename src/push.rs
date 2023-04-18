@@ -19,6 +19,19 @@ impl Value {
                 }
                 return Value::from_list(data);
             }
+            LAMBDA => {
+                let mut data: Vec<Value> = Vec::new();
+                match &self.data {
+                    Val::Lambda(v) => {
+                        for i in v {
+                            data.push(i.clone());
+                        }
+                        data.push(value.clone());
+                    }
+                    _ => {},
+                }
+                return Value::to_lambda(data);
+            }
             METRICS => {
                 if value.dt != FLOAT {
                     return self.clone();

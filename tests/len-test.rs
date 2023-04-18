@@ -19,4 +19,9 @@ mod tests {
         let v = Value::from(42 as i64).unwrap();
         assert_eq!(v.len(), 1);
     }
+    #[test]
+    fn test_len_lambda() {
+        let val = Value::to_lambda(vec![Value::from_int(42)]);
+        assert_eq!(val.len(), 1);
+    }
 }
