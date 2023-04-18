@@ -6,3 +6,4 @@
 * Value::cast_queue() - returns first element of queue
 * Value.cast_fifo() - returns first element of fifo
 * Value.pull() removes last element from LIST/RESULT/FIFO or first element from QUEUE
+* Value.car()/.cdr() supports QUEUE and FIFO

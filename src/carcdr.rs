@@ -16,6 +16,28 @@ impl Value {
                     _ => None,
                 }
             }
+            QUEUE => {
+                match &self.data {
+                    Val::Queue(_) => {
+                        match self.cast_queue() {
+                            Ok(val) => return Some(val),
+                            Err(_) => return None,
+                        }
+                    }
+                    _ => None,
+                }
+            }
+            FIFO => {
+                match &self.data {
+                    Val::Queue(_) => {
+                        match self.cast_fifo() {
+                            Ok(val) => return Some(val),
+                            Err(_) => return None,
+                        }
+                    }
+                    _ => None,
+                }
+            }
             METRICS => {
                 match &self.data {
                     Val::Metrics(m_val) => {
@@ -49,6 +71,7 @@ impl Value {
                     _ => None,
                 }
             }
+            QUEUE | FIFO => return Some(self.pull()),
             METRICS => {
                 match &self.data {
                     Val::Metrics(m_val) => {

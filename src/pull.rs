@@ -2,14 +2,16 @@ use crate::value::{Value};
 use crate::types::*;
 
 impl Value {
-    pub fn pull(&mut self) -> Self {
+    pub fn pull(&self) -> Self {
         match self.dt {
             QUEUE => {
                 let mut data: Vec<Value> = Vec::new();
                 match &self.data {
                     Val::Queue(v) => {
-                        for i in &v[1..] {
-                            data.push(i.clone());
+                        if v.len() > 0 {
+                            for i in &v[1..] {
+                                data.push(i.clone());
+                            }
                         }
                     }
                     _ => {},
@@ -20,8 +22,10 @@ impl Value {
                 let mut data: Vec<Value> = Vec::new();
                 match &self.data {
                     Val::Queue(v) => {
-                        for i in &v[..self.len()-1] {
-                            data.push(i.clone());
+                        if v.len() > 0 {
+                            for i in &v[..self.len()-1] {
+                                data.push(i.clone());
+                            }
                         }
                     }
                     _ => {},

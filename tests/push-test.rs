@@ -31,7 +31,7 @@ mod tests {
     }
     #[test]
     fn test_push_queue_val() {
-        let mut v = Value::queue()
+        let v = Value::queue()
             .push(Value::from_int(42))
             .push(Value::from_int(41));
         let val = v.cast_queue().unwrap();
@@ -46,7 +46,7 @@ mod tests {
     }
     #[test]
     fn test_push_fifo_val() {
-        let mut v = Value::fifo()
+        let v = Value::fifo()
             .push(Value::from_int(41))
             .push(Value::from_int(42));
         let val = v.cast_fifo().unwrap();

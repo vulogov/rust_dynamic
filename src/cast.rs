@@ -174,7 +174,7 @@ impl Value {
             _ => return Err("This Dynamic type is not METRICS".into()),
         }
     }
-    pub fn cast_queue(&mut self) -> Result<Value, Box<dyn std::error::Error>> {
+    pub fn cast_queue(&self) -> Result<Value, Box<dyn std::error::Error>> {
         if self.dt != QUEUE {
             return Err(format!("This is not a FIFO value but {}", &self.dt).into());
         }
@@ -188,7 +188,7 @@ impl Value {
              _ => return Err("This Dynamic type is not queue".into()),
         }
     }
-    pub fn cast_fifo(&mut self) -> Result<Value, Box<dyn std::error::Error>> {
+    pub fn cast_fifo(&self) -> Result<Value, Box<dyn std::error::Error>> {
         if self.dt != FIFO {
             return Err(format!("This is not a FIFO value but {}", &self.dt).into());
         }
