@@ -179,6 +179,49 @@ fn value_list_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, Box
     }
 }
 
+fn value_lambda_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, Box<dyn std::error::Error>> {
+    if ot != LAMBDA {
+        return Err(format!("Source value is not LAMBDA but {:?} and not suitable for conversion", &ot).into());
+    }
+    match t {
+        LIST => {
+            return Result::Ok(Value::from_list(val.to_vec()));
+        }
+        LAMBDA => {
+            return Result::Ok(Value::to_lambda(val.to_vec()));
+        }
+        FLOAT => {
+            return Result::Ok(Value::from_float(val.len() as f64));
+        }
+        INTEGER => {
+            return Result::Ok(Value::from_int(val.len() as i64));
+        }
+        BOOL => {
+            if val.len() == 0 {
+                return Result::Ok(Value::from_bool(false));
+            } else {
+                return Result::Ok(Value::from_bool(true));
+            }
+        }
+        STRING => {
+            let mut out: String = "lambda[".to_string();
+            for v in val {
+                match v.conv(STRING) {
+                    Ok(s_v) => {
+                        out = out + &" ".to_string();
+                        out = out + &s_v.cast_string().unwrap();
+                        out = out + &" :: ".to_string();
+                    }
+                    Err(_) => continue,
+                }
+            }
+            out = out + &"]".to_string();
+            return Result::Ok(Value::from_string(out));
+        }
+        _ => Err(format!("Can not convert lambda to {:?}", &t).into()),
+    }
+}
+
 fn value_map_conversion(t: u16, ot: u16, val: &HashMap<String,Value>) -> Result<Value, Box<dyn std::error::Error>> {
     if ot != MAP && ot != ASSOCIATION && ot != INFO && ot != CONFIG  {
         return Err(format!("Source value is not MAP but {:?} and not suitable for conversion", &ot).into());
@@ -245,6 +288,12 @@ impl Value {
                         match &self.data {
                             Val::List(l_val) => value_list_conversion(t, self.dt, l_val),
                             _ => Err(format!("Can not convert LIST/RESULT Value from {:?}", &self.dt).into()),
+                        }
+                    }
+                    LAMBDA => {
+                        match &self.data {
+                            Val::Lambda(l_val) => value_lambda_conversion(t, self.dt, l_val),
+                            _ => Err(format!("Can not convert LAMBDA Value from {:?}", &self.dt).into()),
                         }
                     }
                     MAP | INFO | CONFIG | ASSOCIATION => {

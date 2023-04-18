@@ -16,4 +16,10 @@ mod tests {
         v = v.push(Value::from(42.0).unwrap());
         assert_eq!(v.len(), 1);
     }
+    #[test]
+    fn test_push_lambda() {
+        let mut v = Value::lambda();
+        v = v.push(Value::from(42.0).unwrap());
+        assert_eq!(v.len(), 1);
+    }
 }

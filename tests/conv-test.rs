@@ -126,4 +126,9 @@ mod tests {
         let val2 = val.get("0".to_string()).unwrap();
         assert_eq!(val2.cast_int().unwrap(), 42 as i64);
     }
+    #[test]
+    fn test_conv_lambda_string() {
+        let val = Value::to_lambda(vec![Value::from_int(42)]).conv(STRING).unwrap();
+        assert_eq!(val.cast_string().unwrap(), "lambda[ 42 :: ]");
+    }
 }
