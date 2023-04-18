@@ -174,4 +174,32 @@ impl Value {
             _ => return Err("This Dynamic type is not METRICS".into()),
         }
     }
+    pub fn cast_queue(&mut self) -> Result<Value, Box<dyn std::error::Error>> {
+        if self.dt != QUEUE {
+            return Err(format!("This is not a FIFO value but {}", &self.dt).into());
+        }
+        if self.len() == 0 {
+            return Err("Queue is empty".into());
+        }
+        match &self.data {
+             Val::Queue(q_val) => {
+                 return Result::Ok(q_val[0].clone());
+             }
+             _ => return Err("This Dynamic type is not queue".into()),
+        }
+    }
+    pub fn cast_fifo(&mut self) -> Result<Value, Box<dyn std::error::Error>> {
+        if self.dt != FIFO {
+            return Err(format!("This is not a FIFO value but {}", &self.dt).into());
+        }
+        if self.len() == 0 {
+            return Err("Fifo is empty".into());
+        }
+        match &self.data {
+             Val::Queue(q_val) => {
+                 return Result::Ok(q_val[self.len()-1].clone());
+             }
+             _ => return Err("This Dynamic type is not fifo".into()),
+        }
+    }
 }

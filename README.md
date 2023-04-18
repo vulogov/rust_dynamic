@@ -100,6 +100,8 @@ rust_dynamic supports a number of casting functions that will try to extract wra
 | Value::cast_pair_x() | Return Value from PAIR X object |
 | Value::cast_pair_y() | Return Value from PAIR Y object |
 | Value::cast_metrics() | Return Vec<Metric> from METRICS object |
+| Value::cast_fifo() | Return next Value from FIFO object |
+| Value::cast_queue() | Return next Value from QUEUE object |
 | Value::cast_dict() | Return HashMap<String,Value> from MAP,INFO,CONFIG,ASSOCIATION objects |
 | Value::cast_complex_int() | Return Complex<i64> from CINTEGER object |
 | Value::cast_complex_float() | Return Complex<f64> from CFLOAT object |
