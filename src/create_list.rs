@@ -1,4 +1,5 @@
 use crate::value::{Value, timestamp_ms};
+use std::collections::HashMap;
 use nanoid::nanoid;
 use crate::types::*;
 
@@ -12,6 +13,7 @@ impl Value {
             data: Val::List(Vec::new()),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn from_list(value: Vec<Value>) -> Self {
@@ -23,6 +25,7 @@ impl Value {
             data: Val::List(value),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
 }

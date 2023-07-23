@@ -1,5 +1,6 @@
 use nanoid::nanoid;
 use crate::value::{Value, timestamp_ms};
+use std::collections::HashMap;
 use crate::error::BundError;
 use crate::types::*;
 
@@ -13,6 +14,7 @@ impl Value {
             data: Val::F64(value),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn from_float32(value: f32) -> Self {
@@ -24,6 +26,7 @@ impl Value {
             data: Val::F64(value as f64),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn from_int(value: i64) -> Self {
@@ -35,6 +38,7 @@ impl Value {
             data: Val::I64(value),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn from_int32(value: i32) -> Self {
@@ -46,6 +50,7 @@ impl Value {
             data: Val::I64(value as i64),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn from_bool(value: bool) -> Self {
@@ -57,6 +62,7 @@ impl Value {
             data: Val::Bool(value),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn from_string<N: AsRef<str>>(value: N) -> Self {
@@ -68,6 +74,7 @@ impl Value {
             data: Val::String(value.as_ref().to_string()),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn from_str(value: &str) -> Self {
@@ -79,6 +86,7 @@ impl Value {
             data: Val::String(value.to_string()),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn from_bin(value: Vec<u8>) -> Self {
@@ -90,6 +98,7 @@ impl Value {
             data: Val::Binary(value),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn make_envelope(value: Vec<u8>) -> Self {
@@ -101,6 +110,7 @@ impl Value {
             data: Val::Binary(value),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn binary() -> Self {
@@ -112,6 +122,7 @@ impl Value {
             data: Val::Binary(Vec::new()),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn from_error(value: BundError) -> Self {
@@ -123,6 +134,7 @@ impl Value {
             data: Val::Error(value),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn from_pair(value: (Value, Value)) -> Self {
@@ -139,6 +151,7 @@ impl Value {
             data: Val::Time(value),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
 }

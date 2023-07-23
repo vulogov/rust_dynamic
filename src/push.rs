@@ -19,6 +19,23 @@ impl Value {
                 }
                 return Value::from_list(data);
             }
+            QUEUE | FIFO => {
+                let mut data: Vec<Value> = Vec::new();
+                match &self.data {
+                    Val::Queue(v) => {
+                        for i in v {
+                            data.push(i.clone());
+                        }
+                        data.push(value.clone());
+                    }
+                    _ => {},
+                }
+                if self.dt == QUEUE {
+                    return Value::to_queue(data);
+                } else {
+                    return Value::to_fifo(data);
+                }
+            }
             LAMBDA => {
                 let mut data: Vec<Value> = Vec::new();
                 match &self.data {

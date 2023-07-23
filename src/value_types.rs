@@ -33,6 +33,9 @@ impl Value {
             CFLOAT      => "ComplexFloat",
             METRICS     => "Metrics",
             LAMBDA      => "Lambda",
+            QUEUE       => "Queue",
+            FIFO        => "Fifo",
+
             _ => "Unknown",
         }
     }

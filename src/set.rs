@@ -8,6 +8,9 @@ impl Value {
             LIST | RESULT => {
                 return Value::from_list(vec![value]);
             }
+            LAMBDA => {
+                return Value::to_lambda(vec![value]);
+            }
             MAP | INFO | CONFIG | ASSOCIATION => {
                 let mut res = self.dup().unwrap();
                 res.id = nanoid!();

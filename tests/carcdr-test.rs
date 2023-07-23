@@ -49,4 +49,22 @@ mod tests {
         let m = val.car().expect("expecting car");
         assert_eq!(m.get("value").unwrap().cast_float().unwrap(), 43.0 as f64);
     }
+    #[test]
+    fn test_queue_car() {
+        let mut val = Value::queue();
+        val = val.push(Value::from_float(42.0 as f64));
+        val = val.push(Value::from_float(43.0 as f64));
+        val = val.push(Value::from_float(44.0 as f64));
+        let m = val.car().expect("expecting car");
+        assert_eq!(m.cast_float().unwrap(), 42.0 as f64);
+    }
+    #[test]
+    fn test_fifo_car() {
+        let mut val = Value::fifo();
+        val = val.push(Value::from_float(42.0 as f64));
+        val = val.push(Value::from_float(43.0 as f64));
+        val = val.push(Value::from_float(44.0 as f64));
+        let m = val.car().expect("expecting car");
+        assert_eq!(m.cast_float().unwrap(), 44.0 as f64);
+    }
 }

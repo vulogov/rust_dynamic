@@ -138,6 +138,74 @@ fn value_list_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, Box
         RESULT => {
             return Result::Ok(Value::to_result(val.to_vec()));
         }
+        QUEUE => {
+            return Result::Ok(Value::to_queue(val.to_vec()));
+        }
+        FIFO => {
+            return Result::Ok(Value::to_fifo(val.to_vec()));
+        }
+        FLOAT => {
+            return Result::Ok(Value::from_float(val.len() as f64));
+        }
+        INTEGER => {
+            return Result::Ok(Value::from_int(val.len() as i64));
+        }
+        BOOL => {
+            if val.len() == 0 {
+                return Result::Ok(Value::from_bool(false));
+            } else {
+                return Result::Ok(Value::from_bool(true));
+            }
+        }
+        MAP  => {
+            let mut res: HashMap<String, Value> = HashMap::new();
+            let mut c: u64 = 0;
+            for v in val {
+                res.insert(format!("{}", &c), v.clone());
+                c += 1;
+            }
+            return Result::Ok(Value::from_dict(res));
+        }
+        STRING => {
+            let mut out: String = "[".to_string();
+            for v in val {
+                match v.conv(STRING) {
+                    Ok(s_v) => {
+                        out = out + &" ".to_string();
+                        out = out + &s_v.cast_string().unwrap();
+                        out = out + &" :: ".to_string();
+                    }
+                    Err(_) => continue,
+                }
+            }
+            out = out + &"]".to_string();
+            return Result::Ok(Value::from_string(out));
+        }
+        _ => Err(format!("Can not convert list to {:?}", &t).into()),
+    }
+}
+
+fn value_queue_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, Box<dyn std::error::Error>> {
+    let mut st = "queue";
+    if ot != QUEUE && ot != FIFO {
+        return Err(format!("Source value is not QUEUE/FIFO but {:?} and not suitable for conversion", &ot).into());
+    }
+    if ot == FIFO {
+        st = "fifo";
+    }
+    match t {
+        LIST => {
+            return Result::Ok(Value::from_list(val.to_vec()));
+        }
+        RESULT => {
+            return Result::Ok(Value::to_result(val.to_vec()));
+        }
+        QUEUE => {
+            return Result::Ok(Value::to_queue(val.to_vec()));
+        }
+        FIFO => {
+            return Result::Ok(Value::to_fifo(val.to_vec()));
+        }
         FLOAT => {
             return Result::Ok(Value::from_float(val.len() as f64));
         }
@@ -161,7 +229,7 @@ fn value_list_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, Box
             return Result::Ok(Value::from_dict(res));
         }
         STRING => {
-            let mut out: String = "[".to_string();
+            let mut out: String = format!("{}[", st).to_string();
             for v in val {
                 match v.conv(STRING) {
                     Ok(s_v) => {
@@ -288,6 +356,12 @@ impl Value {
                         match &self.data {
                             Val::List(l_val) => value_list_conversion(t, self.dt, l_val),
                             _ => Err(format!("Can not convert LIST/RESULT Value from {:?}", &self.dt).into()),
+                        }
+                    }
+                    QUEUE | FIFO => {
+                        match &self.data {
+                            Val::Queue(q_val) => value_queue_conversion(t, self.dt, q_val),
+                            _ => Err(format!("Can not convert QUEUE/FIFO Value from {:?}", &self.dt).into()),
                         }
                     }
                     LAMBDA => {

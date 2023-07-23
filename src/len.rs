@@ -10,6 +10,12 @@ impl Value {
                     _ => return 0,
                 }
             }
+            QUEUE | FIFO => {
+                match &self.data {
+                    Val::Queue(v) => return v.len(),
+                    _ => return 0,
+                }
+            }
             LAMBDA => {
                 match &self.data {
                     Val::Lambda(v) => return v.len(),
