@@ -25,4 +25,13 @@ mod tests {
         v.set_tag("prefix", "prefix");
         assert!(v.has_tag("prefix"));
     }
+
+    #[test]
+    fn test_serialize_tag() {
+        let mut data = Value::from(42 as i64).unwrap();
+        data.set_tag("prefix", "prefix");
+        let bin_data = data.wrap().unwrap();
+        let mut data2 = bin_data.unwrap().unwrap();
+        assert_eq!(data2.get_tag("prefix").unwrap(), "prefix");
+    }
 }
