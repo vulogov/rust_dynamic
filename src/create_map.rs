@@ -13,6 +13,7 @@ impl Value {
             data: Val::Map(HashMap::new()),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn from_dict(value: HashMap<String, Value>) -> Self {
@@ -24,6 +25,7 @@ impl Value {
             data: Val::Map(value),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn info() -> Self {
@@ -35,6 +37,7 @@ impl Value {
             data: Val::Map(HashMap::new()),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn config() -> Self {
@@ -46,6 +49,7 @@ impl Value {
             data: Val::Map(HashMap::new()),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn association<N: AsRef<str>>(name: N, value: Value) -> Self {
@@ -59,6 +63,7 @@ impl Value {
             data: Val::Map(data),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
 }

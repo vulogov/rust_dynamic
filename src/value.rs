@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 use std::time::{SystemTime, UNIX_EPOCH};
 use nanoid::nanoid;
@@ -20,6 +21,7 @@ pub struct Value {
     pub data:   Val,
     pub attr:   Vec::<Value>,
     pub curr:   i32,
+    pub tags:   HashMap<String, String>,
 }
 
 #[derive(Clone, Debug)]
@@ -37,6 +39,7 @@ impl Value {
             data:   Val::Null,
             attr:   Vec::new(),
             curr:   -1,
+            tags:   HashMap::new(),
         }
     }
 }

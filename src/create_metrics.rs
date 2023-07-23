@@ -1,4 +1,5 @@
 use crate::value::{Value, timestamp_ms};
+use std::collections::HashMap;
 use crate::metric::Metric;
 use nanoid::nanoid;
 use crate::types::*;
@@ -17,6 +18,7 @@ impl Value {
             data: Val::Metrics(data),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn metrics() -> Self {
@@ -31,6 +33,7 @@ impl Value {
             data: Val::Metrics(value),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
 }

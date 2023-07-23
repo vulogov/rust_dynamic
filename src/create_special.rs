@@ -1,4 +1,5 @@
 use crate::value::{Value, timestamp_ms, timestamp_ns};
+use std::collections::HashMap;
 use nanoid::nanoid;
 use crate::types::*;
 
@@ -12,6 +13,7 @@ impl Value {
             data: Val::Null,
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn none() -> Self {
@@ -29,6 +31,7 @@ impl Value {
             data: Val::String(name),
             attr: attrs,
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn call(name: String, attrs: Vec<Value>) -> Self {
@@ -40,6 +43,7 @@ impl Value {
             data: Val::String(name),
             attr: attrs,
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn exit() -> Self {
@@ -51,6 +55,7 @@ impl Value {
             data: Val::Exit,
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn result() -> Self {
@@ -62,6 +67,7 @@ impl Value {
             data: Val::List(Vec::new()),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn to_result(value: Vec<Value>) -> Self {
@@ -73,6 +79,7 @@ impl Value {
             data: Val::List(value),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn now() -> Self {
@@ -84,6 +91,7 @@ impl Value {
             data: Val::Time(timestamp_ns()),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn from_stamp(t: u128) -> Self {
@@ -95,6 +103,7 @@ impl Value {
             data: Val::Time(t),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn queue() -> Self {
@@ -106,6 +115,7 @@ impl Value {
             data: Val::Queue(Vec::new()),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn to_queue(value: Vec<Value>) -> Self {
@@ -117,6 +127,7 @@ impl Value {
             data: Val::Queue(value),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn fifo() -> Self {
@@ -128,6 +139,7 @@ impl Value {
             data: Val::Queue(Vec::new()),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn to_fifo(value: Vec<Value>) -> Self {
@@ -139,6 +151,7 @@ impl Value {
             data: Val::Queue(value),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
 }

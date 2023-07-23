@@ -1,5 +1,6 @@
 use nanoid::nanoid;
 use num::complex::Complex;
+use std::collections::HashMap;
 use crate::value::{Value, timestamp_ms};
 use crate::types::*;
 
@@ -13,6 +14,7 @@ impl Value {
             data: Val::List(vec![Value::from_int(value.re as i64), Value::from_int(value.im as i64)]),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
     pub fn from_complex_float(value: Complex<f64>) -> Self {
@@ -24,6 +26,7 @@ impl Value {
             data: Val::List(vec![Value::from_float(value.re as f64), Value::from_float(value.im as f64)]),
             attr: Vec::new(),
             curr: -1,
+            tags:   HashMap::new(),
         }
     }
 }
