@@ -18,7 +18,7 @@ impl Value {
         } else if let Some(string_val) = (&value as &dyn Any).downcast_ref::<String>() {
             return Result::Ok(Value::from_string((*string_val.clone()).to_string()));
         } else if let Some(str_val) = (&value as &dyn Any).downcast_ref::<&str>() {
-            return Result::Ok(Value::from_str(&*str_val.clone()));
+            return Result::Ok(Value::from_str(&*str_val));
         } else if let Some(lst_val) = (&value as &dyn Any).downcast_ref::<Vec<Value>>() {
             return Result::Ok(Value::from_list((*lst_val.clone()).to_vec()));
         } else if let Some(err_val) = (&value as &dyn Any).downcast_ref::<BundError>() {
