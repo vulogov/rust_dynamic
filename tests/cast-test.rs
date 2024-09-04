@@ -32,6 +32,13 @@ mod tests {
         assert_eq!(v2, 42 as i64);
     }
     #[test]
+    fn test_cast_fifo_type() {
+        let mut v = Value::fifo();
+        v = v.push(Value::from(42 as i64).unwrap());
+        let v2 = v.pop().unwrap();
+        assert_eq!(v2.cast_int().unwrap(), 42 as i64);
+    }
+    #[test]
     fn test_cast_lambda_type() {
         let v = Value::to_lambda(vec![Value::from(42 as i64).unwrap()]);
         let l = v.cast_lambda().unwrap();
@@ -71,5 +78,16 @@ mod tests {
         val = val.push(Value::from_float(42.0 as f64));
         let m = val.cast_metrics().unwrap();
         assert_eq!(m[0].data, 42 as f64);
+    }
+    #[test]
+    fn test_cast_operator_opcode() {
+        let v = Value::operator(42, Value::from(42 as i64).unwrap());
+        assert_eq!(v.cast_operator_opcode().unwrap(), 42 as i32);
+    }
+    #[test]
+    fn test_cast_operator_opvalue() {
+        let v = Value::operator(42, Value::from(42 as i64).unwrap());
+        let opval = v.cast_operator_value().unwrap();
+        assert_eq!(opval.cast_int().unwrap(), 42 as i64);
     }
 }

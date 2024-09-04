@@ -70,6 +70,18 @@ impl Value {
             tags:   HashMap::new(),
         }
     }
+    pub fn operator(opcode: i32, param: Value) -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   OPERATOR,
+            q:    100.0,
+            data: Val::Operator(Operator{opcode: opcode, opvalue: param.to_binary().unwrap()}),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
     pub fn to_result(value: Vec<Value>) -> Self {
         Self {
             id:   nanoid!(),

@@ -7,6 +7,19 @@ impl Value {
     pub fn to_binary(&self) -> Result<Vec<u8>, bincode2::Error> {
         bincode2::serialize(self)
     }
+    pub fn compile(&self) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+        if self.dt != LAMBDA {
+            return Err("Attempt to compile non-lambda object".into());
+        }
+        match self.to_binary() {
+            Ok(buffer) => {
+                return Ok(buffer);
+            }
+            Err(err) => {
+                return Err(format!("Error compiling lambda object: {}", err).into());
+            }
+        }
+    }
     pub fn from_binary(data: Vec<u8>) -> Result<Value, bincode2::Error> {
         bincode2::deserialize::<Value>(&data)
     }

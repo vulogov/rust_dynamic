@@ -61,6 +61,7 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::from_str() | Create dynamic object from Rust &str |
 | Value::from_bin() | Create dynamic object of type BINARY from Vec<u8> |
 | Value::pair() | Create dynamic object of type PAIR from the pair of values |
+| Value::operator() | Create OPERATOR with OPCODE and OPVALUE |
 | Value::list() | Create empty dynamic object of type LIST |
 | Value::from_list() | Create dynamic object of type LIST and initialize it from Vec<Value> |
 | Value::from_dict() | Create dynamic object of type MAP and initialize it from HashMap<String, Value> |
@@ -189,6 +190,7 @@ While rust_dynamic crate is not strive to provide a full-featured functional int
 
 | Function name | Description |
 |---|---|
+| Value.pop() | Returns last pushed value to the (LIST|RESULT|FIFO) or None |
 | Value.bind() | Takes a reference to a function that accepts Value as a parameter, that function is called with passed current object and new Value object returned |
 | Value::bind_values() | Takes a reference to a function that accepts two Values as a parameter, and two values. New Value object returned that is result of programmatic binding of the values |
 | Value.fmap() | Execute function to each element of the LIST or to the value and return new Value |

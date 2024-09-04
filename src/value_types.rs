@@ -35,6 +35,7 @@ impl Value {
             LAMBDA      => "Lambda",
             QUEUE       => "Queue",
             FIFO        => "Fifo",
+            OPERATOR    => "Operator",
 
             _ => "Unknown",
         }

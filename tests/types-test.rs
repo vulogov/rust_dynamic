@@ -153,4 +153,9 @@ mod tests {
         let v = Value::fifo();
         assert_eq!(v.type_name(), "Fifo");
     }
+    #[test]
+    fn test_create_operator_type() {
+        let v = Value::operator(0, Value::from(42 as i64).unwrap());
+        assert_eq!(v.type_name(), "Operator");
+    }
 }

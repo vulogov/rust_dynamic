@@ -41,7 +41,7 @@ mod tests {
     fn test_time_compare_nanos() {
         let val = Value::now();
         let dt = val.get_time_as_datetime().unwrap();
-        assert_eq!(dt.timestamp_nanos() as u128, val.cast_timestamp().unwrap());
+        assert_eq!(dt.timestamp_nanos_opt().unwrap() as u128, val.cast_timestamp().unwrap());
     }
     #[test]
     fn test_time_compare_times() {

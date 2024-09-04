@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 use crate::error::{BundError};
 use crate::metric::Metric;
 
+pub type AppFn0  = fn();
 pub type AppFn  = fn(Value) -> Value;
 pub type AppFn2 = fn(Value, Value) -> Value;
 pub type MaybeFn = fn(&Value) -> bool;
@@ -30,6 +31,7 @@ pub const METRICS: u16      = 16;
 pub const LAMBDA: u16       = 17;
 pub const QUEUE: u16        = 18;
 pub const FIFO: u16         = 19;
+pub const OPERATOR: u16     = 20;
 pub const RESULT: u16       = 92;
 pub const EXIT: u16         = 93;
 pub const ASSOCIATION: u16  = 94;
@@ -39,7 +41,11 @@ pub const NODATA: u16       = 97;
 pub const ERROR: u16        = 98;
 pub const TOKEN: u16        = 99;
 
-
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct Operator {
+    pub opcode:     i32,
+    pub opvalue:    Vec<u8>,
+}
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum Val {
@@ -58,4 +64,5 @@ pub enum Val {
     Binary(Vec<u8>),
     Time(u128),
     Metrics(Vec<Metric>),
+    Operator(Operator),
 }

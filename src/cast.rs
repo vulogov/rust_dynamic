@@ -202,4 +202,33 @@ impl Value {
              _ => return Err("This Dynamic type is not fifo".into()),
         }
     }
+    pub fn cast_operator_opcode(&self) -> Result<i32, Box<dyn std::error::Error>> {
+        if self.dt != OPERATOR {
+            return Err(format!("This is not a OPERATOR value but {}", &self.dt).into());
+        }
+        match &self.data {
+             Val::Operator(val) => {
+                 return Result::Ok(val.opcode as i32);
+             }
+             _ => return Err("This Dynamic type is not operator".into()),
+        }
+    }
+    pub fn cast_operator_value(&self) -> Result<Value, Box<dyn std::error::Error>> {
+        if self.dt != OPERATOR {
+            return Err(format!("This is not a OPERATOR value but {}", &self.dt).into());
+        }
+        match &self.data {
+             Val::Operator(val) => {
+                 match Value::from_binary(val.opvalue.clone()) {
+                     Ok(opval) => {
+                         return Result::Ok(opval);
+                     }
+                     Err(err) => {
+                         return Err(format!("Error unpacking operator value: {}", err).into());
+                     }
+                 }
+             }
+             _ => return Err("This Dynamic type is not operator".into()),
+        }
+    }
 }
