@@ -1,10 +1,10 @@
 # What in the Value ?
 
-Rust's core strength is its ability to provide memory safety and performance guarantees at compile-time, which is achieved through its ownership and borrowing system. But ability for the developer to handle a dynamic data types defined at run-time for the applications written in Rust is still important endeavor and it is improving versatility of the application while providing an ability to handle a wide range of use cases.
+Rust's primary strength lies in its ability to ensure memory safety and performance guarantees at compile time, which is accomplished through its ownership and borrowing system. However, the capability for developers to manage dynamically defined data types at runtime in Rust applications is not just a pursuit, but a key to enhancing the application's adaptability and versatility, enabling it to address a diverse array of use cases.
 
-Various interpreted DSL languages created in Rust uses run-time dynamic data type system created for the specific language. Excellent crate Serde also implements trait Value that's allow to handle dynamic datatypes in run-time. But none of those solutions is not perfect for a Rust developers as they ether focus on specific DSL or handling JSON values.
+Specific interpreted DSL languages devised in Rust utilize a runtime dynamic data type system customized for the specific language. In addition, the reputable crate Serde plays a significant role by incorporating the trait Value, thereby providing a strong sense of security and confidence to Rust developers in the management of dynamic data types at runtime. However, these solutions have limitations, as they cater to specific DSLs or the handling of JSON values.
 
-rust_dynamic is a crate, created for Rust language, implementing primitives that will be helping to Rust developer with the specific issue of handling dynamic data types defined at run-time. Currently, rust_dynamic supports following data types:
+rust_dynamic, a crate developed for the Rust language, encompasses primitives designed to assist Rust developers in managing dynamically defined data types at runtime. Presently, rust_dynamic supports the following data types:
 
 * Integer, internally represented as i64
 * Float, internally represented as f64
@@ -23,7 +23,7 @@ rust_dynamic is a crate, created for Rust language, implementing primitives that
 * Error
 * Metrics as a Vector of TIMESTAMP->F64 samples
 
-Dynamic values are wrapped and stored inside a Value structure and could be cast-able back into original Rust value.
+Dynamic values are wrapped and stored inside a Value structure and could be castable back into the original Rust value.
 
 ```rust
 use rust_dynamic::value::Value;
