@@ -44,7 +44,8 @@ pub const TOKEN: u16        = 99;
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Operator {
     pub opcode:     i32,
-    pub opvalue:    Vec<u8>,
+    pub opvalue1:    Vec<u8>,
+    pub opvalue2:    Vec<u8>,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]

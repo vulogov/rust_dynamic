@@ -219,7 +219,25 @@ impl Value {
         }
         match &self.data {
              Val::Operator(val) => {
-                 match Value::from_binary(val.opvalue.clone()) {
+                 match Value::from_binary(val.opvalue1.clone()) {
+                     Ok(opval) => {
+                         return Result::Ok(opval);
+                     }
+                     Err(err) => {
+                         return Err(format!("Error unpacking operator value: {}", err).into());
+                     }
+                 }
+             }
+             _ => return Err("This Dynamic type is not operator".into()),
+        }
+    }
+    pub fn cast_operator_value2(&self) -> Result<Value, Box<dyn std::error::Error>> {
+        if self.dt != OPERATOR {
+            return Err(format!("This is not a OPERATOR value but {}", &self.dt).into());
+        }
+        match &self.data {
+             Val::Operator(val) => {
+                 match Value::from_binary(val.opvalue2.clone()) {
                      Ok(opval) => {
                          return Result::Ok(opval);
                      }

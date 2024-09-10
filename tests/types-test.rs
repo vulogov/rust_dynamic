@@ -155,7 +155,7 @@ mod tests {
     }
     #[test]
     fn test_create_operator_type() {
-        let v = Value::operator(0, Value::from(42 as i64).unwrap());
+        let v = Value::operator(0, Value::from(42 as i64).unwrap(), Value::none());
         assert_eq!(v.type_name(), "Operator");
     }
 }

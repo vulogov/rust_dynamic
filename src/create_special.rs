@@ -70,13 +70,13 @@ impl Value {
             tags:   HashMap::new(),
         }
     }
-    pub fn operator(opcode: i32, param: Value) -> Self {
+    pub fn operator(opcode: i32, param1: Value, param2: Value) -> Self {
         Self {
             id:   nanoid!(),
             stamp:  timestamp_ms(),
             dt:   OPERATOR,
             q:    100.0,
-            data: Val::Operator(Operator{opcode: opcode, opvalue: param.to_binary().unwrap()}),
+            data: Val::Operator(Operator{opcode: opcode, opvalue1: param1.to_binary().unwrap(), opvalue2: param2.to_binary().unwrap()}),
             attr: Vec::new(),
             curr: -1,
             tags:   HashMap::new(),

@@ -81,12 +81,12 @@ mod tests {
     }
     #[test]
     fn test_cast_operator_opcode() {
-        let v = Value::operator(42, Value::from(42 as i64).unwrap());
+        let v = Value::operator(42, Value::from(42 as i64).unwrap(), Value::none());
         assert_eq!(v.cast_operator_opcode().unwrap(), 42 as i32);
     }
     #[test]
     fn test_cast_operator_opvalue() {
-        let v = Value::operator(42, Value::from(42 as i64).unwrap());
+        let v = Value::operator(42, Value::from(42 as i64).unwrap(), Value::none());
         let opval = v.cast_operator_value().unwrap();
         assert_eq!(opval.cast_int().unwrap(), 42 as i64);
     }

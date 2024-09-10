@@ -46,21 +46,21 @@ mod tests {
     }
     #[test]
     fn test_serialize_operator1() {
-        let data = Value::operator(42, Value::from(42 as i64).unwrap());
+        let data = Value::operator(42, Value::from(42 as i64).unwrap(), Value::none());
         let bin_data = data.wrap().unwrap();
         let data2 = bin_data.unwrap().unwrap();
         assert_eq!(data2.type_name(), "Operator");
     }
     #[test]
     fn test_serialize_operator2() {
-        let data = Value::operator(42, Value::from(42 as i64).unwrap());
+        let data = Value::operator(42, Value::from(42 as i64).unwrap(), Value::none());
         let bin_data = data.wrap().unwrap();
         let data2 = bin_data.unwrap().unwrap();
         assert_eq!(data2.cast_operator_opcode().unwrap(), 42 as i32);
     }
     #[test]
     fn test_serialize_operator3() {
-        let data = Value::operator(42, Value::from(42 as i64).unwrap());
+        let data = Value::operator(42, Value::from(42 as i64).unwrap(), Value::none());
         let bin_data = data.wrap().unwrap();
         let data2 = bin_data.unwrap().unwrap();
         let opval = data2.cast_operator_value().unwrap();
@@ -69,7 +69,7 @@ mod tests {
     #[test]
     fn test_serialize_operator4() {
         let mut data = Value::list();
-        let data1 = Value::operator(42, Value::from(42 as i64).unwrap());
+        let data1 = Value::operator(42, Value::from(42 as i64).unwrap(), Value::none());
         data = data.push(data1);
         let bin_data = data.wrap().unwrap();
         let data2 = bin_data.unwrap().unwrap();
@@ -78,7 +78,7 @@ mod tests {
     #[test]
     fn test_serialize_operator5() {
         let mut data = Value::list();
-        let data1 = Value::operator(42, Value::from(42 as i64).unwrap());
+        let data1 = Value::operator(42, Value::from(42 as i64).unwrap(), Value::none());
         data = data.push(data1);
         let bin_data = data.wrap().unwrap();
         let data2 = bin_data.unwrap().unwrap();
@@ -89,8 +89,8 @@ mod tests {
     #[test]
     fn test_serialize_lambda() {
         let data = Value::lambda()
-                        .push(Value::operator(42, Value::from(42 as i64).unwrap()))
-                        .push(Value::operator(43, Value::from(43 as i64).unwrap()));
+                        .push(Value::operator(42, Value::from(42 as i64).unwrap(), Value::none()))
+                        .push(Value::operator(43, Value::from(43 as i64).unwrap(), Value::none()));
 
         let buffer = data.compile().unwrap();
         assert_ne!(buffer.len(), 0);
