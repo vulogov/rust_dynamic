@@ -196,6 +196,7 @@ While rust_dynamic crate is not strive to provide a full-featured functional int
 | Value.fmap() | Execute function to each element of the LIST or to the value and return new Value |
 | Value.map_float() | Execute function to each FLOAT element of the LIST or to the value and return new Value |
 | Value.push() | Ether add a new value to the list, or return a new Value |
+| Value.push_inplace() | Push new Value to supported Value (LIST, QUEUE, FIFO, RESULT, METRIC) or return Error |
 | Value.maybe() | Takes a function which is if returns true, Value.maybe() returns value, if false Value::none() |
 | Value::left_right() | Takes a function which is if returns true, and a references on two Values. Value::left_right() returns clone of first value, if function return true, second othewise |
 | Value::freduce() | Takes two parameters - function which takes two values and returning a single value and initial value, reducing dynamic value to a single value by applying function to all elements |

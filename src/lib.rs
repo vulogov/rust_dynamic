@@ -27,6 +27,7 @@ pub mod export;
 pub mod types;
 pub mod error;
 pub mod push;
+pub mod push_inplace;
 pub mod pull;
 pub mod pop;
 pub mod hash;

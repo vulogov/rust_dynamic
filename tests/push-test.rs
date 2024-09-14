@@ -85,4 +85,11 @@ mod tests {
         let val = v.cast_list().unwrap();
         assert_eq!(val[val.len()-1].cast_int().unwrap(), 42);
     }
+
+    #[test]
+    fn test_push_list_push_inplace() {
+        let mut v = Value::list();
+        v.push_inplace(Value::from_int(42)).unwrap();
+        assert_eq!(v.len(), 1);
+    }
 }
