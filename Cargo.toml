@@ -5,6 +5,8 @@ version = "0.21.0"
 edition = "2021"
 license-file = "LICENSE"
 repository = "https://github.com/vulogov/rust_dynamic"
+categories = ["data-structures"]
+keywords = ["value", "dynamic", "data", "value-object"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
