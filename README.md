@@ -62,6 +62,8 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::from_bin() | Create dynamic object of type BINARY from Vec<u8> |
 | Value::pair() | Create dynamic object of type PAIR from the pair of values |
 | Value::operator() | Create OPERATOR with OPCODE and OPVALUE |
+| Value::context() | Create CONTEXT with random ID |
+| Value::named_context() | Create named CONTEXT  |
 | Value::list() | Create empty dynamic object of type LIST |
 | Value::from_list() | Create dynamic object of type LIST and initialize it from Vec<Value> |
 | Value::from_dict() | Create dynamic object of type MAP and initialize it from HashMap<String, Value> |

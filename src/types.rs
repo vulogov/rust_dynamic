@@ -32,6 +32,7 @@ pub const LAMBDA: u16       = 17;
 pub const QUEUE: u16        = 18;
 pub const FIFO: u16         = 19;
 pub const OPERATOR: u16     = 20;
+pub const CONTEXT: u16      = 21;
 pub const RESULT: u16       = 92;
 pub const EXIT: u16         = 93;
 pub const ASSOCIATION: u16  = 94;

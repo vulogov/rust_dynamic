@@ -25,6 +25,11 @@ mod tests {
         assert_eq!(v.cast_string().unwrap(), "Hello world");
     }
     #[test]
+    fn test_cast_context_type() {
+        let v = Value::named_context("MAIN".to_string());
+        assert_eq!(v.cast_string().unwrap(), "MAIN");
+    }
+    #[test]
     fn test_cast_list_type() {
         let v = Value::from_list(vec![Value::from(42 as i64).unwrap()]);
         let l = v.cast_list().unwrap();
