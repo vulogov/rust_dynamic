@@ -61,7 +61,7 @@ fn string_op_string_int(op: Ops, x: String, y: i64) -> String {
 }
 
 impl Value {
-    pub fn numeric_op(op: Ops, mut x: Value, y: Value) -> Result<Value, Box<dyn std::error::Error>> {
+    pub fn numeric_op(op: Ops, mut x: Value, mut y: Value) -> Result<Value, Box<dyn std::error::Error>> {
         match x.data {
             Val::F64(f_x) => {
                 match y.data {
@@ -154,7 +154,44 @@ impl Value {
                             _ => return Err("Incompartible Y argument for the math operations".into()),
                         }
                     }
-                    _ => return Err(format!("Incompartible X argument for the math operations: {}", x.dt).into()),
+                    _ => {
+                        match y.dt {
+                            LIST => {
+                                match x.dt {
+                                    LIST => {
+                                        match op {
+                                            Ops::Add => {
+                                                let mut res = Value::list();
+                                                for v in y {
+                                                    res = res.push(v);
+                                                }
+                                                for v in x {
+                                                    res = res.push(v);
+                                                }
+                                                return Result::Ok(res);
+                                            }
+                                            _ => {
+                                                return Err("Incompartible operation for the list".into());
+                                            }
+                                        }
+                                    }
+                                    _ => {
+                                        match op {
+                                            Ops::Add => {
+                                                return Result::Ok(y.push(x));
+                                            }
+                                            _ => {
+                                                return Err("Incompartible operation for the list".into());
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            _ => {
+                                return Err(format!("Incompartible X argument for the math operations: {}", x.dt).into());
+                            }
+                        }
+                    }
                 }
             }
         }
