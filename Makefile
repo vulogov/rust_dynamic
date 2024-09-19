@@ -9,7 +9,7 @@ rebuild:
 	make all
 
 test:
-	cargo test
+	cargo test -- --show-output
 
 clean:
 	cargo clean

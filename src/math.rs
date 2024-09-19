@@ -61,7 +61,7 @@ fn string_op_string_int(op: Ops, x: String, y: i64) -> String {
 }
 
 impl Value {
-    pub fn numeric_op(op: Ops, x: Value, y: Value) -> Result<Value, Box<dyn std::error::Error>> {
+    pub fn numeric_op(op: Ops, mut x: Value, y: Value) -> Result<Value, Box<dyn std::error::Error>> {
         match x.data {
             Val::F64(f_x) => {
                 match y.data {
@@ -107,6 +107,37 @@ impl Value {
             }
             _ => {
                 match x.dt {
+                    LIST => {
+                        match y.dt {
+                            LIST => {
+                                match op {
+                                    Ops::Add => {
+                                        let mut res = Value::list();
+                                        for v in x {
+                                            res = res.push(v);
+                                        }
+                                        for v in y {
+                                            res = res.push(v);
+                                        }
+                                        return Result::Ok(res);
+                                    }
+                                    _ => {
+                                        return Err("Incompartible operation for the list".into());
+                                    }
+                                }
+                            }
+                            _ => {
+                                match op {
+                                    Ops::Add => {
+                                        return Result::Ok(x.push(y));
+                                    }
+                                    _ => {
+                                        return Err("Incompartible operation for the list".into());
+                                    }
+                                }
+                            }
+                        }
+                    }
                     CINTEGER => {
                         match y.dt {
                             CINTEGER => {

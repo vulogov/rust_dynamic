@@ -54,4 +54,23 @@ mod tests {
         x = x * y;
         assert_eq!(x.cast_string().unwrap(), "HelloHello");
     }
+    #[test]
+    fn test_math_add_list1() {
+        let mut x = Value::list();
+        x = x.push(Value::from(41.0 as f64).unwrap())
+             .push(Value::from(43.0 as f64).unwrap());
+        let y = Value::from(43.0 as f64).unwrap();
+        x = x + y;
+        assert_eq!(x.len(), 3);
+    }
+    #[test]
+    fn test_math_add_list2() {
+        let mut x = Value::list();
+        x = x.push(Value::from(41.0 as f64).unwrap())
+             .push(Value::from(43.0 as f64).unwrap());
+        let mut y = Value::list();
+        y = y.push(Value::from(43.0 as f64).unwrap());
+        x = x + y;
+        assert_eq!(x.len(), 3);
+    }
 }
