@@ -154,7 +154,7 @@ impl Value {
                             _ => return Err("Incompartible Y argument for the math operations".into()),
                         }
                     }
-                    _ => return Err("Incompartible X argument for the math operations".into()),
+                    _ => return Err(format!("Incompartible X argument for the math operations: {}", x.dt).into()),
                 }
             }
         }
