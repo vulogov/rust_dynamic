@@ -43,6 +43,18 @@ impl Value {
             tags:   HashMap::new(),
         }
     }
+    pub fn text_buffer(name: String) -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   TEXTBUFFER,
+            q:    100.0,
+            data: Val::String(name),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
     pub fn pair(x: Value, y:Value) -> Self {
         Value::from_pair((x, y))
     }

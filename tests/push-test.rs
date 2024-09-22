@@ -92,4 +92,11 @@ mod tests {
         v.push_inplace(Value::from_int(42)).unwrap();
         assert_eq!(v.len(), 1);
     }
+
+    #[test]
+    fn test_push_textbuffer() {
+        let mut v = Value::text_buffer("Answer is ".to_string());
+        v = v.push(Value::from_int(42));
+        assert_eq!(v.cast_string().unwrap(),  "Answer is 42");
+    }
 }

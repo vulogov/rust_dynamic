@@ -33,6 +33,7 @@ pub const QUEUE: u16        = 18;
 pub const FIFO: u16         = 19;
 pub const OPERATOR: u16     = 20;
 pub const CONTEXT: u16      = 21;
+pub const TEXTBUFFER: u16   = 22;
 pub const LARGE_FLOAT: u16  = 23;
 pub const RESULT: u16       = 92;
 pub const EXIT: u16         = 93;

@@ -25,6 +25,7 @@ impl Value {
             ENVELOPE    => "Envelope",
             TIME        => "Time",
             CONTEXT     => "Context",
+            TEXTBUFFER  => "TextBuffer",
             ERROR       => "Error",
             TOKEN       => "Token",
             EXIT        => "Exit",

@@ -19,6 +19,20 @@ impl Value {
                 }
                 return Value::from_list(data);
             }
+            TEXTBUFFER => {
+                match self.cast_string() {
+                    Ok(str_val) => {
+                        let mut res = Value::text_buffer(str_val);
+                        res = res + value;
+                        println!("{:?}", &res);
+                        return res;
+                    }
+                    Err(err) => {
+                        println!("ERR {}", err);
+                        return self.clone();
+                    }
+                }
+            }
             QUEUE | FIFO => {
                 let mut data: Vec<Value> = Vec::new();
                 match &self.data {

@@ -56,6 +56,7 @@ fn string_op_string_string(op: Ops, x: String, y: String) -> String {
 fn string_op_string_int(op: Ops, x: String, y: i64) -> String {
     match op {
         Ops::Mul => x.repeat(y as usize),
+        Ops::Add => format!("{}{}", x, y),
         _ => x,
     }
 }
@@ -94,15 +95,59 @@ impl Value {
             Val::String(s_x) => {
                 match y.data {
                     Val::String(s_y) => {
-                        return Result::Ok(Value::from(string_op_string_string(op, s_x, s_y)).unwrap());
+                        match x.dt {
+                            TEXTBUFFER => {
+                                return Result::Ok(Value::text_buffer(string_op_string_string(op, s_x, s_y)));
+                            }
+                            _ => {
+                                return Result::Ok(Value::from(string_op_string_string(op, s_x, s_y)).unwrap());
+                            }
+                        }
                     }
                     Val::I64(i_y) => {
-                        return Result::Ok(Value::from(string_op_string_int(op, s_x, i_y)).unwrap());
+                        match x.dt {
+                            TEXTBUFFER => {
+                                return Result::Ok(Value::text_buffer(string_op_string_int(op, s_x, i_y)));
+                            }
+                            _ => {
+                                return Result::Ok(Value::from(string_op_string_int(op, s_x, i_y)).unwrap());
+                            }
+                        }
                     }
                     Val::F64(f_y) => {
-                        return Result::Ok(Value::from(string_op_string_int(op, s_x, f_y as i64)).unwrap());
+                        match x.dt {
+                            TEXTBUFFER => {
+                                return Result::Ok(Value::text_buffer(string_op_string_int(op, s_x, f_y as i64)));
+                            }
+                            _ => {
+                                return Result::Ok(Value::from(string_op_string_int(op, s_x, f_y as i64)).unwrap());
+                            }
+                        }
                     }
-                    _ => return Err("Incompartible Y argument for the string operations".into()),
+                    _ => {
+                        match y.conv(STRING) {
+                            Ok(str_y) => {
+                                match str_y.cast_string() {
+                                    Ok(s_y) => {
+                                        match x.dt {
+                                            TEXTBUFFER => {
+                                                return Result::Ok(Value::text_buffer(string_op_string_string(op, s_x, s_y)));
+                                            }
+                                            _ => {
+                                                return Result::Ok(Value::from(string_op_string_string(op, s_x, s_y)).unwrap());
+                                            }
+                                        }
+                                    }
+                                    Err(err) => {
+                                            return Err(format!("Incompartible Y argument for the string operations: {}", err).into());
+                                    }
+                                }
+                            }
+                            Err(err) => {
+                                return Err(format!("Incompartible Y argument for the string operations: {}", err).into());
+                            }
+                        }
+                    }
                 }
             }
             _ => {

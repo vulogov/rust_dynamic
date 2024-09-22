@@ -73,4 +73,12 @@ mod tests {
         x = x + y;
         assert_eq!(x.len(), 3);
     }
+
+    #[test]
+    fn test_textbuffer_add() {
+        let mut x = Value::text_buffer("Hello".to_string());
+        let y = Value::from(" world").unwrap();
+        x = x + y;
+        assert_eq!(x.cast_string().unwrap(), "Hello world");
+    }
 }
