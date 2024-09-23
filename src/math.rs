@@ -64,7 +64,7 @@ fn string_op_string_int(op: Ops, x: String, y: i64) -> String {
 fn string_op_string_float(op: Ops, x: String, y: f64) -> String {
     match op {
         Ops::Mul => x.repeat(y as usize),
-        Ops::Add => format!("{}{}", x, y),
+        Ops::Add => format!("{}{:.}", x, y),
         _ => x,
     }
 }

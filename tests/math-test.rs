@@ -75,10 +75,18 @@ mod tests {
     }
 
     #[test]
-    fn test_textbuffer_add() {
+    fn test_textbuffer_add_string() {
         let mut x = Value::text_buffer("Hello".to_string());
         let y = Value::from(" world").unwrap();
         x = x + y;
         assert_eq!(x.cast_string().unwrap(), "Hello world");
+    }
+
+    #[test]
+    fn test_textbuffer_add_float() {
+        let mut x = Value::text_buffer("Hello ".to_string());
+        let y = Value::from(3.14).unwrap();
+        x = x + y;
+        assert_eq!(x.cast_string().unwrap(), "Hello 3.14");
     }
 }
