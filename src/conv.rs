@@ -62,7 +62,7 @@ fn value_integer_conversion(t: u16, ot: u16, val: i64) -> Result<Value, Box<dyn 
 }
 
 fn value_string_conversion(t: u16, ot: u16, val: &String) -> Result<Value, Box<dyn std::error::Error>> {
-    if ot != STRING {
+    if ot != STRING && ot != TEXTBUFFER {
         return Err(format!("Source value is not STRING but {:?} and not suitable for conversion", &ot).into());
     }
     match t {
@@ -86,6 +86,9 @@ fn value_string_conversion(t: u16, ot: u16, val: &String) -> Result<Value, Box<d
             return Result::Ok(Value::from_bool(rustils::parse::boolean::string_to_bool(val.to_string())));
         }
         STRING => {
+            return Result::Ok(Value::from_string(val.to_string()));
+        }
+        TEXTBUFFER => {
             return Result::Ok(Value::from_string(val.to_string()));
         }
         LIST => {

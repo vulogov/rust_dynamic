@@ -82,6 +82,11 @@ mod tests {
         assert_eq!(val.cast_int().unwrap(), 42 as i64);
     }
     #[test]
+    fn test_conv_textbuffer_string() {
+        let val = Value::text_buffer("42".to_string()).conv(STRING).unwrap();
+        assert_eq!(val.cast_string().unwrap(), "42");
+    }
+    #[test]
     fn test_conv_bool_list_check_len() {
         let val = Value::from(true).unwrap().conv(LIST).unwrap();
         assert_eq!(val.len(), 1);

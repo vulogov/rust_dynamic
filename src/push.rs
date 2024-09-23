@@ -24,11 +24,9 @@ impl Value {
                     Ok(str_val) => {
                         let mut res = Value::text_buffer(str_val);
                         res = res + value;
-                        println!("{:?}", &res);
                         return res;
                     }
                     Err(err) => {
-                        println!("ERR {}", err);
                         return self.clone();
                     }
                 }
