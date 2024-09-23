@@ -61,6 +61,14 @@ fn string_op_string_int(op: Ops, x: String, y: i64) -> String {
     }
 }
 
+fn string_op_string_float(op: Ops, x: String, y: f64) -> String {
+    match op {
+        Ops::Mul => x.repeat(y as usize),
+        Ops::Add => format!("{}{}", x, y),
+        _ => x,
+    }
+}
+
 impl Value {
     pub fn numeric_op(op: Ops, mut x: Value, mut y: Value) -> Result<Value, Box<dyn std::error::Error>> {
         match x.data {
@@ -117,10 +125,10 @@ impl Value {
                     Val::F64(f_y) => {
                         match x.dt {
                             TEXTBUFFER => {
-                                return Result::Ok(Value::text_buffer(string_op_string_int(op, s_x, f_y as i64)));
+                                return Result::Ok(Value::text_buffer(string_op_string_float(op, s_x, f_y)));
                             }
                             _ => {
-                                return Result::Ok(Value::from(string_op_string_int(op, s_x, f_y as i64)).unwrap());
+                                return Result::Ok(Value::from(string_op_string_float(op, s_x, f_y)).unwrap());
                             }
                         }
                     }
