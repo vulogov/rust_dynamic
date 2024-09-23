@@ -26,7 +26,7 @@ impl Value {
                         res = res + value;
                         return res;
                     }
-                    Err(err) => {
+                    Err(_) => {
                         return self.clone();
                     }
                 }
