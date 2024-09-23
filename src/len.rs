@@ -4,6 +4,12 @@ use crate::types::*;
 impl Value {
     pub fn len(&self) -> usize {
         match self.dt {
+            STRING | TEXTBUFFER => {
+                match &self.data {
+                    Val::String(v) => return v.len(),
+                    _ => return 0,
+                }
+            }
             LIST | RESULT => {
                 match &self.data {
                     Val::List(v) => return v.len(),
@@ -41,7 +47,15 @@ impl Value {
                 }
             }
             NODATA => return 0,
-            _ => return 1,
+            _ => {
+                let str_val = match self.conv(STRING) {
+                    Ok(str_val) => str_val,
+                    Err(_) => {
+                        return 1;
+                    }
+                };
+                return str_val.len();
+            }
         }
     }
 }
