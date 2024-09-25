@@ -210,7 +210,7 @@ fn value_list_conversion(
             }
             return Result::Ok(Value::from_dict(res));
         }
-        STRING => {
+        STRING | TEXTBUFFER => {
             let mut out: String = "[".to_string();
             for v in val {
                 match v.conv(STRING) {
@@ -223,7 +223,11 @@ fn value_list_conversion(
                 }
             }
             out = out + &"]".to_string();
-            return Result::Ok(Value::from_string(out));
+            if t == STRING {
+                return Result::Ok(Value::from_string(out));
+            } else {
+                return Result::Ok(Value::text_buffer(out));
+            }
         }
         _ => Err(format!("Can not convert list to {:?}", &t).into()),
     }
@@ -280,7 +284,7 @@ fn value_queue_conversion(
             }
             return Result::Ok(Value::from_dict(res));
         }
-        STRING => {
+        STRING | TEXTBUFFER => {
             let mut out: String = format!("{}[", st).to_string();
             for v in val {
                 match v.conv(STRING) {
@@ -293,7 +297,11 @@ fn value_queue_conversion(
                 }
             }
             out = out + &"]".to_string();
-            return Result::Ok(Value::from_string(out));
+            if t == STRING {
+                return Result::Ok(Value::from_string(out));
+            } else {
+                return Result::Ok(Value::text_buffer(out));
+            }
         }
         _ => Err(format!("Can not convert list to {:?}", &t).into()),
     }
@@ -331,7 +339,7 @@ fn value_lambda_conversion(
                 return Result::Ok(Value::from_bool(true));
             }
         }
-        STRING => {
+        STRING | TEXTBUFFER => {
             let mut out: String = "lambda[".to_string();
             for v in val {
                 match v.conv(STRING) {
@@ -344,7 +352,11 @@ fn value_lambda_conversion(
                 }
             }
             out = out + &"]".to_string();
-            return Result::Ok(Value::from_string(out));
+            if t == STRING {
+                return Result::Ok(Value::from_string(out));
+            } else {
+                return Result::Ok(Value::text_buffer(out));
+            }
         }
         _ => Err(format!("Can not convert lambda to {:?}", &t).into()),
     }
@@ -390,7 +402,7 @@ fn value_map_conversion(
             }
             return Result::Ok(Value::from_list(res));
         }
-        STRING => {
+        STRING | TEXTBUFFER => {
             let mut out: String = "{".to_string();
             for (k, v) in val {
                 match v.conv(STRING) {
@@ -405,7 +417,11 @@ fn value_map_conversion(
                 }
             }
             out = out + &"}".to_string();
-            return Result::Ok(Value::from_string(out));
+            if t == STRING {
+                return Result::Ok(Value::from_string(out));
+            } else {
+                return Result::Ok(Value::text_buffer(out));
+            }
         }
         _ => Err(format!("Can not convert map to {:?}", &t).into()),
     }

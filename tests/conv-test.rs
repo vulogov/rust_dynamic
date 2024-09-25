@@ -124,6 +124,13 @@ mod tests {
         assert_eq!(val.cast_string().unwrap(), "{ answer=42 :: }");
     }
     #[test]
+    fn test_conv_map_textbuffer() {
+        let val = Value::dict()
+            .set("answer".to_string(), Value::from(42 as i64).unwrap())
+            .conv(TEXTBUFFER).unwrap();
+        assert_eq!(val.cast_string().unwrap(), "{ answer=42 :: }");
+    }
+    #[test]
     fn test_conv_map_list() {
         let val = Value::dict()
             .set("answer".to_string(), Value::from(42 as i64).unwrap())
