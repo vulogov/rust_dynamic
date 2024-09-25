@@ -26,6 +26,11 @@ mod tests {
         assert_eq!(val.cast_string().unwrap(), "42.0");
     }
     #[test]
+    fn test_conv_float_textbuffer() {
+        let val = Value::from(42.0 as f64).unwrap().conv(TEXTBUFFER).unwrap();
+        assert_eq!(val.cast_string().unwrap(), "42.0");
+    }
+    #[test]
     fn test_conv_float_list_check_len() {
         let val = Value::from(42.0 as f64).unwrap().conv(LIST).unwrap();
         assert_eq!(val.len(), 1);

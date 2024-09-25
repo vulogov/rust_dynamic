@@ -30,6 +30,10 @@ fn value_float_conversion(t: u16, ot: u16, val: f64) -> Result<Value, Box<dyn st
             let mut buffer = dtoa::Buffer::new();
             return Result::Ok(Value::from_string(buffer.format(val).to_string()));
         }
+        TEXTBUFFER => {
+            let mut buffer = dtoa::Buffer::new();
+            return Result::Ok(Value::text_buffer(buffer.format(val).to_string()));
+        }
         LIST => {
             return Result::Ok(Value::from(vec![Value::from(val as f64).unwrap()]).unwrap());
         }
@@ -65,6 +69,10 @@ fn value_integer_conversion(
         STRING => {
             let mut buffer = itoa::Buffer::new();
             return Result::Ok(Value::from_string(buffer.format(val).to_string()));
+        }
+        TEXTBUFFER => {
+            let mut buffer = itoa::Buffer::new();
+            return Result::Ok(Value::text_buffer(buffer.format(val).to_string()));
         }
         LIST => {
             return Result::Ok(Value::from(vec![Value::from(val as i64).unwrap()]).unwrap());
@@ -144,6 +152,9 @@ fn value_bool_conversion(t: u16, ot: u16, val: bool) -> Result<Value, Box<dyn st
         }
         STRING => {
             return Result::Ok(Value::from_string(format!("{}", val)));
+        }
+        TEXTBUFFER => {
+            return Result::Ok(Value::text_buffer(format!("{}", val)));
         }
         LIST => {
             return Result::Ok(Value::from(vec![Value::from_bool(val)]).unwrap());
