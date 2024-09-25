@@ -1,13 +1,17 @@
+use crate::types::*;
+use crate::value::Value;
 use dtoa;
 use itoa;
 use rustils;
 use std::collections::hash_map::HashMap;
-use crate::value::Value;
-use crate::types::*;
 
 fn value_float_conversion(t: u16, ot: u16, val: f64) -> Result<Value, Box<dyn std::error::Error>> {
     if ot != FLOAT {
-        return Err(format!("Source value is not FLOAT but {:?} and not suitable for conversion", &ot).into());
+        return Err(format!(
+            "Source value is not FLOAT but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
     }
     match t {
         FLOAT => {
@@ -33,9 +37,17 @@ fn value_float_conversion(t: u16, ot: u16, val: f64) -> Result<Value, Box<dyn st
     }
 }
 
-fn value_integer_conversion(t: u16, ot: u16, val: i64) -> Result<Value, Box<dyn std::error::Error>> {
+fn value_integer_conversion(
+    t: u16,
+    ot: u16,
+    val: i64,
+) -> Result<Value, Box<dyn std::error::Error>> {
     if ot != INTEGER {
-        return Err(format!("Source value is not INTEGER but {:?} and not suitable for conversion", &ot).into());
+        return Err(format!(
+            "Source value is not INTEGER but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
     }
     match t {
         FLOAT => {
@@ -61,35 +73,41 @@ fn value_integer_conversion(t: u16, ot: u16, val: i64) -> Result<Value, Box<dyn 
     }
 }
 
-fn value_string_conversion(t: u16, ot: u16, val: &String) -> Result<Value, Box<dyn std::error::Error>> {
+fn value_string_conversion(
+    t: u16,
+    ot: u16,
+    val: &String,
+) -> Result<Value, Box<dyn std::error::Error>> {
     if ot != STRING && ot != TEXTBUFFER {
-        return Err(format!("Source value is not STRING but {:?} and not suitable for conversion", &ot).into());
+        return Err(format!(
+            "Source value is not STRING but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
     }
     match t {
-        FLOAT => {
-            match rustils::parse::double::string_to_f64_res(val.to_string()) {
-                Ok(f_res) => {
-                    return Result::Ok(Value::from(f_res as f64).unwrap());
-                }
-                Err(err) => Err(format!("Can not convert string to float {:?}", err).into()),
+        FLOAT => match rustils::parse::double::string_to_f64_res(val.to_string()) {
+            Ok(f_res) => {
+                return Result::Ok(Value::from(f_res as f64).unwrap());
             }
-        }
-        INTEGER => {
-            match rustils::parse::long::string_to_i64_res(val.to_string()) {
-                Ok(i_res) => {
-                    return Result::Ok(Value::from(i_res as i64).unwrap());
-                }
-                Err(err) => Err(format!("Can not convert string to integer {:?}", err).into()),
+            Err(err) => Err(format!("Can not convert string to float {:?}", err).into()),
+        },
+        INTEGER => match rustils::parse::long::string_to_i64_res(val.to_string()) {
+            Ok(i_res) => {
+                return Result::Ok(Value::from(i_res as i64).unwrap());
             }
-        }
+            Err(err) => Err(format!("Can not convert string to integer {:?}", err).into()),
+        },
         BOOL => {
-            return Result::Ok(Value::from_bool(rustils::parse::boolean::string_to_bool(val.to_string())));
+            return Result::Ok(Value::from_bool(rustils::parse::boolean::string_to_bool(
+                val.to_string(),
+            )));
         }
         STRING => {
             return Result::Ok(Value::from_string(val.to_string()));
         }
         TEXTBUFFER => {
-            return Result::Ok(Value::from_string(val.to_string()));
+            return Result::Ok(Value::text_buffer(val.to_string()));
         }
         LIST => {
             return Result::Ok(Value::from(vec![Value::from(val.to_string()).unwrap()]).unwrap());
@@ -100,7 +118,11 @@ fn value_string_conversion(t: u16, ot: u16, val: &String) -> Result<Value, Box<d
 
 fn value_bool_conversion(t: u16, ot: u16, val: bool) -> Result<Value, Box<dyn std::error::Error>> {
     if ot != BOOL {
-        return Err(format!("Source value is not BOOL but {:?} and not suitable for conversion", &ot).into());
+        return Err(format!(
+            "Source value is not BOOL but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
     }
     match t {
         FLOAT => {
@@ -121,7 +143,7 @@ fn value_bool_conversion(t: u16, ot: u16, val: bool) -> Result<Value, Box<dyn st
             return Result::Ok(Value::from_bool(val));
         }
         STRING => {
-            return Result::Ok(Value::from_string(format!("{}",val)));
+            return Result::Ok(Value::from_string(format!("{}", val)));
         }
         LIST => {
             return Result::Ok(Value::from(vec![Value::from_bool(val)]).unwrap());
@@ -130,9 +152,17 @@ fn value_bool_conversion(t: u16, ot: u16, val: bool) -> Result<Value, Box<dyn st
     }
 }
 
-fn value_list_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, Box<dyn std::error::Error>> {
+fn value_list_conversion(
+    t: u16,
+    ot: u16,
+    val: &Vec<Value>,
+) -> Result<Value, Box<dyn std::error::Error>> {
     if ot != LIST && ot != RESULT {
-        return Err(format!("Source value is not LIST but {:?} and not suitable for conversion", &ot).into());
+        return Err(format!(
+            "Source value is not LIST but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
     }
     match t {
         LIST => {
@@ -160,7 +190,7 @@ fn value_list_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, Box
                 return Result::Ok(Value::from_bool(true));
             }
         }
-        MAP  => {
+        MAP => {
             let mut res: HashMap<String, Value> = HashMap::new();
             let mut c: u64 = 0;
             for v in val {
@@ -188,10 +218,18 @@ fn value_list_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, Box
     }
 }
 
-fn value_queue_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, Box<dyn std::error::Error>> {
+fn value_queue_conversion(
+    t: u16,
+    ot: u16,
+    val: &Vec<Value>,
+) -> Result<Value, Box<dyn std::error::Error>> {
     let mut st = "queue";
     if ot != QUEUE && ot != FIFO {
-        return Err(format!("Source value is not QUEUE/FIFO but {:?} and not suitable for conversion", &ot).into());
+        return Err(format!(
+            "Source value is not QUEUE/FIFO but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
     }
     if ot == FIFO {
         st = "fifo";
@@ -250,9 +288,17 @@ fn value_queue_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, Bo
     }
 }
 
-fn value_lambda_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, Box<dyn std::error::Error>> {
+fn value_lambda_conversion(
+    t: u16,
+    ot: u16,
+    val: &Vec<Value>,
+) -> Result<Value, Box<dyn std::error::Error>> {
     if ot != LAMBDA {
-        return Err(format!("Source value is not LAMBDA but {:?} and not suitable for conversion", &ot).into());
+        return Err(format!(
+            "Source value is not LAMBDA but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
     }
     match t {
         LIST => {
@@ -293,14 +339,22 @@ fn value_lambda_conversion(t: u16, ot: u16, val: &Vec<Value>) -> Result<Value, B
     }
 }
 
-fn value_map_conversion(t: u16, ot: u16, val: &HashMap<String,Value>) -> Result<Value, Box<dyn std::error::Error>> {
-    if ot != MAP && ot != ASSOCIATION && ot != INFO && ot != CONFIG  {
-        return Err(format!("Source value is not MAP but {:?} and not suitable for conversion", &ot).into());
+fn value_map_conversion(
+    t: u16,
+    ot: u16,
+    val: &HashMap<String, Value>,
+) -> Result<Value, Box<dyn std::error::Error>> {
+    if ot != MAP && ot != ASSOCIATION && ot != INFO && ot != CONFIG {
+        return Err(format!(
+            "Source value is not MAP but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
     }
     match t {
         MAP => {
             let mut res: HashMap<String, Value> = HashMap::new();
-            for (k,v) in val {
+            for (k, v) in val {
                 res.insert(k.clone(), v.clone());
             }
             return Result::Ok(Value::from_dict(res));
@@ -320,14 +374,14 @@ fn value_map_conversion(t: u16, ot: u16, val: &HashMap<String,Value>) -> Result<
         }
         LIST => {
             let mut res: Vec<Value> = Vec::new();
-            for (k,v) in val {
+            for (k, v) in val {
                 res.push(Value::pair(Value::from_string(k.clone()), v.clone()));
             }
             return Result::Ok(Value::from_list(res));
         }
         STRING => {
             let mut out: String = "{".to_string();
-            for (k,v) in val {
+            for (k, v) in val {
                 match v.conv(STRING) {
                     Ok(s_v) => {
                         out = out + &" ".to_string();
@@ -353,35 +407,29 @@ impl Value {
             Val::I64(i_val) => value_integer_conversion(t, self.dt, *i_val),
             Val::String(s_val) => value_string_conversion(t, self.dt, &s_val),
             Val::Bool(b_val) => value_bool_conversion(t, self.dt, *b_val),
-            _ => {
-                match self.dt {
-                    LIST | RESULT => {
-                        match &self.data {
-                            Val::List(l_val) => value_list_conversion(t, self.dt, l_val),
-                            _ => Err(format!("Can not convert LIST/RESULT Value from {:?}", &self.dt).into()),
-                        }
+            _ => match self.dt {
+                LIST | RESULT => match &self.data {
+                    Val::List(l_val) => value_list_conversion(t, self.dt, l_val),
+                    _ => {
+                        Err(format!("Can not convert LIST/RESULT Value from {:?}", &self.dt).into())
                     }
-                    QUEUE | FIFO => {
-                        match &self.data {
-                            Val::Queue(q_val) => value_queue_conversion(t, self.dt, q_val),
-                            _ => Err(format!("Can not convert QUEUE/FIFO Value from {:?}", &self.dt).into()),
-                        }
+                },
+                QUEUE | FIFO => match &self.data {
+                    Val::Queue(q_val) => value_queue_conversion(t, self.dt, q_val),
+                    _ => {
+                        Err(format!("Can not convert QUEUE/FIFO Value from {:?}", &self.dt).into())
                     }
-                    LAMBDA => {
-                        match &self.data {
-                            Val::Lambda(l_val) => value_lambda_conversion(t, self.dt, l_val),
-                            _ => Err(format!("Can not convert LAMBDA Value from {:?}", &self.dt).into()),
-                        }
-                    }
-                    MAP | INFO | CONFIG | ASSOCIATION => {
-                        match &self.data {
-                            Val::Map(m_val) => value_map_conversion(t, self.dt, m_val),
-                            _ => Err(format!("Can not convert MAP Value from {:?}", &self.dt).into()),
-                        }
-                    }
-                    _ => Err(format!("Can not convert Value from {:?}", &self.dt).into()),
-                }
-            }
+                },
+                LAMBDA => match &self.data {
+                    Val::Lambda(l_val) => value_lambda_conversion(t, self.dt, l_val),
+                    _ => Err(format!("Can not convert LAMBDA Value from {:?}", &self.dt).into()),
+                },
+                MAP | INFO | CONFIG | ASSOCIATION => match &self.data {
+                    Val::Map(m_val) => value_map_conversion(t, self.dt, m_val),
+                    _ => Err(format!("Can not convert MAP Value from {:?}", &self.dt).into()),
+                },
+                _ => Err(format!("Can not convert Value from {:?}", &self.dt).into()),
+            },
         }
     }
 }
