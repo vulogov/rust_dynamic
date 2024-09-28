@@ -8,8 +8,15 @@ impl Value {
         self.stamp
     }
     pub fn get_timestamp_as_datetime(&self) -> DateTime<Utc> {
-        let ts = Timestamp::from_millis(self.stamp as i128);
-        ts.to_utc_datetime()
+        match self.data {
+            Val::Time(u_val) => {
+                let ts = Timestamp::from_nanos(u_val as i128);
+                return DateTime::from_timestamp_nanos(ts.at_precision(9) as i64);
+            }
+            _ => {
+                return Utc::now();
+            }
+        }
     }
     pub fn timestamp_diff(&self, other: Self) -> f64 {
         self.stamp - other.get_timestamp()
@@ -43,7 +50,7 @@ impl Value {
         match self.data {
             Val::Time(u_val) => {
                 let ts = Timestamp::from_nanos(u_val as i128);
-                return Result::Ok(ts.to_utc_datetime());
+                return Ok(DateTime::from_timestamp_nanos(ts.at_precision(9) as i64));
             }
             _ => Err("Value of type TIME is corrupted".into()),
         }
