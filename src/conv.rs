@@ -427,6 +427,37 @@ fn value_map_conversion(
     }
 }
 
+fn value_json_conversion(
+    t: u16,
+    ot: u16,
+    val: &serde_json::Value,
+) -> Result<Value, Box<dyn std::error::Error>> {
+    if ot != JSON {
+        return Err(format!(
+            "Source value is not JSON but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
+    }
+
+    match t {
+        STRING | TEXTBUFFER => {
+            let Ok(str_json) = serde_json::to_string(val) else { return Err(format!("Error casting JSON to string").into()); };
+            return Ok(Value::from_string(str_json));
+        }
+        _ => {
+            match Value::json(val.clone()).cast_json_to_value() {
+                Ok(value) => {
+                    return value.conv(ot);
+                }
+                Err(err) => {
+                    return Err(format!("Can not convert json to INTEGER: {:?} due to: {}", &t, err).into());
+                }
+            }
+        }
+    }
+}
+
 impl Value {
     pub fn conv(&self, t: u16) -> Result<Self, Box<dyn std::error::Error>> {
         match &self.data {
@@ -434,6 +465,7 @@ impl Value {
             Val::I64(i_val) => value_integer_conversion(t, self.dt, *i_val),
             Val::String(s_val) => value_string_conversion(t, self.dt, &s_val),
             Val::Bool(b_val) => value_bool_conversion(t, self.dt, *b_val),
+            Val::Json(j_val) => value_json_conversion(t, self.dt, &j_val),
             _ => match self.dt {
                 LIST | RESULT => match &self.data {
                     Val::List(l_val) => value_list_conversion(t, self.dt, l_val),

@@ -38,6 +38,8 @@ impl Value {
             QUEUE       => "Queue",
             FIFO        => "Fifo",
             OPERATOR    => "Operator",
+            JSON        => "JSON",
+            JSON_WRAPPED => "JSON_WRAPPED",
 
             _ => "Unknown",
         }

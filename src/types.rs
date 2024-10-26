@@ -1,3 +1,4 @@
+use serde_json;
 use std::collections::hash_map::HashMap;
 use crate::value::Value;
 use serde::{Deserialize, Serialize};
@@ -35,6 +36,8 @@ pub const OPERATOR: u16     = 20;
 pub const CONTEXT: u16      = 21;
 pub const TEXTBUFFER: u16   = 22;
 pub const LARGE_FLOAT: u16  = 23;
+pub const JSON: u16         = 24;
+pub const JSON_WRAPPED: u16 = 25;
 pub const RESULT: u16       = 92;
 pub const EXIT: u16         = 93;
 pub const ASSOCIATION: u16  = 94;
@@ -69,4 +72,5 @@ pub enum Val {
     Time(u128),
     Metrics(Vec<Metric>),
     Operator(Operator),
+    Json(serde_json::Value),
 }

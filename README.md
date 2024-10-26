@@ -22,6 +22,7 @@ rust_dynamic, a crate developed for the Rust language, encompasses primitives de
 * NODATA
 * Error
 * Metrics as a Vector of TIMESTAMP->F64 samples
+* JSON - dynamic Value object containing JSON
 
 Dynamic values are wrapped and stored inside a Value structure and could be castable back into the original Rust value.
 
@@ -68,6 +69,7 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::from_list() | Create dynamic object of type LIST and initialize it from Vec<Value> |
 | Value::from_dict() | Create dynamic object of type MAP and initialize it from HashMap<String, Value> |
 | Value::dict() | Create dynamic empty object of type MAP  |
+| Value::json() | Create dynamic empty object for storing JSON values  |
 | Value::none() | Create dynamic object that wraps value of None  |
 | Value::nodata() | Create dynamic object that contains no data |
 | Value::now() | Return dynamic object of type TIME containing current number of nanosecods from UNIX_EPOCH |
@@ -109,6 +111,7 @@ rust_dynamic supports a number of casting functions that will try to extract wra
 | Value::cast_complex_int() | Return Complex<i64> from CINTEGER object |
 | Value::cast_complex_float() | Return Complex<f64> from CFLOAT object |
 | Value::export_float() | Return Vec<f64> from Value object |
+| Value::cast_json_to_value() | Cast Dynamic value from JSON object |
 
 
 Example:
@@ -122,6 +125,20 @@ let mut value = Value::from(42).unwrap();
 // Then we can cast raw value back from the dynamic object
 let raw_value = value.cast_integer().unwrap()
 ```
+
+And here is an example of creating and casting JSON data
+
+```rust
+//
+// First, we will create a Value of JSON type
+//
+let data = Value::json(serde_json::json!(42));
+//
+// Now, we are converting JSON values to Dynamic types
+//
+let value = data.cast_json_to_value()
+```
+
 
 ## How to set attributes to the Value
 
@@ -147,7 +164,7 @@ let v = Value::from(42 as i64).unwrap()
 
 ## How to serialize and deserialize dynamically-typed values
 
-There are two serialization formats that rust_dynamic presently supports: JSON and Bincode.
+There are two serialization formats that rust_dynamic presently supports: JSON and Bincode. If you are serialize to Biuncode, specail provisioning (wrapping) for objects holding JSON's will be done.
 
 | Function name | Description |
 |---|---|

@@ -2,10 +2,38 @@ use crate::value::Value;
 use crate::types::*;
 use bincode2;
 use nanoid::nanoid;
+use easy_error::{Error, bail};
 
 impl Value {
-    pub fn to_binary(&self) -> Result<Vec<u8>, bincode2::Error> {
-        bincode2::serialize(self)
+    pub fn to_binary(&self) -> Result<Vec<u8>, Error> {
+        if self.dt == JSON {
+            let str_json = match self.conv(STRING) {
+                Ok(str_json) => str_json,
+                Err(err) => {
+                    bail!("to_binary() returns: {}", err);
+                }
+            };
+            let str_data = match str_json.cast_string() {
+                Ok(str_data) => str_data,
+                Err(err) => {
+                    bail!("to_binary() returns: {}", err);
+                }
+            };
+            let wrapped_json = Value::json_wrap(str_data);
+            match bincode2::serialize(&wrapped_json) {
+                Ok(res) => return Ok(res),
+                Err(err) => {
+                    bail!("bincode2::serialize() returns {}", err);
+                }
+            }
+        } else {
+            match bincode2::serialize(self) {
+                Ok(res) => return Ok(res),
+                Err(err) => {
+                    bail!("bincode2::serialize() returns {}", err);
+                }
+            }
+        }
     }
     pub fn compile(&self) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
         if self.dt != LAMBDA {
@@ -20,20 +48,45 @@ impl Value {
             }
         }
     }
-    pub fn from_binary(data: Vec<u8>) -> Result<Value, bincode2::Error> {
-        bincode2::deserialize::<Value>(&data)
+    pub fn from_binary(data: Vec<u8>) -> Result<Value, Error> {
+        match bincode2::deserialize::<Value>(&data) {
+            Ok(value) => {
+                if value.dt == JSON_WRAPPED {
+                    match value.cast_string() {
+                        Ok(str_data) => {
+                            match serde_json::from_str(&str_data) {
+                                Ok(json_val) => {
+                                    return Ok(Value::json(json_val));
+                                }
+                                Err(err) => {
+                                    bail!("{}", err);
+                                }
+                            }
+                        }
+                        Err(err) => {
+                            bail!("{}", err);
+                        }
+                    }
+                } else {
+                    return Ok(value)
+                }
+            }
+            Err(err) => {
+                bail!("{}", err);
+            }
+        }
     }
-    pub fn wrap(&self) -> Result<Value, bincode2::Error> {
+    pub fn wrap(&self) -> Result<Value, Error> {
         match self.to_binary() {
             Ok(res) => {
                 return Result::Ok(Value::make_envelope(res));
             }
-            Err(err) => return Err(err),
+            Err(err) => bail!("{}", err),
         }
     }
-    pub fn unwrap(&self) -> Result<Value, Box<dyn std::error::Error>> {
+    pub fn unwrap(&self) -> Result<Value, Error> {
         if self.dt != ENVELOPE {
-            return Err("You requested to unwrap a non-envelope object".into());
+            bail!("You requested to unwrap a non-envelope object");
         }
         match &self.data {
             Val::Binary(data) => {
@@ -42,10 +95,10 @@ impl Value {
                         res.id = nanoid!();
                         return Result::Ok(res);
                     }
-                    Err(err) => return Err(err),
+                    Err(err) => bail!("{}", err),
                 }
             }
-            _ => Err(format!("Unwrappable object {}", self.id).into()),
+            _ => bail!("Unwrappable object {}", self.id),
         }
     }
 }

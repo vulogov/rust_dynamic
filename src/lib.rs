@@ -6,6 +6,8 @@ pub mod bind;
 pub mod bincode;
 pub mod carcdr;
 pub mod cast;
+pub mod cast_json_to_value;
+pub mod wrap_json;
 pub mod cast_generic;
 pub mod conv;
 pub mod ctx;

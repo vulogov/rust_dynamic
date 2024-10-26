@@ -202,4 +202,52 @@ impl Value {
             tags:   HashMap::new(),
         }
     }
+    pub fn json(value: serde_json::Value) -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   JSON,
+            q:    100.0,
+            data: Val::Json(value),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
+    pub fn json_array() -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   JSON,
+            q:    100.0,
+            data: Val::Json(serde_json::json!([])),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
+    pub fn json_object() -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   JSON,
+            q:    100.0,
+            data: Val::Json(serde_json::json!({})),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
+    pub fn json_wrap(data: String) -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   JSON_WRAPPED,
+            q:    100.0,
+            data: Val::String(data),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
 }

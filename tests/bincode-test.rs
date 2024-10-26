@@ -31,6 +31,14 @@ mod tests {
         assert_eq!(data2.cast_int().unwrap(), 42);
     }
     #[test]
+    fn test_serialize_unwrap_json1() {
+        let data = Value::json(serde_json::json!(42));
+        let bin_data = data.wrap().unwrap();
+        let data2: Value = bin_data.unwrap().unwrap();
+        let data3 = data2.cast_json_to_value().unwrap();
+        assert_eq!(data3.cast_int().unwrap(), 42);
+    }
+    #[test]
     fn test_serialize_unwrap_dict() {
         let data = Value::dict();
         let bin_data = data.wrap().unwrap();
