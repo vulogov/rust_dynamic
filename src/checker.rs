@@ -8,4 +8,7 @@ impl Value {
     pub fn is_none(&self) -> bool {
         self.is_type(NONE)
     }
+    pub fn is_json(&self) -> bool {
+        self.is_type(JSON)
+    }
 }
