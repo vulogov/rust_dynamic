@@ -2,12 +2,25 @@ use std::ops::{Add, Sub, Mul, Div};
 use num::complex::Complex;
 use crate::value::Value;
 use crate::types::*;
+extern crate json_value_merge;
+use json_value_merge::Merge;
 
 pub enum Ops {
     Add,
     Sub,
     Mul,
     Div,
+}
+
+fn numeric_op_json_json(op: Ops, x: serde_json::Value, y: serde_json::Value) -> serde_json::Value {
+    match op {
+        Ops::Add => {
+            let mut res = x.clone();
+            res.merge(&y);
+            return res.into();
+        }
+        _ => x,
+    }
 }
 
 fn numeric_op_float_float(op: Ops, x: f64, y: f64) -> f64 {
@@ -72,6 +85,14 @@ fn string_op_string_float(op: Ops, x: String, y: f64) -> String {
 impl Value {
     pub fn numeric_op(op: Ops, mut x: Value, mut y: Value) -> Result<Value, Box<dyn std::error::Error>> {
         match x.data {
+            Val::Json(j_x) => {
+                match y.data {
+                    Val::Json(j_y) => {
+                        return Result::Ok(Value::json(numeric_op_json_json(op, j_x, j_y)));
+                    }
+                    _ => return Err("Incompartible X and Y argument for the JSON math operations".into()),
+                }
+            }
             Val::F64(f_x) => {
                 match y.data {
                     Val::F64(f_y) => {

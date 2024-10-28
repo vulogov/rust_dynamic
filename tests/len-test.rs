@@ -39,4 +39,9 @@ mod tests {
         let v = Value::from_float(3.14);
         assert_eq!(v.len(), 4);
     }
+    #[test]
+    fn test_len_json_array() {
+        let v = Value::json(serde_json::json!([3.14, 42]));
+        assert_eq!(v.len(), 2);
+    }
 }

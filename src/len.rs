@@ -4,6 +4,20 @@ use crate::types::*;
 impl Value {
     pub fn len(&self) -> usize {
         match self.dt {
+            JSON => {
+                match self.cast_json() {
+                    Ok(j_value) => {
+                        if j_value.is_array() {
+                            return j_value.as_array().unwrap().len();
+                        } else {
+                            return 1;
+                        }
+                    }
+                    Err(_) => {
+                        return 0;
+                    }
+                }
+            }
             STRING | TEXTBUFFER => {
                 match &self.data {
                     Val::String(v) => return v.len(),

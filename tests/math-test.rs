@@ -89,4 +89,12 @@ mod tests {
         x = x + y;
         assert_eq!(x.cast_string().unwrap(), "Hello 3.14");
     }
+    #[test]
+    fn test_math_json_merge() {
+        let mut x = Value::json(serde_json::json!([1]));
+        let y = Value::json(serde_json::json!([2]));
+        x = x + y;
+        println!("{:?}", x.cast_json());
+        assert_eq!(x.cast_json().unwrap().as_array().unwrap().len(), 2);
+    }
 }
