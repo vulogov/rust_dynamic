@@ -174,6 +174,17 @@ impl Value {
             _ => return Err("This Dynamic type is not METRICS".into()),
         }
     }
+    pub fn cast_json(&self) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
+        if self.dt != JSON {
+            return Err("This Dynamic type is not JSON".into());
+        }
+        match &self.data {
+            Val::Json(j_val) => {
+                return Result::Ok(j_val.clone());
+            }
+            _ => return Err("This Dynamic type is not JSON".into()),
+        }
+    }
     pub fn cast_queue(&self) -> Result<Value, Box<dyn std::error::Error>> {
         if self.dt != QUEUE {
             return Err(format!("This is not a FIFO value but {}", &self.dt).into());

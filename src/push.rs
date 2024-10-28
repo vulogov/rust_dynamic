@@ -6,6 +6,34 @@ use nanoid::nanoid;
 impl Value {
     pub fn push(&mut self, value: Value) -> Self {
         match self.dt {
+            JSON => {
+                match &self.data {
+                    Val::Json(v) => {
+                        if ! v.is_array() {
+                            return self.clone();
+                        }
+                        match value.cast_value_to_json() {
+                            Ok(j_value) => {
+                                match self.cast_json() {
+                                    Ok(mut j_arr_value) => {
+                                        let j_array = j_arr_value.as_array_mut().unwrap();
+                                        j_array.push(j_value);
+                                        return Value::json(serde_json::to_value(j_array).unwrap());
+                                    }
+                                    Err(_) => {
+                                        return self.clone();
+                                    }
+                                }
+                            }
+                            Err(_) => {
+                                return self.clone();
+                            }
+                        }
+                    }
+                    _ => {}
+                }
+                return self.clone();
+            }
             LIST | RESULT => {
                 let mut data: Vec<Value> = Vec::new();
                 match &self.data {

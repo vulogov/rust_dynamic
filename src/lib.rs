@@ -7,6 +7,7 @@ pub mod bincode;
 pub mod carcdr;
 pub mod cast;
 pub mod cast_json_to_value;
+pub mod cast_value_to_json;
 pub mod wrap_json;
 pub mod cast_generic;
 pub mod conv;

@@ -17,6 +17,20 @@ mod tests {
         assert_eq!(v.len(), 1);
     }
     #[test]
+    fn test_push_list_json1() {
+        let mut v = Value::json(serde_json::json!([]));
+        v = v.push(Value::from(42.0).unwrap());
+        let j_value = v.cast_json().unwrap();
+        assert_eq!(j_value.as_array().unwrap().len(), 1);
+    }
+    #[test]
+    fn test_push_list_json2() {
+        let mut v = Value::json(serde_json::json!([]));
+        v = v.push(Value::from(42.0).unwrap());
+        let j_value = v.cast_json().unwrap();
+        assert_eq!(j_value.as_array().unwrap()[0].as_f64().unwrap(), 42.0);
+    }
+    #[test]
     fn test_push_lambda() {
         let mut v = Value::lambda();
         v = v.push(Value::from(42.0).unwrap());

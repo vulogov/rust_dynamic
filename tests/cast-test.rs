@@ -44,6 +44,12 @@ mod tests {
         assert_eq!(v2.cast_int().unwrap(), 42 as i64);
     }
     #[test]
+    fn test_cast_json_type() {
+        let v = Value::json(serde_json::json![42]);
+        let j_value = v.cast_json().unwrap();
+        assert_eq!(j_value.as_i64().unwrap(), 42 as i64);
+    }
+    #[test]
     fn test_cast_lambda_type() {
         let v = Value::to_lambda(vec![Value::from(42 as i64).unwrap()]);
         let l = v.cast_lambda().unwrap();

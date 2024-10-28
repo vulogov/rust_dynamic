@@ -15,6 +15,7 @@ mod tests {
         let data = Value::from(42 as i64).unwrap();
         let json_out = data.to_json().unwrap();
         let data2 = Value::from_json(json_out).unwrap();
+        println!("{:?}", &data2);
         assert_eq!(data2.cast_int().unwrap(), 42 as i64);
     }
     #[test]

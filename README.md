@@ -111,6 +111,7 @@ rust_dynamic supports a number of casting functions that will try to extract wra
 | Value::cast_complex_int() | Return Complex<i64> from CINTEGER object |
 | Value::cast_complex_float() | Return Complex<f64> from CFLOAT object |
 | Value::export_float() | Return Vec<f64> from Value object |
+| Value::cast_json() | Cast serde_json::Value from JSON object |
 | Value::cast_json_to_value() | Cast Dynamic value from JSON object |
 
 
