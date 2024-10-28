@@ -9,3 +9,4 @@
 * New method: ```Value::cast_json()``` Casting serde_json::Value out of Value::JSON object
 * New method: ```Value::cast_value_to_json()``` converting Value object to wrapped Value::JSON
 * New method: ```Value::cast_json_to_value()``` Convert wrapped Vaue::JSON object to appropriate Value
+* Support for Value::JSON in Value::conv()
