@@ -5,6 +5,27 @@ use crate::types::*;
 impl Value {
     pub fn fmap(&mut self, appfn: AppFn) -> Self {
         match self.dt {
+            JSON => {
+                let mut data: Vec<Value> = Vec::new();
+                match &self.data {
+                    Val::Json(v) => {
+                        if v.is_array() {
+                            for n in v.as_array().unwrap() {
+                                match Value::json(n.clone()).cast_json_to_value() {
+                                    Ok(value) => {
+                                        data.push(appfn(value));
+                                    }
+                                    Err(_) => {
+                                        continue;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    _ => {},
+                }
+                return Value::from_list(data);
+            }
             LIST | RESULT => {
                 let mut data: Vec<Value> = Vec::new();
                 match &self.data {

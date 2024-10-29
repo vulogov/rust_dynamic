@@ -56,4 +56,22 @@ mod tests {
         let v = Value::pair(Value::from_int(1), Value::from_int(2)).as_json_value();
         assert_eq!(v.as_array().unwrap()[0].as_i64().unwrap(), 1);
     }
+
+    #[test]
+    fn test_list_to_from_json1() {
+        let mut v = Value::list();
+        v = v.push(Value::from(42.0).unwrap());
+        let j_value = v.cast_value_to_json().unwrap();
+        assert_eq!(j_value.as_array().unwrap().len(), 1);
+    }
+
+    #[test]
+    fn test_list_to_from_json2() {
+        let mut v = Value::list();
+        v = v.push(Value::from(42.0).unwrap());
+        let j_value = v.cast_value_to_json().unwrap();
+        let j_object = Value::json(j_value);
+        let j_value2 = j_object.cast_json_to_value().unwrap();
+        assert_eq!(j_value2.cast_list().unwrap().len(), 1);
+    }
 }

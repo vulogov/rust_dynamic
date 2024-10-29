@@ -54,7 +54,7 @@ impl Value {
                                 let jv = Value::json(v.clone());
                                 match jv.cast_json_to_value() {
                                     Ok(ja_val) => {
-                                        res.push(ja_val);
+                                        res = res.push(ja_val);
                                     }
                                     Err(err) => {
                                         return Err(format!("JSON returns error during casting: {}", err).into());
@@ -79,7 +79,7 @@ impl Value {
                                 let jv = Value::json(j_val_value);
                                 match jv.cast_json_to_value() {
                                     Ok(ja_val) => {
-                                        res.set(n, ja_val);
+                                        res = res.set(n, ja_val);
                                     }
                                     Err(err) => {
                                         return Err(format!("JSON returns error during casting: {}", err).into());
