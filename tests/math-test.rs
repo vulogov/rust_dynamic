@@ -97,4 +97,13 @@ mod tests {
         println!("{:?}", x.cast_json());
         assert_eq!(x.cast_json().unwrap().as_array().unwrap().len(), 2);
     }
+    #[test]
+    fn test_math_metrics_push_through_add() {
+        let mut x = Value::metrics();
+        for n in 1..129 {
+            x = x + Value::from(n as f64).unwrap();
+        }
+        let m = x.car().expect("expecting car");
+        assert_eq!(m.get("value").unwrap().cast_float().unwrap(), 1.0 as f64);
+    }
 }

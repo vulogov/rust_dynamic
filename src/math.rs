@@ -12,6 +12,15 @@ pub enum Ops {
     Div,
 }
 
+fn numeric_op_metric_number(op: Ops, mut x: Value, y: Value) -> Value {
+    match op {
+        Ops::Add => {
+            return x.push(y)
+        }
+        _ => x,
+    }
+}
+
 fn numeric_op_json_json(op: Ops, x: serde_json::Value, y: serde_json::Value) -> serde_json::Value {
     match op {
         Ops::Add => {
@@ -85,6 +94,16 @@ fn string_op_string_float(op: Ops, x: String, y: f64) -> String {
 impl Value {
     pub fn numeric_op(op: Ops, mut x: Value, mut y: Value) -> Result<Value, Box<dyn std::error::Error>> {
         match x.data {
+            Val::Metrics(ref _m_x) => {
+                let y_val = match y.conv(FLOAT) {
+                    Ok(y_val) => y_val,
+                    Err(_) => {
+                        return Err("Incompartible Y argument for the metrics math operations".into())
+                    }
+                };
+                let x_val = x.clone();
+                return Result::Ok(numeric_op_metric_number(op, x_val, y_val));
+            }
             Val::Json(j_x) => {
                 match y.data {
                     Val::Json(j_y) => {
