@@ -5,6 +5,7 @@ use crate::types::*;
 extern crate json_value_merge;
 use json_value_merge::Merge;
 
+#[derive(Debug, Clone)]
 pub enum Ops {
     Add,
     Sub,
