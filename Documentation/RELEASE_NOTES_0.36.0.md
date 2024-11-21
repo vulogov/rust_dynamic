@@ -6,3 +6,5 @@
 * Value::car() support for Matrix
 * Value::cdr() support for Matrix
 * Value math operation support for Matrix
+* Value::conv(LIST) support for Matrix
+* Value::conv(MATRIX) support for List

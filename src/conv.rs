@@ -163,6 +163,31 @@ fn value_bool_conversion(t: u16, ot: u16, val: bool) -> Result<Value, Box<dyn st
     }
 }
 
+fn value_matrix_conversion(
+    t: u16,
+    ot: u16,
+    val: &Vec<Vec<Value>>,
+) -> Result<Value, Box<dyn std::error::Error>> {
+    if ot != MATRIX  {
+        return Err(format!(
+            "Source value is not LIST but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
+    }
+    match t {
+        LIST => {
+            let mut res: Vec<Value> = Vec::new();
+            for v in val {
+                let row = Value::from_list(v.to_vec());
+                res.push(row);
+            }
+            return Result::Ok(Value::from_list(res));
+        }
+        _ => Err(format!("Can not convert list to {:?}", &t).into()),
+    }
+}
+
 fn value_list_conversion(
     t: u16,
     ot: u16,
@@ -228,6 +253,25 @@ fn value_list_conversion(
             } else {
                 return Result::Ok(Value::text_buffer(out));
             }
+        }
+        MATRIX => {
+            let mut res: Vec<Vec<Value>> = Vec::new();
+            for r in val {
+                let row_val = match r.conv(LIST) {
+                    Ok(row) => row,
+                    Err(err) => {
+                        return Err(format!("Error converting row into matrix {}", err).into());
+                    }
+                };
+                let row = match row_val.cast_list() {
+                    Ok(row) => row,
+                    Err(err) => {
+                        return Err(format!("Error casting row into matrix {}", err).into());
+                    }
+                };
+                res.push(row);
+            }
+            return Result::Ok(Value::from_matrix(res));
         }
         _ => Err(format!("Can not convert list to {:?}", &t).into()),
     }
@@ -471,6 +515,12 @@ impl Value {
                     Val::List(l_val) => value_list_conversion(t, self.dt, l_val),
                     _ => {
                         Err(format!("Can not convert LIST/RESULT Value from {:?}", &self.dt).into())
+                    }
+                },
+                MATRIX => match &self.data {
+                    Val::Matrix(m_val) => value_matrix_conversion(t, self.dt, m_val),
+                    _ => {
+                        Err(format!("Can not convert MATRIX Value from {:?}", &self.dt).into())
                     }
                 },
                 QUEUE | FIFO => match &self.data {

@@ -144,6 +144,29 @@ mod tests {
         assert_eq!(val2.cast_int().unwrap(), 42 as i64);
     }
     #[test]
+    fn test_conv_matrix_list() {
+        let mut m1 = Value::matrix();
+        let mut v1 = Value::list();
+        v1 = v1.push(Value::from(42.0).unwrap());
+        v1 = v1.push(Value::from(41.0).unwrap());
+        m1 = m1.push(v1);
+        let val = m1.conv(LIST).unwrap();
+        let list_val = val.cast_list().unwrap();
+        let row = list_val[0].cast_list().unwrap();
+        assert_eq!(row[0].cast_float().unwrap(), 42.0 as f64);
+    }
+    #[test]
+    fn test_conv_list_matrix() {
+        let mut m1 = Value::list();
+        let mut v1 = Value::list();
+        v1 = v1.push(Value::from(42.0).unwrap());
+        v1 = v1.push(Value::from(41.0).unwrap());
+        m1 = m1.push(v1);
+        let val = m1.conv(MATRIX).unwrap();
+        let mat_val = val.cast_matrix().unwrap();
+        assert_eq!(mat_val[0][0].cast_float().unwrap(), 42.0 as f64);
+    }
+    #[test]
     fn test_conv_lambda_string() {
         let val = Value::to_lambda(vec![Value::from_int(42)]).conv(STRING).unwrap();
         assert_eq!(val.cast_string().unwrap(), "lambda[ 42 :: ]");
