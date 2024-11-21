@@ -12,6 +12,7 @@ pub mod cast_matrix;
 pub mod wrap_json;
 pub mod cast_generic;
 pub mod conv;
+pub mod conv_inner;
 pub mod ctx;
 pub mod ctxapplicative;
 pub mod create;

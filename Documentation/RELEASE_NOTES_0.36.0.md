@@ -8,3 +8,4 @@
 * Value math operation support for Matrix
 * Value::conv(LIST) support for Matrix
 * Value::conv(MATRIX) support for List
+* Value::conv_inner() - convert container inner data
