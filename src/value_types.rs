@@ -18,6 +18,7 @@ impl Value {
             PTR         => "Ptr",
             BIN         => "Binary",
             LIST        => "List",
+            MATRIX      => "Matrix",
             PAIR        => "Pair",
             MAP         => "Map",
             CONFIG      => "Config",

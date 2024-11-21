@@ -38,6 +38,7 @@ pub const TEXTBUFFER: u16   = 22;
 pub const LARGE_FLOAT: u16  = 23;
 pub const JSON: u16         = 24;
 pub const JSON_WRAPPED: u16 = 25;
+pub const MATRIX:       u16 = 26;
 pub const RESULT: u16       = 92;
 pub const EXIT: u16         = 93;
 pub const ASSOCIATION: u16  = 94;
@@ -64,6 +65,7 @@ pub enum Val {
     I64(i64),
     F64(f64),
     List(Vec<Value>),
+    Matrix(Vec<Vec<Value>>),
     Lambda(Vec<Value>),
     Queue(Vec<Value>),
     Map(HashMap<String, Value>),

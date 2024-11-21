@@ -17,6 +17,15 @@ mod tests {
         assert_eq!(v.len(), 1);
     }
     #[test]
+    fn test_push_matrix() {
+        let mut m = Value::matrix();
+        let mut v = Value::list();
+        v = v.push(Value::from(42.0).unwrap());
+        v = v.push(Value::from(41.0).unwrap());
+        m = m.push(v);
+        assert_eq!(m.len(), 2);
+    }
+    #[test]
     fn test_push_list_json1() {
         let mut v = Value::json(serde_json::json!([]));
         v = v.push(Value::from(42.0).unwrap());

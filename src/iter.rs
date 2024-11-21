@@ -30,6 +30,32 @@ impl Iterator for Value {
                 }
                 _ => return None,
             }
+        } else if self.curr == -1 && self.dt == MATRIX  {
+           match &self.data {
+               Val::Matrix(v) => {
+                   if v.len() > 0 {
+                       self.curr = 1;
+                       return Some(Value::from_list(v[0].clone()));
+                   } else {
+                       return None;
+                   }
+               }
+               _ => return None,
+           }
+       } else if self.curr >= 0 && self.dt == MATRIX {
+            match &self.data {
+                Val::Matrix(v) => {
+                    if v.len() > self.curr as usize {
+                        let ret = v[self.curr as usize].clone();
+                        self.curr += 1;
+                        return Some(Value::from_list(ret));
+                    } else {
+                        self.curr = -1;
+                        return None;
+                    }
+                }
+                _ => return None,
+            }
         } else if self.curr == -1 && self.dt == METRICS {
             match &self.data {
                 Val::Metrics(v) => {

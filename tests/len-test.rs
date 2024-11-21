@@ -10,6 +10,11 @@ mod tests {
         assert_eq!(v.len(), 2);
     }
     #[test]
+    fn test_len_matrix() {
+        let v = Value::from(vec![vec![Value::new(), Value::new()]]).unwrap();
+        assert_eq!(v.len(), 2);
+    }
+    #[test]
     fn test_len_nodata() {
         let v = Value::nodata();
         assert_eq!(v.len(), 0);

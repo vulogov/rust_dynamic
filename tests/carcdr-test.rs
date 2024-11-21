@@ -10,6 +10,16 @@ mod tests {
         assert_eq!(v.car().expect("expecting value").cast_int().unwrap(), 1 as i64);
     }
     #[test]
+    fn test_car_matrix() {
+        let mut m = Value::matrix();
+        let v = Value::list()
+                .push(Value::from(1.0 as f64).unwrap())
+                .push(Value::from(41.0 as f64).unwrap());
+        m = m.push(v.clone());
+        let matrix_car = m.car().unwrap();
+        assert_eq!(matrix_car.car().expect("expecting value").cast_float().unwrap(), 1.0 as f64);
+    }
+    #[test]
     fn test_last_list() {
         let v = Value::from(vec![Value::from_int(1 as i64), Value::from_int(2 as i64), Value::from_int(3 as i64)]).unwrap();
         assert_eq!(v.last().expect("expecting value").cast_int().unwrap(), 3 as i64);

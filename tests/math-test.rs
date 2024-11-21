@@ -73,7 +73,50 @@ mod tests {
         x = x + y;
         assert_eq!(x.len(), 3);
     }
-
+    #[test]
+    fn test_add_matrix1() {
+        let mut m1 = Value::matrix();
+        let mut v1 = Value::list();
+        v1 = v1.push(Value::from(42.0).unwrap());
+        v1 = v1.push(Value::from(41.0).unwrap());
+        m1 = m1.push(v1);
+        let mut m2 = Value::matrix();
+        let mut v2 = Value::list();
+        v2 = v2.push(Value::from(43.0).unwrap());
+        v2 = v2.push(Value::from(44.0).unwrap());
+        m2 = m2.push(v2);
+        m1 = m1 + m2;
+        assert_eq!(m1.len(), 2);
+    }
+    #[test]
+    fn test_add_matrix3() {
+        let mut m1 = Value::matrix();
+        let mut v1 = Value::list();
+        v1 = v1.push(Value::from(42.0).unwrap());
+        v1 = v1.push(Value::from(41.0).unwrap());
+        m1 = m1.push(v1);
+        let mut m2 = Value::matrix();
+        let mut v2 = Value::list();
+        v2 = v2.push(Value::from(43.0).unwrap());
+        v2 = v2.push(Value::from(44.0).unwrap());
+        m2 = m2.push(v2);
+        m1 = m1 + m2;
+        let m1_vec = m1.cast_matrix().unwrap();
+        assert_eq!(m1_vec[0][0].cast_float().unwrap(), 85.0 as f64);
+    }
+    #[test]
+    fn test_add_matrix2() {
+        let mut m1 = Value::matrix();
+        let mut v1 = Value::list();
+        v1 = v1.push(Value::from(42.0).unwrap());
+        v1 = v1.push(Value::from(41.0).unwrap());
+        m1 = m1.push(v1);
+        let mut v2 = Value::list();
+        v2 = v2.push(Value::from(43.0).unwrap());
+        v2 = v2.push(Value::from(44.0).unwrap());
+        m1 = m1 + v2;
+        assert_eq!(m1.len(), 4);
+    }
     #[test]
     fn test_textbuffer_add_string() {
         let mut x = Value::text_buffer("Hello".to_string());

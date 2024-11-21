@@ -30,6 +30,18 @@ impl Value {
                     _ => return 0,
                 }
             }
+            MATRIX => {
+                match &self.data {
+                    Val::Matrix(v) => {
+                        let mut c: usize = 0;
+                        for r in v.iter() {
+                            c = c + r.len();
+                        }
+                        return c;
+                    }
+                    _ => return 0,
+                }
+            }
             QUEUE | FIFO => {
                 match &self.data {
                     Val::Queue(v) => return v.len(),

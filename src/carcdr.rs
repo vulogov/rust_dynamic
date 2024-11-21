@@ -16,6 +16,18 @@ impl Value {
                     _ => None,
                 }
             }
+            MATRIX => {
+                match &self.data {
+                    Val::Matrix(m_val) => {
+                        if m_val.len() > 0 {
+                            return Some(Value::from_list(m_val[0].clone()));
+                        } else {
+                            return None;
+                        }
+                    }
+                    _ => None,
+                }
+            }
             QUEUE => {
                 match &self.data {
                     Val::Queue(_) => {

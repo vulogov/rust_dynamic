@@ -65,6 +65,11 @@ mod tests {
         assert_eq!(v.type_name(), "List");
     }
     #[test]
+    fn test_create_matrix_type_name() {
+        let v = Value::from(vec![vec![Value::new(), Value::new()]]).unwrap();
+        assert_eq!(v.type_name(), "Matrix");
+    }
+    #[test]
     fn test_create_error_type_name() {
         let v = Value::from(BundError::new("Hello".to_string(), "World".to_string())).unwrap();
         assert_eq!(v.type_name(), "Error");

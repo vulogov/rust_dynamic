@@ -24,4 +24,17 @@ mod tests {
         }
         assert_eq!(c, 42.0);
     }
+    #[test]
+    fn test_iter_matrix() {
+        let mut c: usize = 0;
+        let mut m = Value::matrix();
+        let v = Value::list()
+                .push(Value::from(1.0 as f64).unwrap())
+                .push(Value::from(41.0 as f64).unwrap());
+        m = m.push(v.clone());
+        for i in m {
+            c += i.cast_list().unwrap().len();
+        }
+        assert_eq!(c, 2);
+    }
 }

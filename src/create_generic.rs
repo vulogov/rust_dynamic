@@ -21,6 +21,8 @@ impl Value {
             return Result::Ok(Value::from_str(&*str_val));
         } else if let Some(lst_val) = (&value as &dyn Any).downcast_ref::<Vec<Value>>() {
             return Result::Ok(Value::from_list((*lst_val.clone()).to_vec()));
+        } else if let Some(mat_val) = (&value as &dyn Any).downcast_ref::<Vec<Vec<Value>>>() {
+            return Result::Ok(Value::from_matrix((*mat_val.clone()).to_vec()));
         } else if let Some(err_val) = (&value as &dyn Any).downcast_ref::<BundError>() {
             return Result::Ok(Value::from_error(err_val.clone()));
         } else if let Some(ci_val) = (&value as &dyn Any).downcast_ref::<Complex<i64>>() {

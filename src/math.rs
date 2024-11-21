@@ -33,6 +33,37 @@ fn numeric_op_json_json(op: Ops, x: serde_json::Value, y: serde_json::Value) -> 
     }
 }
 
+fn numeric_op_matrix(op: Ops, x: Vec<Vec<Value>>, y: Vec<Vec<Value>>) -> Vec<Vec<Value>> {
+    if &x.len() != &y.len() {
+        return x;
+    }
+    let mut res: Vec<Vec<Value>> = Vec::new();
+
+    let mut x_i: usize = 0;
+    let mut y_i: usize = 0;
+
+    for x_v in &x {
+        if x_v.len() != y[y_i].len() {
+            return x;
+        }
+        let mut row: Vec<Value> = Vec::new();
+        for y_v in x_v {
+            let x_res = match Value::numeric_op(op.clone(), y_v.clone(), y[y_i][x_i].clone()) {
+                Ok(x_res) => x_res,
+                Err(_) => {
+                    return x;
+                }
+            };
+            row.push(x_res);
+            x_i = x_i + 1;
+        }
+        res.push(row);
+        x_i = 0;
+        y_i = y_i + 1;
+    }
+    return res;
+}
+
 fn numeric_op_float_float(op: Ops, x: f64, y: f64) -> f64 {
     match op {
         Ops::Add => x + y,
@@ -229,6 +260,32 @@ impl Value {
                                         return Err("Incompartible operation for the list".into());
                                     }
                                 }
+                            }
+                        }
+                    }
+                    MATRIX => {
+                        match y.dt {
+                            MATRIX => {
+                                return Result::Ok(Value::from_matrix(numeric_op_matrix(op, x.cast_matrix().unwrap(), y.cast_matrix().unwrap())));
+                            }
+                            LIST => {
+                                match op {
+                                    Ops::Add => {
+                                        let mut res = Value::matrix();
+
+                                        for v in x {
+                                            res = res.push(v);
+                                        }
+                                        res = res.push(y);
+                                        return Result::Ok(res);
+                                    }
+                                    _ => {
+                                        return Err("Incompartible operation for the list".into());
+                                    }
+                                }
+                            }
+                            _ => {
+                                return Err("Incompartible operation for the matrix".into());
                             }
                         }
                     }

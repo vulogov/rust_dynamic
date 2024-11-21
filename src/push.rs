@@ -47,6 +47,27 @@ impl Value {
                 }
                 return Value::from_list(data);
             }
+            MATRIX => {
+                let mut data: Vec<Vec<Value>> = Vec::new();
+                match &self.data {
+                    Val::Matrix(v) => {
+                        for i in v {
+                            data.push(i.clone());
+                        }
+                        if value.type_of() == LIST {
+                            let list_data = match value.cast_list() {
+                                Ok(list_data) => list_data,
+                                Err(_) => {
+                                    return self.clone();
+                                }
+                            };
+                            data.push(list_data);
+                        }
+                    }
+                    _ => {},
+                }
+                return Value::from_matrix(data);
+            }
             TEXTBUFFER => {
                 match self.cast_string() {
                     Ok(str_val) => {
