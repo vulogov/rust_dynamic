@@ -83,6 +83,18 @@ impl Value {
                     _ => None,
                 }
             }
+            MATRIX => {
+                match &self.data {
+                    Val::Matrix(m_val) => {
+                        if m_val.len() > 0 {
+                            return Some(Value::from_matrix(m_val[1..].to_vec()));
+                        } else {
+                            return None;
+                        }
+                    }
+                    _ => None,
+                }
+            }
             QUEUE | FIFO => return Some(self.pull()),
             METRICS => {
                 match &self.data {
