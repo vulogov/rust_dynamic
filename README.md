@@ -12,6 +12,7 @@ rust_dynamic, a crate developed for the Rust language, encompasses primitives de
 * String, internally represented as String
 * Pair, as a pair of dynamic values
 * List, as a list of dynamic values
+* Matrix, as a 2D collection of of vynamic values allocated in a logical grid.
 * Binary, as a Vector of u8 values
 * Nanosecond grade timestamp
 * Any dynamically-typed object wrapped in envelope
@@ -66,6 +67,7 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::context() | Create CONTEXT with random ID |
 | Value::named_context() | Create named CONTEXT  |
 | Value::list() | Create empty dynamic object of type LIST |
+| Value::matrix() | Create empty dynamic object of type MATRIX |
 | Value::from_list() | Create dynamic object of type LIST and initialize it from Vec<Value> |
 | Value::from_dict() | Create dynamic object of type MAP and initialize it from HashMap<String, Value> |
 | Value::dict() | Create dynamic empty object of type MAP  |
@@ -84,6 +86,7 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::from_complex_int() | Return dynamic object created from Complex<i64>  |
 | Value::from_complex_float() | Return dynamic object created from Complex<f64>  |
 | Value::conv() | Converting of the object of one type to another |
+| Value::from_matrix() | Return dynamic object of MATRIX type created from Vec<Vec<Value>>  |
 
 There are generic function Value::from() that will automatically cast proper data type and ether return object or error message.
 
@@ -113,6 +116,7 @@ rust_dynamic supports a number of casting functions that will try to extract wra
 | Value::export_float() | Return Vec<f64> from Value object |
 | Value::cast_json() | Cast serde_json::Value from JSON object |
 | Value::cast_json_to_value() | Cast Dynamic value from JSON object |
+| Value::cast_matrix() | Return Vec<Vec<Value>> from MATRIX |
 
 
 Example:
@@ -324,8 +328,6 @@ let mut v = Value::from(42.0).unwrap();
 v = v.map_float(f64::sin);
 ```
 ## How to use a math operations with dynamically-typed objects
-
-At this moment, only FLOAT and INTEGER objects supported math operations.
 
 ```rust
 // Let's create x and y objects both of FLOAT type
