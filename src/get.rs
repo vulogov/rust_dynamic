@@ -4,7 +4,7 @@ use crate::types::*;
 impl Value {
     pub fn get<N: AsRef<str> + std::fmt::Display>(&self, key: N) -> Result<Self, Box<dyn std::error::Error>> {
         match self.dt {
-            MAP | INFO | CONFIG | ASSOCIATION => {
+            MAP | INFO | CONFIG | ASSOCIATION | CURRY => {
                 match &self.data {
                     Val::Map(v) => {
                         match v.get(&key.as_ref().to_string()) {

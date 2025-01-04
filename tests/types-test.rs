@@ -139,6 +139,11 @@ mod tests {
         assert_eq!(v.len(), 0);
     }
     #[test]
+    fn test_create_curry_type() {
+        let v = Value::ptr_curry("Test", "TestPtr", Vec::new());
+        assert_eq!(v.len(), 4);
+    }
+    #[test]
     fn test_create_exit_type() {
         let v = Value::exit();
         assert_eq!(v.type_name(), "Exit");

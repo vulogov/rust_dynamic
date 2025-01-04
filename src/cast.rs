@@ -128,6 +128,53 @@ impl Value {
             _ => return Err("This Dynamic type is not dict".into()),
         }
     }
+    pub fn cast_curry_lambda(&self) -> Result<Value, Box<dyn std::error::Error>> {
+        match &self.data {
+            Val::Map(c_val) => {
+                match c_val.get("lambda") {
+                    Some(lambda) => {
+                        return Result::Ok(lambda.clone());
+                    }
+                    None => {
+                        return Err("This Dynamic type is not curry".into());
+                    }
+                }
+            }
+            _ => return Err("This Dynamic type is not curry".into()),
+        }
+    }
+    pub fn cast_curry_ptr(&self) -> Result<Value, Box<dyn std::error::Error>> {
+        match &self.data {
+            Val::Map(c_val) => {
+                match c_val.get("ptr") {
+                    Some(ptr) => {
+                        return Result::Ok(ptr.clone());
+                    }
+                    None => {
+                        return Err("This Dynamic type is not curry".into());
+                    }
+                }
+            }
+            _ => return Err("This Dynamic type is not curry".into()),
+        }
+    }
+    pub fn cast_curry(&self) -> Result<Value, Box<dyn std::error::Error>> {
+        match self.cast_curry_ptr() {
+            Ok(ptr) => {
+                return Ok(ptr);
+            }
+            Err(_) => {
+                match self.cast_curry_lambda() {
+                    Ok(lambda) => {
+                        return Ok(lambda);
+                    }
+                    Err(_) => {
+                        return Err("This Dynamic type is not curry".into());
+                    }
+                }
+            }
+        }
+    }
     pub fn cast_timestamp(&self) -> Result<u128, Box<dyn std::error::Error>> {
         if self.dt != TIME {
             return Err("This Dynamic type is not TIME".into());

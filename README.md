@@ -10,6 +10,7 @@ rust_dynamic, a crate developed for the Rust language, encompasses primitives de
 * Float, internally represented as f64
 * Boolean
 * String, internally represented as String
+* Lambda functions/Curry functions and pointed on functions
 * Pair, as a pair of dynamic values
 * List, as a list of dynamic values
 * Matrix, as a 2D collection of of vynamic values allocated in a logical grid.
@@ -80,6 +81,9 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::metrics_n(n) | Return dynamic object of type METRICS for n samples  |
 | Value::lambda() | Return dynamic object of type LAMBDA   |
 | Value::to_lambda() | Return dynamic object of type LAMBDA created from Vector  |
+| Value::curry() | Return dynamic object of type CURRY. Basic and empty  |
+| Value::ptr_curry() | Return dynamic object of type CURRY. Containing pointed to the function  |
+| Value::lambda_curry() | Return dynamic object of type CURRY. Containing lambda function  |
 | Value::result() | Return dynamic object of type RESULT   |
 | Value::to_result() | Return dynamic object of type RESULT created from Vector  |
 | Value::from_metrics() | Return dynamic object created from Vec of Metrics  |

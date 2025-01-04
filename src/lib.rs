@@ -22,6 +22,7 @@ pub mod create_special_float;
 pub mod create_list;
 pub mod create_matrix;
 pub mod create_map;
+pub mod create_curry;
 pub mod create_complex;
 pub mod create_metrics;
 pub mod checker;

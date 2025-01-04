@@ -19,6 +19,7 @@ impl Value {
             BIN         => "Binary",
             LIST        => "List",
             MATRIX      => "Matrix",
+            CURRY       => "Curry",
             PAIR        => "Pair",
             MAP         => "Map",
             CONFIG      => "Config",
