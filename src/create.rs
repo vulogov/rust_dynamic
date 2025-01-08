@@ -65,6 +65,30 @@ impl Value {
             tags:   HashMap::new(),
         }
     }
+    pub fn make_true() -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   BOOL,
+            q:    100.0,
+            data: Val::Bool(true),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
+    pub fn make_false() -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   BOOL,
+            q:    100.0,
+            data: Val::Bool(false),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
     pub fn from_string<N: AsRef<str>>(value: N) -> Self {
         Self {
             id:   nanoid!(),

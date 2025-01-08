@@ -12,6 +12,14 @@ mod tests {
     }
 
     #[test]
+    fn test_has_key() {
+        let val = Value::dict()
+                        .set("answer".to_string(), Value::from(42 as i64).unwrap());
+        let res = val.has_key("answer").unwrap().cast_bool().unwrap();
+        assert_eq!(res, true);
+    }
+
+    #[test]
     fn test_dict_set_with_spaces() {
         let val = Value::dict()
                         .set("  answer    ".to_string(), Value::from(42 as i64).unwrap());

@@ -51,6 +51,7 @@ pub mod iter;
 pub mod json;
 pub mod set;
 pub mod get;
+pub mod has_key;
 pub mod tags;
 pub mod timestamp;
 pub mod value;
