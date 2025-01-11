@@ -5,6 +5,44 @@ use itoa;
 use rustils;
 use std::collections::hash_map::HashMap;
 
+fn value_nodata_conversion(t: u16, ot: u16) -> Result<Value, Box<dyn std::error::Error>> {
+    if ot != NODATA {
+        return Err(format!(
+            "Source value is not NODATA but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
+    }
+    match t {
+        STRING => {
+            return Result::Ok(Value::from_string("NODATA"));
+        }
+        LIST => {
+            return Result::Ok(Value::from(vec![Value::nodata()]).unwrap());
+        }
+        _ => Err(format!("Can not convert NODATA to {:?}", &t).into()),
+    }
+}
+
+fn value_none_conversion(t: u16, ot: u16) -> Result<Value, Box<dyn std::error::Error>> {
+    if ot != NODATA {
+        return Err(format!(
+            "Source value is not NONE but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
+    }
+    match t {
+        STRING => {
+            return Result::Ok(Value::from_string("NONE"));
+        }
+        LIST => {
+            return Result::Ok(Value::from(vec![Value::none()]).unwrap());
+        }
+        _ => Err(format!("Can not convert NONE to {:?}", &t).into()),
+    }
+}
+
 fn value_float_conversion(t: u16, ot: u16, val: f64) -> Result<Value, Box<dyn std::error::Error>> {
     if ot != FLOAT {
         return Err(format!(
@@ -533,10 +571,12 @@ impl Value {
                     Val::Lambda(l_val) => value_lambda_conversion(t, self.dt, l_val),
                     _ => Err(format!("Can not convert LAMBDA Value from {:?}", &self.dt).into()),
                 },
-                MAP | INFO | CONFIG | ASSOCIATION => match &self.data {
+                MAP | INFO | CONFIG | ASSOCIATION | MESSAGE => match &self.data {
                     Val::Map(m_val) => value_map_conversion(t, self.dt, m_val),
                     _ => Err(format!("Can not convert MAP Value from {:?}", &self.dt).into()),
                 },
+                NODATA => value_nodata_conversion(t, self.dt),
+                NONE => value_none_conversion(t, self.dt),
                 _ => Err(format!("Can not convert Value from {:?}", &self.dt).into()),
             },
         }

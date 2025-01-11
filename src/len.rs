@@ -66,6 +66,14 @@ impl Value {
                     _ => return 0,
                 }
             }
+            MESSAGE => {
+                let _ = match self.get("payload") {
+                    Ok(res) => {
+                        return res.len();
+                    }
+                    Err(_) => return 0,
+                };
+            }
             METRICS => {
                 match &self.data {
                     Val::Metrics(v) => return v.len(),

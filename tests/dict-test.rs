@@ -41,4 +41,11 @@ mod tests {
         let val2 = val.get("answer".to_string()).unwrap();
         assert_eq!(val2.cast_int().unwrap(), 42 as i64);
     }
+
+    #[test]
+    fn test_message_get() {
+        let v = Value::message(Value::from_string("ABC"), Value::from_string("CDE"), Value::from_string("GHI"));
+        let val = v.get("from".to_string()).unwrap();
+        assert_eq!(val.cast_string().unwrap(), "ABC".to_string());
+    }
 }

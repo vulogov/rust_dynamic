@@ -11,14 +11,16 @@ impl Value {
             LAMBDA => {
                 return Value::to_lambda(vec![value]);
             }
-            MAP | INFO | CONFIG | ASSOCIATION | CURRY => {
+            MAP | INFO | CONFIG | ASSOCIATION | CURRY | MESSAGE => {
                 let mut res = self.dup().unwrap();
                 res.id = nanoid!();
                 match &res.data {
                     Val::Map(v) => {
                         let mut m = v.clone();
                         m.insert(key.as_ref().to_string().trim().to_string(), value);
-                        return Value::from_dict(m);
+                        let mut raw_value = Value::from_dict(m);
+                        raw_value.dt = self.dt;
+                        return raw_value;
                     }
                     _ => {}
                 }
@@ -42,14 +44,16 @@ impl Value {
             LAMBDA => {
                 return Value::to_lambda(vec![value]);
             }
-            MAP | INFO | CONFIG | ASSOCIATION | CURRY => {
+            MAP | INFO | CONFIG | ASSOCIATION | CURRY | MESSAGE => {
                 let mut res = self.dup().unwrap();
                 res.id = nanoid!();
                 match &res.data {
                     Val::Map(v) => {
                         let mut m = v.clone();
                         m.insert(key.as_ref().to_string(), value);
-                        return Value::from_dict(m);
+                        let mut raw_value = Value::from_dict(m);
+                        raw_value.dt = self.dt;
+                        return raw_value;
                     }
                     _ => {}
                 }

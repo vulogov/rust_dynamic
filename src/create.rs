@@ -178,4 +178,17 @@ impl Value {
             tags:   HashMap::new(),
         }
     }
+    pub fn message(from: Value, to: Value, data: Value) -> Self {
+        let mut res = Value::dict();
+        let mut to_list = Value::list();
+        let mut payload = Value::list();
+
+        res.dt = MESSAGE;
+        res = res.set("from", from);
+        to_list = to_list.push(to);
+        res = res.set("to", to_list);
+        payload = payload.push(data);
+        res = res.set("payload", payload);
+        res
+    }
 }

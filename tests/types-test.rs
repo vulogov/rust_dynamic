@@ -144,6 +144,11 @@ mod tests {
         assert_eq!(v.len(), 4);
     }
     #[test]
+    fn test_create_message_type() {
+        let v = Value::message(Value::from_string("ABC"), Value::from_string("CDE"), Value::from_string("GHI"));
+        assert_eq!(v.type_name(), "Message");
+    }
+    #[test]
     fn test_create_exit_type() {
         let v = Value::exit();
         assert_eq!(v.type_name(), "Exit");

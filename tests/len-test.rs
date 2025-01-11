@@ -49,4 +49,9 @@ mod tests {
         let v = Value::json(serde_json::json!([3.14, 42]));
         assert_eq!(v.len(), 2);
     }
+    #[test]
+    fn test_len_message_type() {
+        let v = Value::message(Value::from_string("ABC"), Value::from_string("CDE"), Value::from_string("GHI"));
+        assert_eq!(v.len(), 1);
+    }
 }

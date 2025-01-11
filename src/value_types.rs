@@ -20,6 +20,7 @@ impl Value {
             LIST        => "List",
             MATRIX      => "Matrix",
             CURRY       => "Curry",
+            MESSAGE     => "Message",
             PAIR        => "Pair",
             MAP         => "Map",
             CONFIG      => "Config",

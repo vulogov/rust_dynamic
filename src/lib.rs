@@ -31,6 +31,7 @@ pub mod dup;
 pub mod q;
 pub mod func;
 pub mod export;
+pub mod message;
 pub mod types;
 pub mod error;
 pub mod push;
