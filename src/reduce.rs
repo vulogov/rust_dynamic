@@ -16,7 +16,7 @@ impl Value {
                     _ => return appfn(value1, self.clone()),
                 }
             }
-            MAP => {
+            MAP | INFO | CONFIG | ASSOCIATION | CURRY | MESSAGE | CONDITIONAL=> {
                 match &self.data {
                     Val::Map(v) => {
                         let mut v1 = value1;

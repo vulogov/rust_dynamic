@@ -21,6 +21,7 @@ impl Value {
             MATRIX      => "Matrix",
             CURRY       => "Curry",
             MESSAGE     => "Message",
+            CONDITIONAL => "Conditional",
             PAIR        => "Pair",
             MAP         => "Map",
             CONFIG      => "Config",

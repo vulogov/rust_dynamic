@@ -449,7 +449,7 @@ fn value_map_conversion(
     ot: u16,
     val: &HashMap<String, Value>,
 ) -> Result<Value, Box<dyn std::error::Error>> {
-    if ot != MAP && ot != ASSOCIATION && ot != INFO && ot != CONFIG {
+    if ot != MAP && ot != ASSOCIATION && ot != INFO && ot != CONFIG && ot != MESSAGE && ot != CONDITIONAL {
         return Err(format!(
             "Source value is not MAP but {:?} and not suitable for conversion",
             &ot
@@ -463,6 +463,13 @@ fn value_map_conversion(
                 res.insert(k.clone(), v.clone());
             }
             return Result::Ok(Value::from_dict(res));
+        }
+        CONDITIONAL => {
+            let mut res: HashMap<String, Value> = HashMap::new();
+            for (k, v) in val {
+                res.insert(k.clone(), v.clone());
+            }
+            return Result::Ok(Value::conditional_from_dict(res));
         }
         FLOAT => {
             return Result::Ok(Value::from_float(val.len() as f64));
@@ -571,7 +578,7 @@ impl Value {
                     Val::Lambda(l_val) => value_lambda_conversion(t, self.dt, l_val),
                     _ => Err(format!("Can not convert LAMBDA Value from {:?}", &self.dt).into()),
                 },
-                MAP | INFO | CONFIG | ASSOCIATION | MESSAGE => match &self.data {
+                MAP | INFO | CONFIG | ASSOCIATION | MESSAGE | CONDITIONAL => match &self.data {
                     Val::Map(m_val) => value_map_conversion(t, self.dt, m_val),
                     _ => Err(format!("Can not convert MAP Value from {:?}", &self.dt).into()),
                 },

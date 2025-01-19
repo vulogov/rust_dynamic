@@ -82,6 +82,8 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::lambda() | Return dynamic object of type LAMBDA   |
 | Value::to_lambda() | Return dynamic object of type LAMBDA created from Vector  |
 | Value::curry() | Return dynamic object of type CURRY. Basic and empty  |
+| Value::conditional() | Return dynamic object of type CONDITIONAL. Basic and empty  |
+| Value::conditional_from_dict() | Return dynamic object of type CURRY. Initialized from the HashTable  |
 | Value::ptr_curry() | Return dynamic object of type CURRY. Containing pointed to the function  |
 | Value::lambda_curry() | Return dynamic object of type CURRY. Containing lambda function  |
 | Value::result() | Return dynamic object of type RESULT   |

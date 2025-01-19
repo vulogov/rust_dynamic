@@ -11,7 +11,7 @@ impl Value {
             LAMBDA => {
                 return Value::to_lambda(vec![value]);
             }
-            MAP | INFO | CONFIG | ASSOCIATION | CURRY | MESSAGE => {
+            MAP | INFO | CONFIG | ASSOCIATION | CURRY | MESSAGE | CONDITIONAL => {
                 let mut res = self.dup().unwrap();
                 res.id = nanoid!();
                 match &res.data {
@@ -44,7 +44,7 @@ impl Value {
             LAMBDA => {
                 return Value::to_lambda(vec![value]);
             }
-            MAP | INFO | CONFIG | ASSOCIATION | CURRY | MESSAGE => {
+            MAP | INFO | CONFIG | ASSOCIATION | CURRY | MESSAGE | CONDITIONAL => {
                 let mut res = self.dup().unwrap();
                 res.id = nanoid!();
                 match &res.data {

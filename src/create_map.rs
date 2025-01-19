@@ -66,4 +66,30 @@ impl Value {
             tags:   HashMap::new(),
         }
     }
+    pub fn conditional() -> Self {
+        let mut data: HashMap<String, Value> = HashMap::new();
+        data.insert("type".to_string(), Value::from_string("unknown"));
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   CONDITIONAL,
+            q:    100.0,
+            data: Val::Map(HashMap::new()),
+            attr: Vec::new(),
+            curr: -1,
+            tags:  HashMap::new(),
+        }
+    }
+    pub fn conditional_from_dict(value: HashMap<String, Value>) -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   CONDITIONAL,
+            q:    100.0,
+            data: Val::Map(value),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
 }

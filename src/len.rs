@@ -60,7 +60,7 @@ impl Value {
                     _ => return 0,
                 }
             }
-            MAP | CURRY => {
+            MAP | CURRY | CONDITIONAL => {
                 match &self.data {
                     Val::Map(v) => return v.len(),
                     _ => return 0,

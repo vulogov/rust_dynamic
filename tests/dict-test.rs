@@ -48,4 +48,12 @@ mod tests {
         let val = v.get("from".to_string()).unwrap();
         assert_eq!(val.cast_string().unwrap(), "ABC".to_string());
     }
+
+    #[test]
+    fn test_dict_set_conditional() {
+        let val = Value::conditional()
+                        .set("try".to_string(), Value::from(42 as i64).unwrap());
+        let val2 = val.get("try".to_string()).unwrap();
+        assert_eq!(val2.cast_int().unwrap(), 42 as i64);
+    }
 }

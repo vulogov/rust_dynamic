@@ -149,6 +149,11 @@ mod tests {
         assert_eq!(v.type_name(), "Message");
     }
     #[test]
+    fn test_create_conditional_type() {
+        let v = Value::conditional();
+        assert_eq!(v.type_name(), "Conditional");
+    }
+    #[test]
     fn test_create_exit_type() {
         let v = Value::exit();
         assert_eq!(v.type_name(), "Exit");
