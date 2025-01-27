@@ -48,6 +48,7 @@ println!("Dynamic value of the value is {:?}", &value.cast_integer());
 * You can create attributes attached to wrapped data.
 * Basic math operation Add/Sub/Mul/Div supported for FLOAT and INTEGER types.
 * String concatenation and multiplication supported.
+* LIST-type objects supports car/cdr/at/head and tail functions returning the values or the splices of the list
 
 ## How to create a dynamically-typed values
 

@@ -147,9 +147,25 @@ impl Value {
             Val::F64(f_x) => {
                 match y.data {
                     Val::F64(f_y) => {
+                        match op {
+                            Ops::Div => {
+                                if f_y == 0.0 {
+                                    return Err("Float-point division to 0.0".into());
+                                }
+                            }
+                            _ => {},
+                        }
                         return Result::Ok(Value::from(numeric_op_float_float(op, f_x, f_y)).unwrap());
                     }
                     Val::I64(i_y) => {
+                        match op {
+                            Ops::Div => {
+                                if i_y == 0 {
+                                    return Err("Integer division to 0.0".into());
+                                }
+                            }
+                            _ => {},
+                        }
                         return Result::Ok(Value::from(numeric_op_float_float(op, f_x, i_y as f64)).unwrap());
                     }
                     Val::String(s_y) => {
@@ -161,9 +177,25 @@ impl Value {
             Val::I64(i_x) => {
                 match y.data {
                     Val::F64(f_y) => {
+                        match op {
+                            Ops::Div => {
+                                if f_y == 0.0 {
+                                    return Err("Float-point division to 0.0".into());
+                                }
+                            }
+                            _ => {},
+                        }
                         return Result::Ok(Value::from(numeric_op_float_float(op, i_x as f64, f_y)).unwrap());
                     }
                     Val::I64(i_y) => {
+                        match op {
+                            Ops::Div => {
+                                if i_y == 0 {
+                                    return Err("Integer division to 0.0".into());
+                                }
+                            }
+                            _ => {},
+                        }
                         return Result::Ok(Value::from(numeric_op_int_int(op, i_x, i_y)).unwrap());
                     }
                     Val::String(s_y) => {

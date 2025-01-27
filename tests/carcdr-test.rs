@@ -47,6 +47,27 @@ mod tests {
         assert_eq!(v.car().expect("expecting value").cast_int().unwrap(), 2 as i64);
     }
     #[test]
+    fn test_at_list() {
+        let v = Value::from(vec![Value::from_int(1 as i64), Value::from_int(2 as i64), Value::from_int(3 as i64)])
+                .unwrap()
+                .at(1).expect("expecting cdr");
+        assert_eq!(v.car().expect("expecting value").cast_int().unwrap(), 2 as i64);
+    }
+    #[test]
+    fn test_head1_list() {
+        let v = Value::from(vec![Value::from_int(1 as i64), Value::from_int(2 as i64), Value::from_int(3 as i64)])
+                .unwrap()
+                .head(2).expect("expecting cdr");
+        assert_eq!(v.len(), 2);
+    }
+    #[test]
+    fn test_tail1_list() {
+        let v = Value::from(vec![Value::from_int(1 as i64), Value::from_int(2 as i64), Value::from_int(3 as i64)])
+                .unwrap()
+                .head(3).expect("expecting cdr");
+        assert_eq!(v.len(), 3);
+    }
+    #[test]
     fn test_metrics_car() {
         let mut val = Value::metrics_n(3);
         val = val.push(Value::from_float(42.0 as f64));

@@ -2,6 +2,78 @@ use crate::value::Value;
 use crate::types::*;
 
 impl Value {
+    pub fn head(&self, n: i64) -> Option<Self> {
+        match self.dt {
+            LIST => {
+                match self.cast_list() {
+                    Ok(raw_list) => {
+                        let mut res = Value::list();
+                        let mut c: usize = 0;
+                        for v in raw_list {
+                            if c >= n as usize {
+                                break;
+                            }
+                            res = res.push(v);
+                            c = c + 1;
+                        }
+                        return Some(res);
+                    }
+                    Err(_) => {
+                        return None;
+                    }
+                }
+            }
+            _ => {
+                return Some(self.clone());
+            }
+        }
+    }
+    pub fn tail(&self, n: i64) -> Option<Self> {
+        match self.dt {
+            LIST => {
+                match self.cast_list() {
+                    Ok(raw_list) => {
+                        let mut res = Value::list();
+                        let mut c: usize = raw_list.len();
+                        for v in raw_list.into_iter().rev().clone().into_iter() {
+                            if c <= n as usize  || c == 0 {
+                                break;
+                            }
+                            res = res.push(v);
+                            c = c - 1;
+                        }
+                        return Some(res);
+                    }
+                    Err(_) => {
+                        return None;
+                    }
+                }
+            }
+            _ => {
+                return Some(self.clone());
+            }
+        }
+    }
+    pub fn at(&self, n: i64) -> Option<Self> {
+        match self.dt {
+            LIST => {
+                match self.cast_list() {
+                    Ok(raw_list) => {
+                        if n as usize > raw_list.len() || n < 0 {
+                            return None;
+                        }
+                        return Some(raw_list[n as usize].clone());
+                    }
+                    Err(_) => {
+                        return None;
+                    }
+                }
+            }
+            _ => {
+                return Some(self.clone());
+            }
+        }
+    }
     pub fn car(&self) -> Option<Self> {
         match self.dt {
             LIST => {
