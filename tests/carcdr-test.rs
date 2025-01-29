@@ -51,21 +51,29 @@ mod tests {
         let v = Value::from(vec![Value::from_int(1 as i64), Value::from_int(2 as i64), Value::from_int(3 as i64)])
                 .unwrap()
                 .at(1).expect("expecting cdr");
-        assert_eq!(v.car().expect("expecting value").cast_int().unwrap(), 2 as i64);
+        assert_eq!(v.car().expect("expecting value").cast_int().unwrap(), 1 as i64);
     }
     #[test]
     fn test_head1_list() {
         let v = Value::from(vec![Value::from_int(1 as i64), Value::from_int(2 as i64), Value::from_int(3 as i64)])
                 .unwrap()
-                .head(2).expect("expecting cdr");
+                .head(2).expect("expecting head");
         assert_eq!(v.len(), 2);
     }
     #[test]
     fn test_tail1_list() {
         let v = Value::from(vec![Value::from_int(1 as i64), Value::from_int(2 as i64), Value::from_int(3 as i64)])
                 .unwrap()
-                .head(3).expect("expecting cdr");
-        assert_eq!(v.len(), 3);
+                .head(2).expect("expecting head");
+        assert_eq!(v.len(), 2);
+    }
+    #[test]
+    fn test_tail2_list() {
+        let v = Value::from(vec![Value::from_int(1 as i64), Value::from_int(2 as i64), Value::from_int(3 as i64)])
+                .unwrap()
+                .tail(2).expect("expecting tail");
+        let v1 = v.car().expect("Expected car");
+        assert_eq!(v1.cast_int().unwrap(), 2);
     }
     #[test]
     fn test_metrics_car() {
