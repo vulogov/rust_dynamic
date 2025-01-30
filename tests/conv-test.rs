@@ -171,4 +171,11 @@ mod tests {
         let val = Value::to_lambda(vec![Value::from_int(42)]).conv(STRING).unwrap();
         assert_eq!(val.cast_string().unwrap(), "lambda[ 42 :: ]");
     }
+    #[test]
+    fn test_conv_bin_string() {
+        let mut v = Value::binary();
+        v = v.push(Value::from_string("Hello"));
+        let sv = v.conv(STRING).unwrap();
+        assert_eq!(sv.cast_string().unwrap(),  "Hello");
+    }
 }

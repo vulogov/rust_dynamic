@@ -2,8 +2,36 @@ use crate::types::*;
 use crate::value::Value;
 use dtoa;
 use itoa;
+use std::str;
 use rustils;
 use std::collections::hash_map::HashMap;
+
+fn value_bin_conversion(t: u16, ot: u16, data: Vec<u8>) -> Result<Value, Box<dyn std::error::Error>> {
+    if ot != BIN {
+        return Err(format!(
+            "Source value is not BIN but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
+    }
+    match t {
+        STRING => {
+            let str_val = match str::from_utf8(&data) {
+                Ok(str_val) => str_val,
+                Err(err) => return Err(format!("Can not convert BIN to STR to {:?}: {}", &t, err).into()),
+            };
+            return Result::Ok(Value::from_string(str_val));
+        }
+        LIST => {
+            let mut res = Value::list();
+            for v in data.into_iter() {
+                res = res.push(Value::from_bin(vec![v]));
+            }
+            return Result::Ok(res);
+        }
+        _ => Err(format!("Can not convert NODATA to {:?}", &t).into()),
+    }
+}
 
 fn value_nodata_conversion(t: u16, ot: u16) -> Result<Value, Box<dyn std::error::Error>> {
     if ot != NODATA {
@@ -25,7 +53,7 @@ fn value_nodata_conversion(t: u16, ot: u16) -> Result<Value, Box<dyn std::error:
 }
 
 fn value_none_conversion(t: u16, ot: u16) -> Result<Value, Box<dyn std::error::Error>> {
-    if ot != NODATA {
+    if ot != NONE {
         return Err(format!(
             "Source value is not NONE but {:?} and not suitable for conversion",
             &ot
@@ -154,6 +182,10 @@ fn value_string_conversion(
         }
         TEXTBUFFER => {
             return Result::Ok(Value::text_buffer(val.to_string()));
+        }
+        BIN => {
+            let bytes: Vec<u8> = val.clone().into_bytes();
+            return Result::Ok(Value::from_bin(bytes));
         }
         LIST => {
             return Result::Ok(Value::from(vec![Value::from(val.to_string()).unwrap()]).unwrap());
@@ -581,6 +613,10 @@ impl Value {
                 MAP | INFO | CONFIG | ASSOCIATION | MESSAGE | CONDITIONAL => match &self.data {
                     Val::Map(m_val) => value_map_conversion(t, self.dt, m_val),
                     _ => Err(format!("Can not convert MAP Value from {:?}", &self.dt).into()),
+                },
+                BIN => match &self.data {
+                    Val::Binary(b_val) => value_bin_conversion(t, self.dt, b_val.to_vec()),
+                    _ => Err(format!("Can not convert BIN Value from {:?}", &self.dt).into()),
                 },
                 NODATA => value_nodata_conversion(t, self.dt),
                 NONE => value_none_conversion(t, self.dt),

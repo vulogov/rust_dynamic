@@ -122,4 +122,11 @@ mod tests {
         v = v.push(Value::from_int(42));
         assert_eq!(v.cast_string().unwrap(),  "Answer is 42");
     }
+
+    #[test]
+    fn test_push_binary() {
+        let mut v = Value::binary();
+        v = v.push(Value::from_string("Hello"));
+        assert_eq!(v.len(),  5);
+    }
 }

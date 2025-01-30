@@ -127,6 +127,24 @@ impl Value {
                     _ => return self.clone(),
                 }
             }
+            BIN => {
+                if value.dt != STRING {
+                    return self.clone();
+                }
+                let str_data = match value.cast_string() {
+                    Ok(str_data) => str_data,
+                    Err(_) => return self.clone(),
+                };
+                let mut bin_data = match self.cast_bin() {
+                    Ok(bin_data) => bin_data,
+                    Err(_) => return self.clone(),
+                };
+                let bytes: Vec<u8> = str_data.into_bytes();
+                for b in bytes {
+                    bin_data.push(b);
+                }
+                return Value::from_bin(bin_data);
+            }
             _ => {
                 let mut res = value.clone();
                 res.q = self.q;
