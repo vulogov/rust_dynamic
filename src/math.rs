@@ -204,6 +204,35 @@ impl Value {
                     _ => return Err("Incompartible Y argument for the math operations".into()),
                 }
             }
+            Val::Binary(b_x) => {
+                match y.data {
+                    Val::Binary(b_y) => {
+                        match op {
+                            Ops::Add => {
+                                let mut res = Value::from_bin(b_x);
+                                return Result::Ok(res.push(Value::from_bin(b_y)));
+                            }
+                            _ => {
+                                return Err("Unsupported operation for binary".into());
+                            }
+                        }
+                    }
+                    Val::String(b_y) => {
+                        match op {
+                            Ops::Add => {
+                                let mut res = Value::from_bin(b_x);
+                                return Result::Ok(res.push(Value::from_string(b_y)));
+                            }
+                            _ => {
+                                return Err("Unsupported operation for binary".into());
+                            }
+                        }
+                    }
+                    _ => {
+                        return Err("Unsupported datatype Y for binary".into());
+                    }
+                }
+            }
             Val::String(s_x) => {
                 match y.data {
                     Val::String(s_y) => {

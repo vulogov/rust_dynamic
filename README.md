@@ -384,3 +384,24 @@ let sin = Applicative::new(comp_sin);
 // Then apply a Value to a wrapped function
 let res = sin.apply(Value::from(42.0).unwrap());
 ```
+
+# Neural Network features of rust_dynamic
+
+## Conversion Values to Tensors
+
+You can easily convert dynamic value into a Tensor. At this moment, we support this feature for INTEGER, FLOAT and STRING Values
+
+```rust
+let value = Value::from(42.0);
+match value {
+  Ok(val) => {
+    match val.tensor() {
+      Ok(tensor) => {
+        // Here will be a tensor
+      }
+      Err(_) => todo!();
+    }
+  }
+  Err(_) => todo!();
+}
+```

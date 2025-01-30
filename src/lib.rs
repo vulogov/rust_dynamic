@@ -57,6 +57,7 @@ pub mod tags;
 pub mod timestamp;
 pub mod value;
 pub mod value_types;
+pub mod tensor;
 
 pub fn version() -> String {
     env!("CARGO_PKG_VERSION").to_string().clone()

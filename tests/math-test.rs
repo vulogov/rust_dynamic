@@ -124,6 +124,15 @@ mod tests {
         x = x + y;
         assert_eq!(x.cast_string().unwrap(), "Hello world");
     }
+    #[test]
+    fn test_binary_add_string() {
+        use rust_dynamic::types::STRING;
+        let mut x = Value::binary();
+        x = x.push(Value::from_string("Hello "));
+        let y = Value::from("world").unwrap();
+        x = x + y;
+        assert_eq!(x.conv(STRING).unwrap().cast_string().unwrap(), "Hello world");
+    }
 
     #[test]
     fn test_textbuffer_add_float() {
