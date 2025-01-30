@@ -74,7 +74,21 @@ impl Value {
             stamp:  timestamp_ms(),
             dt:   CONDITIONAL,
             q:    100.0,
-            data: Val::Map(HashMap::new()),
+            data: Val::Map(data),
+            attr: Vec::new(),
+            curr: -1,
+            tags:  HashMap::new(),
+        }
+    }
+    pub fn conditional_of_type(t: String) -> Self {
+        let mut data: HashMap<String, Value> = HashMap::new();
+        data.insert("type".to_string(), Value::from_string(t));
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   CONDITIONAL,
+            q:    100.0,
+            data: Val::Map(data),
             attr: Vec::new(),
             curr: -1,
             tags:  HashMap::new(),

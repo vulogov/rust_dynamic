@@ -50,7 +50,7 @@ impl Value {
                 }
                 return Value::to_lambda(data);
             }
-            MAP | INFO | ASSOCIATION | CONFIG => {
+            MAP | INFO | ASSOCIATION | CONFIG | CONDITIONAL => {
                 let mut data: HashMap<String, Value> = HashMap::new();
                 let mut res = self.dup().unwrap().regen_id();
                 match &self.data {
