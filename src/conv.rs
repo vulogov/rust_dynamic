@@ -346,7 +346,9 @@ fn value_list_conversion(
                         out = out + &s_v.cast_string().unwrap();
                         out = out + &" :: ".to_string();
                     }
-                    Err(_) => continue,
+                    Err(_) => {
+                        continue;
+                    }
                 }
             }
             out = out + &"]".to_string();
@@ -616,7 +618,12 @@ impl Value {
         match &self.data {
             Val::F64(f_val) => value_float_conversion(t, self.dt, *f_val),
             Val::I64(i_val) => value_integer_conversion(t, self.dt, *i_val),
-            Val::String(s_val) => value_string_conversion(t, self.dt, &s_val),
+            Val::String(s_val) => match self.type_of() {
+                    STRING => value_string_conversion(t, self.dt, &s_val),
+                    CALL => value_call_conversion(t, self.dt, s_val.to_string()),
+                    PTR => value_ptr_conversion(t, self.dt, s_val.to_string()),
+                    _ => value_string_conversion(t, self.dt, &s_val),
+            },
             Val::Bool(b_val) => value_bool_conversion(t, self.dt, *b_val),
             Val::Json(j_val) => value_json_conversion(t, self.dt, &j_val),
             _ => match self.dt {
@@ -652,14 +659,6 @@ impl Value {
                 },
                 NODATA => value_nodata_conversion(t, self.dt),
                 NONE => value_none_conversion(t, self.dt),
-                CALL => match &self.data {
-                    Val::String(name) => value_call_conversion(t, self.dt, name.to_string()),
-                    _ => Err(format!("Can not convert CALL Value from {:?}", &self.dt).into()),
-                }
-                PTR => match &self.data {
-                    Val::String(name) => value_ptr_conversion(t, self.dt, name.to_string()),
-                    _ => Err(format!("Can not convert PTR Value from {:?}", &self.dt).into()),
-                }
                 _ => Err(format!("Can not convert Value from {:?}", &self.dt).into()),
             },
         }

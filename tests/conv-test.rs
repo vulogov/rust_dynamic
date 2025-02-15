@@ -112,6 +112,11 @@ mod tests {
         assert_eq!(val.cast_string().unwrap(), "[ 42 :: ]");
     }
     #[test]
+    fn test_conv_list_string_with_call() {
+        let val = Value::from(vec![Value::from_int(42), Value::call(".".to_string(), Vec::new())]).unwrap().conv(STRING).unwrap();
+        assert_eq!(val.cast_string().unwrap(), "[ 42 ::  F(.) :: ]");
+    }
+    #[test]
     fn test_conv_list_bool() {
         let val = Value::from(vec![Value::from_int(42)]).unwrap().conv(BOOL).unwrap();
         assert!(val.cast_bool().unwrap());
