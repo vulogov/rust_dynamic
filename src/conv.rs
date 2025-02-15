@@ -71,6 +71,38 @@ fn value_none_conversion(t: u16, ot: u16) -> Result<Value, Box<dyn std::error::E
     }
 }
 
+fn value_call_conversion(t: u16, ot: u16, name: String) -> Result<Value, Box<dyn std::error::Error>> {
+    if ot != CALL {
+        return Err(format!(
+            "Source value is not CALL but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
+    }
+    match t {
+        STRING => {
+            return Result::Ok(Value::from_string(format!("F({})", &name)));
+        }
+        _ => Err(format!("Can not convert CALL to {:?}", &t).into()),
+    }
+}
+
+fn value_ptr_conversion(t: u16, ot: u16, name: String) -> Result<Value, Box<dyn std::error::Error>> {
+    if ot != PTR {
+        return Err(format!(
+            "Source value is not PTR but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
+    }
+    match t {
+        STRING => {
+            return Result::Ok(Value::from_string(format!("`({})", &name)));
+        }
+        _ => Err(format!("Can not convert PTR to {:?}", &t).into()),
+    }
+}
+
 fn value_float_conversion(t: u16, ot: u16, val: f64) -> Result<Value, Box<dyn std::error::Error>> {
     if ot != FLOAT {
         return Err(format!(
@@ -620,6 +652,14 @@ impl Value {
                 },
                 NODATA => value_nodata_conversion(t, self.dt),
                 NONE => value_none_conversion(t, self.dt),
+                CALL => match &self.data {
+                    Val::String(name) => value_call_conversion(t, self.dt, name.to_string()),
+                    _ => Err(format!("Can not convert CALL Value from {:?}", &self.dt).into()),
+                }
+                PTR => match &self.data {
+                    Val::String(name) => value_ptr_conversion(t, self.dt, name.to_string()),
+                    _ => Err(format!("Can not convert PTR Value from {:?}", &self.dt).into()),
+                }
                 _ => Err(format!("Can not convert Value from {:?}", &self.dt).into()),
             },
         }
