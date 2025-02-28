@@ -128,6 +128,14 @@ impl Value {
             _ => return Err("This Dynamic type is not dict".into()),
         }
     }
+    pub fn cast_valuemap(&self) -> Result<HashMap<Value,Value>, Box<dyn std::error::Error>> {
+        match &self.data {
+            Val::ValueMap(m_val) => {
+                return Result::Ok(m_val.clone());
+            }
+            _ => return Err("This Dynamic type is not valuemap".into()),
+        }
+    }
     pub fn cast_curry_lambda(&self) -> Result<Value, Box<dyn std::error::Error>> {
         match &self.data {
             Val::Map(c_val) => {

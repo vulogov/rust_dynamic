@@ -25,6 +25,9 @@ rust_dynamic, a crate developed for the Rust language, encompasses primitives de
 * Error
 * Metrics as a Vector of TIMESTAMP->F64 samples
 * JSON - dynamic Value object containing JSON
+* ValueMap - HashTable where both key and value of type Value
+* Class - synonym to the Map
+* Object - synonym to the Map
 
 Dynamic values are wrapped and stored inside a Value structure and could be castable back into the original Rust value.
 
@@ -72,7 +75,9 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::matrix() | Create empty dynamic object of type MATRIX |
 | Value::from_list() | Create dynamic object of type LIST and initialize it from Vec<Value> |
 | Value::from_dict() | Create dynamic object of type MAP and initialize it from HashMap<String, Value> |
+| Value::from_valuemap() | Create dynamic object of type VALUEMAP and initialize it from HashMap<Value, Value> |
 | Value::dict() | Create dynamic empty object of type MAP  |
+| Value::valuemap() | Create dynamic empty object of type VALUEMAP  |
 | Value::json() | Create dynamic empty object for storing JSON values  |
 | Value::none() | Create dynamic object that wraps value of None  |
 | Value::nodata() | Create dynamic object that contains no data |
@@ -83,6 +88,8 @@ rust_dynamic crate supports a number of function-primitives that will take a raw
 | Value::lambda() | Return dynamic object of type LAMBDA   |
 | Value::to_lambda() | Return dynamic object of type LAMBDA created from Vector  |
 | Value::curry() | Return dynamic object of type CURRY. Basic and empty  |
+| Value::make_class() | Return dynamic object of type CLASS. Basic and empty  |
+| Value::make_object() | Return dynamic object of type OBJECT. Basic and empty  |
 | Value::conditional() | Return dynamic object of type CONDITIONAL. Basic and empty  |
 | Value::conditional_from_dict() | Return dynamic object of type CURRY. Initialized from the HashTable  |
 | Value::ptr_curry() | Return dynamic object of type CURRY. Containing pointed to the function  |
@@ -118,6 +125,7 @@ rust_dynamic supports a number of casting functions that will try to extract wra
 | Value::cast_fifo() | Return next Value from FIFO object |
 | Value::cast_queue() | Return next Value from QUEUE object |
 | Value::cast_dict() | Return HashMap<String,Value> from MAP,INFO,CONFIG,ASSOCIATION objects |
+| Value::cast_valuemap() | Return HashMap<Value,Value> from VALUEMAP objects |
 | Value::cast_complex_int() | Return Complex<i64> from CINTEGER object |
 | Value::cast_complex_float() | Return Complex<f64> from CFLOAT object |
 | Value::export_float() | Return Vec<f64> from Value object |

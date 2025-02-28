@@ -60,9 +60,15 @@ impl Value {
                     _ => return 0,
                 }
             }
-            MAP | CURRY | CONDITIONAL => {
+            MAP | CURRY | CONDITIONAL | CLASS | OBJECT => {
                 match &self.data {
                     Val::Map(v) => return v.len(),
+                    _ => return 0,
+                }
+            }
+            VALUEMAP => {
+                match &self.data {
+                    Val::ValueMap(v) => return v.len(),
                     _ => return 0,
                 }
             }

@@ -510,6 +510,83 @@ fn value_lambda_conversion(
     }
 }
 
+fn true_value_map_conversion(
+    t: u16,
+    ot: u16,
+    val: &HashMap<Value, Value>,
+) -> Result<Value, Box<dyn std::error::Error>> {
+    if ot != MAP && ot != ASSOCIATION && ot != INFO && ot != CONFIG && ot != MESSAGE && ot != CONDITIONAL {
+        return Err(format!(
+            "Source value is not MAP but {:?} and not suitable for conversion",
+            &ot
+        )
+        .into());
+    }
+    match t {
+        VALUEMAP => {
+            let mut res: HashMap<Value, Value> = HashMap::new();
+            for (k, v) in val {
+                res.insert(k.clone(), v.clone());
+            }
+            return Result::Ok(Value::from_valuemap(res));
+        }
+        FLOAT => {
+            return Result::Ok(Value::from_float(val.len() as f64));
+        }
+        INTEGER => {
+            return Result::Ok(Value::from_int(val.len() as i64));
+        }
+        BOOL => {
+            if val.len() == 0 {
+                return Result::Ok(Value::from_bool(false));
+            } else {
+                return Result::Ok(Value::from_bool(true));
+            }
+        }
+        LIST => {
+            let mut res: Vec<Value> = Vec::new();
+            for (k, v) in val {
+                res.push(Value::pair(k.clone(), v.clone()));
+            }
+            return Result::Ok(Value::from_list(res));
+        }
+        STRING | TEXTBUFFER => {
+            let mut out: String = "{".to_string();
+            for (k, v) in val {
+                let key_str_value = match k.conv(STRING) {
+                    Ok(key_str_value) => key_str_value,
+                    Err(_err) =>  {
+                        return Err(format!("Can not convert key in valuemap to {:?}", &k).into());
+                    }
+                };
+                let key_str = match key_str_value.cast_string() {
+                    Ok(key_str) => key_str,
+                    Err(_err) =>  {
+                        return Err(format!("Can not cast key in valuemap to {:?}", &k).into());
+                    }
+                };
+                match v.conv(STRING) {
+                    Ok(s_v) => {
+                        out = out + &" ".to_string();
+                        out = out + &key_str;
+                        out = out + &"=".to_string();
+                        out = out + &s_v.cast_string().unwrap();
+                        out = out + &" :: ".to_string();
+                    }
+                    Err(_) => continue,
+                }
+            }
+            out = out + &"}".to_string();
+            if t == STRING {
+                return Result::Ok(Value::from_string(out));
+            } else {
+                return Result::Ok(Value::text_buffer(out));
+            }
+        }
+        _ => Err(format!("Can not convert valuemap to {:?}", &t).into()),
+    }
+}
+
 fn value_map_conversion(
     t: u16,
     ot: u16,
@@ -649,9 +726,13 @@ impl Value {
                     Val::Lambda(l_val) => value_lambda_conversion(t, self.dt, l_val),
                     _ => Err(format!("Can not convert LAMBDA Value from {:?}", &self.dt).into()),
                 },
-                MAP | INFO | CONFIG | ASSOCIATION | MESSAGE | CONDITIONAL => match &self.data {
+                MAP | INFO | CONFIG | ASSOCIATION | MESSAGE | CONDITIONAL | CLASS | OBJECT => match &self.data {
                     Val::Map(m_val) => value_map_conversion(t, self.dt, m_val),
                     _ => Err(format!("Can not convert MAP Value from {:?}", &self.dt).into()),
+                },
+                VALUEMAP => match &self.data {
+                    Val::ValueMap(m_val) => true_value_map_conversion(t, self.dt, m_val),
+                    _ => Err(format!("Can not convert VALUEMAP Value from {:?}", &self.dt).into()),
                 },
                 BIN => match &self.data {
                     Val::Binary(b_val) => value_bin_conversion(t, self.dt, b_val.to_vec()),

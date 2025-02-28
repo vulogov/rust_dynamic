@@ -50,7 +50,7 @@ impl Value {
                 }
                 return Value::to_lambda(data);
             }
-            MAP | INFO | ASSOCIATION | CONFIG | CONDITIONAL => {
+            MAP | INFO | ASSOCIATION | CONFIG | CONDITIONAL | CLASS | OBJECT => {
                 let mut data: HashMap<String, Value> = HashMap::new();
                 let mut res = self.dup().unwrap().regen_id();
                 match &self.data {
@@ -62,6 +62,20 @@ impl Value {
                     _ => {},
                 }
                 res.data = Val::Map(data);
+                return res;
+            }
+            VALUEMAP => {
+                let mut data: HashMap<Value, Value> = HashMap::new();
+                let mut res = self.dup().unwrap().regen_id();
+                match &self.data {
+                    Val::ValueMap(m_data) => {
+                        for (k,v) in m_data {
+                            data.insert(k.clone(), appfn(v.clone()));
+                        }
+                    }
+                    _ => {},
+                }
+                res.data = Val::ValueMap(data);
                 return res;
             }
             NONE => {

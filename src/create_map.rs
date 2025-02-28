@@ -16,6 +16,18 @@ impl Value {
             tags:   HashMap::new(),
         }
     }
+    pub fn valuemap() -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   VALUEMAP,
+            q:    100.0,
+            data: Val::ValueMap(HashMap::new()),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
     pub fn from_dict(value: HashMap<String, Value>) -> Self {
         Self {
             id:   nanoid!(),
@@ -23,6 +35,18 @@ impl Value {
             dt:   MAP,
             q:    100.0,
             data: Val::Map(value),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
+    pub fn from_valuemap(value: HashMap<Value, Value>) -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   VALUEMAP,
+            q:    100.0,
+            data: Val::ValueMap(value),
             attr: Vec::new(),
             curr: -1,
             tags:   HashMap::new(),
@@ -101,6 +125,30 @@ impl Value {
             dt:   CONDITIONAL,
             q:    100.0,
             data: Val::Map(value),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
+    pub fn make_class() -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   CLASS,
+            q:    100.0,
+            data: Val::Map(HashMap::new()),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
+    pub fn make_object() -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   OBJECT,
+            q:    100.0,
+            data: Val::Map(HashMap::new()),
             attr: Vec::new(),
             curr: -1,
             tags:   HashMap::new(),

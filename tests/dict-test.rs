@@ -18,6 +18,13 @@ mod tests {
         let res = val.has_key("answer").unwrap().cast_bool().unwrap();
         assert_eq!(res, true);
     }
+    #[test]
+    fn test_valuemap_has_key() {
+        let val = Value::valuemap()
+                        .set_vmap(Value::from_string("answer"), Value::from(42 as i64).unwrap());
+        let res = val.cast_valuemap().unwrap();
+        assert_eq!(res.values().nth(0).unwrap().cast_int().unwrap(), 42 as i64);
+    }
 
     #[test]
     fn test_dict_set_with_spaces() {

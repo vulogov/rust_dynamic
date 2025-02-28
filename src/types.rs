@@ -42,6 +42,9 @@ pub const MATRIX:       u16 = 26;
 pub const CURRY:        u16 = 27;
 pub const MESSAGE:      u16 = 28;
 pub const CONDITIONAL:  u16 = 29;
+pub const VALUEMAP:     u16 = 30;
+pub const CLASS:        u16 = 31;
+pub const OBJECT:       u16 = 32;
 pub const RESULT: u16       = 92;
 pub const EXIT: u16         = 93;
 pub const ASSOCIATION: u16  = 94;
@@ -72,6 +75,7 @@ pub enum Val {
     Lambda(Vec<Value>),
     Queue(Vec<Value>),
     Map(HashMap<String, Value>),
+    ValueMap(HashMap<Value, Value>),
     String(String),
     Binary(Vec<u8>),
     Time(u128),
