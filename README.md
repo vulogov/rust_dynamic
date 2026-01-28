@@ -28,6 +28,7 @@ rust_dynamic, a crate developed for the Rust language, encompasses primitives de
 * ValueMap - HashTable where both key and value of type Value
 * Class - synonym to the Map
 * Object - synonym to the Map
+* Embedding - a fixed vector of f32 usedin AI applications
 
 Dynamic values are wrapped and stored inside a Value structure and could be castable back into the original Rust value.
 
