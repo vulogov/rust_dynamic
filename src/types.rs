@@ -45,6 +45,7 @@ pub const CONDITIONAL:  u16 = 29;
 pub const VALUEMAP:     u16 = 30;
 pub const CLASS:        u16 = 31;
 pub const OBJECT:       u16 = 32;
+pub const EMBEDDING:    u16 = 33;
 pub const RESULT: u16       = 92;
 pub const EXIT: u16         = 93;
 pub const ASSOCIATION: u16  = 94;
@@ -82,4 +83,5 @@ pub enum Val {
     Metrics(Vec<Metric>),
     Operator(Operator),
     Json(serde_json::Value),
+    Embedding(Vec<f32>),
 }

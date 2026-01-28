@@ -86,6 +86,12 @@ impl Value {
                     _ => return 0,
                 }
             }
+            EMBEDDING => {
+                match &self.data {
+                    Val::Embedding(v) => return v.len(),
+                    _ => return 0,
+                }
+            }
             NODATA => return 0,
             _ => {
                 let str_val = match self.conv(STRING) {

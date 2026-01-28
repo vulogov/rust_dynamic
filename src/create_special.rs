@@ -250,4 +250,16 @@ impl Value {
             tags:   HashMap::new(),
         }
     }
+    pub fn embedding(value: Vec<f32>) -> Self {
+        Self {
+            id:   nanoid!(),
+            stamp:  timestamp_ms(),
+            dt:   EMBEDDING,
+            q:    100.0,
+            data: Val::Embedding(value),
+            attr: Vec::new(),
+            curr: -1,
+            tags:   HashMap::new(),
+        }
+    }
 }

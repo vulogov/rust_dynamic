@@ -65,6 +65,29 @@ impl Value {
             _ => return Err("This Dynamic type is not list".into()),
         }
     }
+    pub fn cast_raw_embedding(&self) -> Result<Vec<f32>, Box<dyn std::error::Error>> {
+        if self.dt != EMBEDDING {
+            return Err(format!("This is not a EMBEDDING value but {}", &self.dt).into());
+        }
+        match &self.data {
+            Val::Embedding(e_val) => {
+                return Result::Ok(e_val.clone());
+            }
+            _ => return Err("This Dynamic type is not embedding".into()),
+        }
+    }
+    pub fn cast_embedding(&self) -> Result<Vec<Value>, Box<dyn std::error::Error>> {
+        match &self.cast_raw_embedding() {
+            Ok(e_val) => {
+                let mut result = Vec::new();
+                for val in e_val {
+                    result.push(Value::from_float(*val as f64));
+                }
+                Result::Ok(result)
+            }
+            _ => return Err("This Dynamic type is not embedding".into()),
+        }
+    }
     pub fn cast_lambda(&self) -> Result<Vec<Value>, Box<dyn std::error::Error>> {
         if self.dt != LAMBDA {
             return Err(format!("This is not a LAMBDA value but {}", &self.dt).into());

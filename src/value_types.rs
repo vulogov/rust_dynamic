@@ -47,6 +47,7 @@ impl Value {
             OPERATOR    => "Operator",
             JSON        => "JSON",
             JSON_WRAPPED => "JSON_WRAPPED",
+            EMBEDDING    => "Embedding",
 
             _ => "Unknown",
         }

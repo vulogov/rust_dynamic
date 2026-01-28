@@ -89,7 +89,11 @@ mod tests {
         let v3 = Value::left_right(pick_largest, &mut v1, &mut v2);
         assert_eq!(v3.cast_float().unwrap(), 42.0 as f64);
     }
-
+    #[test]
+    fn test_create_embedding_and_len() {
+        let v = Value::embedding(vec![42.0]);
+        assert_eq!(v.len(), 1 as usize);
+    }
     #[test]
     fn test_vm_version() {
         assert_eq!(rust_dynamic::version(), env!("CARGO_PKG_VERSION").to_string());

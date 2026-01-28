@@ -25,6 +25,11 @@ mod tests {
         assert_eq!(v.type_name(), "Float");
     }
     #[test]
+    fn test_create_embedding_type_name() {
+        let v = Value::embedding(vec![42.0]);
+        assert_eq!(v.type_name(), "Embedding");
+    }
+    #[test]
     fn test_create_int_type_name() {
         let v = Value::from(42 as i64).unwrap();
         assert_eq!(v.type_name(), "Integer");
