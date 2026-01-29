@@ -103,4 +103,10 @@ mod tests {
         let buffer = data.compile().unwrap();
         assert_ne!(buffer.len(), 0);
     }
+    #[test]
+    fn test_serialize_embedding() {
+        let data = Value::embedding(vec![0.0, 1.0, 2.0, 3.0]);
+        let bin_out = data.to_binary().unwrap();
+        assert_ne!(bin_out.len(), 0);
+    }
 }
